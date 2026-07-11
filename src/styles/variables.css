@@ -1,0 +1,61 @@
+:root {
+  /* =========================
+     Brand Colors - Sage Green + Beige + Gold
+  ========================== */
+
+  --primary: #7c9a92; /* Sage green - main brand */
+  --primary-dark: #5f7a73; /* Dark sage for hover */
+  --primary-light: #e8f0ee; /* Soft sage background */
+
+  --secondary: #d8c3a5; /* Warm beige */
+  --accent: #c58b45; /* Gold/brown luxury accent */
+
+  /* =========================
+     Status Colors
+  ========================== */
+
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --success: #22c55e;
+
+  /* =========================
+     Background & Surface
+  ========================== */
+
+  --background: #f8f6f2; /* Warm cream background */
+  --surface: #ffffff;
+
+  /* =========================
+     Text Colors
+  ========================== */
+
+  --text-primary: #2f3e3a;
+  --text-secondary: #6b7280;
+
+  /* =========================
+     Border
+  ========================== */
+
+  --border: #e5e1da;
+
+  /* =========================
+     Radius
+  ========================== */
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* =========================
+     Shadow
+  ========================== */
+
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+  /* =========================
+     Font
+  ========================== */
+  /* Font */
+  --font-family: var(--font-body), sans-serif;
+  --font-heading: var(--heading-font), serif;
+}
