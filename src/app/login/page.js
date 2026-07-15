@@ -8,7 +8,7 @@ export default function LoginPage() {
     <AuthLayout
       leftContent={<AuthImage />}
       rightContent={
-        <>
+        <div className="auth-form-wrapper">
           <LoginForm />
 
           <AuthFooter
@@ -16,7 +16,7 @@ export default function LoginPage() {
             linkText="Create Account"
             href="/register"
           />
-        </>
+        </div>
       }
     />
   );
