@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import RoleSelect from "@/components/common/RoleSelect";
 import Link from "next/link";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -11,6 +12,7 @@ export default function LoginForm() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const [error, setError] = useState("");
@@ -22,8 +24,8 @@ export default function LoginForm() {
     setError("");
     setLoading(true);
 
-    if (!email || !password) {
-      setError("Please fill in all fields.");
+    if (!role || !email || !password) {
+      setError("Please select your role and fill in all fields.");
       setLoading(false);
       return;
     }
@@ -46,6 +48,8 @@ export default function LoginForm() {
 
   return (
     <div className="login-form-container">
+      <div className="heading-line"></div>
+
       <h1>Welcome Back</h1>
 
       <p>Sign in to continue to your account.</p>
@@ -53,6 +57,11 @@ export default function LoginForm() {
       {error && <div className="login-error">{error}</div>}
 
       <form onSubmit={handleLogin}>
+        <div className="form-group">
+          <label>Select Your Role</label>
+
+          <RoleSelect value={role} onChange={setRole} />
+        </div>
         <div className="form-group">
           <label>Email</label>
 
