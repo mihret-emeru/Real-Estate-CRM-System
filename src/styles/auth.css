@@ -1,24 +1,40 @@
 .auth-container {
   min-height: 100vh;
+  height: 100vh;
   display: flex;
   background: var(--background);
-}
-
-.auth-left {
-  width: 60%;
+  overflow: hidden;
   position: relative;
 }
 
-.auth-right {
-  width: 40%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 40px;
-  background: var(--surface);
+.auth-left {
+  width: 58%;
+  position: relative;
+  overflow: visible;
+  height: 100%; /* stretches via flex align-items:stretch (default) */
 }
+
+.auth-right {
+  width: 42%;
+
+  background: var(--surface);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 60px 70px;
+
+  position: relative;
+
+  z-index: 10;
+}
+
 .auth-image-container {
-  height: 100vh;
+  width: 100%;
+  height: 100%; /* ← was 100vh, now fills auth-left's actual height */
   position: relative;
   overflow: hidden;
 }
@@ -85,4 +101,14 @@
   font-size: 15px;
   color: rgba(255, 255, 255, 0.95);
   margin-top: 10px;
+}
+.auth-divider {
+  position: absolute;
+  top: 0;
+  left: calc(58% - 90px);
+  width: 180px;
+  height: 100%; /* already correct, just confirm it's not tied to vh anywhere */
+  fill: var(--surface);
+  z-index: 5;
+  pointer-events: none;
 }
