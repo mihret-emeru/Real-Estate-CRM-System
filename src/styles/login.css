@@ -2,14 +2,15 @@
   width: 100%;
   max-width: 420px;
 
-  background: white;
+  background: var(--surface);
 
-  padding: 40px;
+  padding: 28px 32px;
 
   border-radius: 20px;
 
+  border: 1px solid rgba(212, 175, 55, 0.18);
+
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
-  transform: translateY(25px);
 }
 
 .login-form-container h1 {
@@ -24,7 +25,7 @@
 .login-form-container p {
   color: var(--text-light);
 
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 .login-error {
   background: #fee2e2;
@@ -58,39 +59,34 @@
 }
 .login-submit {
   width: 100%;
-
-  height: 52px;
+  height: 55px;
 
   border: none;
+  border-radius: 12px;
 
-  border-radius: 14px;
-
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, var(--primary), #6d8f82);
 
   color: white;
 
   font-size: 16px;
-
   font-weight: 600;
-
-  letter-spacing: 0.3px;
 
   cursor: pointer;
 
-  box-shadow: 0 10px 20px rgba(124, 154, 146, 0.25);
+  transition: all 0.35s ease;
 
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 .login-submit:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 
-  box-shadow: 0 15px 30px rgba(124, 154, 146, 0.35);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.15);
+
+  filter: brightness(1.05);
 }
 .login-submit:active {
-  transform: translateY(0);
+  transform: scale(0.98);
 }
 .login-submit:disabled {
   opacity: 0.7;
@@ -107,12 +103,24 @@
 
   opacity: 0.6;
 }
+.auth-form-wrapper {
+  width: 100%;
+  max-width: 420px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  transform: scale(0.92);
+
+  position: relative;
+  z-index: 20;
+}
+
 .auth-footer {
+  margin-top: 18px;
   text-align: center;
-
-  margin-top: 40px;
-
-  font-size: 14px;
 }
 
 .auth-footer a {
@@ -121,6 +129,9 @@
   font-weight: 600;
 
   text-decoration: none;
+}
+.form-group {
+  margin-bottom: 18px;
 }
 .form-group input {
   width: 100%;
@@ -173,12 +184,21 @@
 }
 .input-wrapper {
   position: relative;
+  transition: all 0.3s ease;
 }
 
 .input-wrapper input {
   padding-left: 45px;
 
   padding-right: 45px;
+}
+.input-wrapper:hover {
+  border-color: var(--secondary);
+}
+.input-wrapper:focus-within {
+  border-color: var(--secondary);
+
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
 }
 
 .input-icon {
@@ -310,4 +330,11 @@
 .login-form {
   width: 100%;
   max-width: 420px;
+}
+.heading-line {
+  width: 150px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--secondary), var(--accent));
+  border-radius: 999px;
+  margin: 0 auto 25px;
 }
