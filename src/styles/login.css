@@ -9,6 +9,7 @@
   border-radius: 20px;
 
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  transform: translateY(25px);
 }
 
 .login-form-container h1 {
@@ -109,7 +110,7 @@
 .auth-footer {
   text-align: center;
 
-  margin-top: 25px;
+  margin-top: 40px;
 
   font-size: 14px;
 }
