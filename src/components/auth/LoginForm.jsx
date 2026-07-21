@@ -42,8 +42,25 @@ export default function LoginForm() {
       return;
     }
 
-    // Temporary redirect
-    router.push("/client/dashboard");
+    const session = await fetch("/api/auth/session");
+    const sessionData = await session.json();
+
+    switch (sessionData.user.role) {
+      case "admin":
+        router.push("/admin/dashboard");
+        break;
+
+      case "manager":
+        router.push("/manager/dashboard");
+        break;
+
+      case "agent":
+        router.push("/agent/dashboard");
+        break;
+
+      default:
+        router.push("/client/dashboard");
+    }
   }
 
   return (
