@@ -234,3 +234,28 @@
   color: var(--secondary);
   font-weight: 600;
 }
+.form-section-title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  color: var(--text-primary);
+  margin: 28px 0 18px;
+}
+
+.budget-row {
+  display: flex;
+  gap: 16px;
+}
+
+.budget-row .form-group {
+  flex: 1;
+}
+
+.property-select {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text-primary);
+}
