@@ -1,0 +1,92 @@
+.sidebar {
+  width: 235px;
+  min-height: 100vh;
+  background: #f8f9fa;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 70px;
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.sidebar-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #4b5563;
+  line-height: 1.2;
+}
+
+/* =========================
+   MENU
+========================= */
+
+.sidebar-menu {
+  flex: 1;
+  padding: 20px 16px;
+}
+
+.sidebar-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-menu li {
+  margin-bottom: 8px;
+}
+
+.sidebar-menu a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 13px 16px;
+
+  text-decoration: none;
+
+  color: #4b5563;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  border-radius: 12px;
+
+  transition: all 0.25s ease;
+}
+
+.sidebar-menu a svg {
+  font-size: 18px;
+  color: var(--primary);
+}
+
+.sidebar-menu a:hover {
+  background: #eef5f1;
+  color: var(--primary);
+}
+
+.sidebar-menu a:hover svg {
+  color: var(--primary);
+}
+
+.sidebar-menu a.active {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.sidebar-menu a.active svg {
+  color: #ffffff;
+}
