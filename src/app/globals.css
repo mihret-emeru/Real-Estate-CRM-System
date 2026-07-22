@@ -1,6 +1,9 @@
 @import "../styles/variables.css";
 @import "../styles/auth.css";
 @import "../styles/login.css";
+@import "@/styles/dashboard.css";
+@import "@/styles/sidebar.css";
+@import "@/styles/topnavbar.css";
 * {
   margin: 0;
   padding: 0;
