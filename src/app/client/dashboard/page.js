@@ -1,3 +1,9 @@
+import DashboardLayout from "@/components/dashboard/DashboardLayout";
+
 export default function ClientDashboard() {
-  return <h1>Client Dashboard</h1>;
+  return (
+    <DashboardLayout>
+      <h1>Client Dashboard</h1>
+    </DashboardLayout>
+  );
 }
