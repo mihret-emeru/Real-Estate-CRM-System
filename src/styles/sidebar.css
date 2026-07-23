@@ -90,3 +90,44 @@
 .sidebar-menu a.active svg {
   color: #ffffff;
 }
+.sidebar-footer {
+  margin-top: auto;
+  padding: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.logout-btn {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 13px 16px;
+
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  color: #4b5563;
+  font-size: 15px;
+  font-weight: 500;
+
+  transition: all 0.25s ease;
+}
+
+.logout-btn svg {
+  color: #d97706;
+  font-size: 18px;
+}
+
+.logout-btn:hover {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.logout-btn:hover svg {
+  color: #d97706;
+}
