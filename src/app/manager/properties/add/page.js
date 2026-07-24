@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function AddPropertyPage() {
   const [formData, setFormData] = useState({
@@ -24,6 +26,9 @@ export default function AddPropertyPage() {
     ownerPhone: "",
   });
 
+  const { data: session } = useSession();
+  const router = useRouter();
+
   function handleChange(e) {
     const { name, value } = e.target;
 
@@ -33,10 +38,40 @@ export default function AddPropertyPage() {
     });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    console.log(formData);
+    try {
+      const response = await fetch("/api/properties", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          ...formData,
+
+          location: {
+            city: formData.city,
+            subCity: formData.subCity,
+            address: formData.address,
+          },
+
+          createdBy: session.user.id,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        router.push("/manager/properties");
+      } else {
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -69,21 +104,22 @@ export default function AddPropertyPage() {
           value={formData.propertyType}
           onChange={handleChange}
         >
-          <option>Select Type</option>
-          <option>House</option>
-          <option>Apartment</option>
-          <option>Villa</option>
-          <option>Condominium</option>
-          <option>Commercial</option>
-          <option>Land</option>
+          <option value="">Select Type</option>
+
+          <option value="house">House</option>
+          <option value="apartment">Apartment</option>
+          <option value="villa">Villa</option>
+          <option value="condominium">Condominium</option>
+          <option value="commercial">Commercial</option>
+          <option value="land">Land</option>
         </select>
 
         <label>Status</label>
         <select name="status" value={formData.status} onChange={handleChange}>
-          <option>Available</option>
-          <option>Sold</option>
-          <option>Rented</option>
-          <option>Pending</option>
+          <option value="available">Available</option>
+          <option value="sold">Sold</option>
+          <option value="rented">Rented</option>
+          <option value="pending">Pending</option>
         </select>
 
         <h2>Pricing</h2>
@@ -113,8 +149,8 @@ export default function AddPropertyPage() {
           value={formData.paymentType}
           onChange={handleChange}
         >
-          <option>Full Payment</option>
-          <option>Installment</option>
+          <option value="full_payment">Full Payment</option>
+          <option value="installment">Installment</option>
         </select>
 
         <h2>Location</h2>
