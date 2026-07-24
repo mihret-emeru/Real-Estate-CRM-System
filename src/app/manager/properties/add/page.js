@@ -33,11 +33,17 @@ export default function AddPropertyPage() {
     });
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    console.log(formData);
+  }
+
   return (
     <div>
       <h1>Add New Property</h1>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <h2>Basic Information</h2>
 
         <label>Property Title</label>
@@ -217,4 +223,3 @@ export default function AddPropertyPage() {
     </div>
   );
 }
-
