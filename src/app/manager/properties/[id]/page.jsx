@@ -1,1 +1,223 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import "@/styles/property-details.css";
+import {
+  FaMoneyBillWave,
+  FaHome,
+  FaBed,
+  FaBath,
+  FaRulerCombined,
+  FaParking,
+  FaMapMarkerAlt,
+  FaPhone,
+  FaVideo,
+  FaCreditCard,
+  FaBuilding,
+  FaEdit,
+  FaTrash,
+} from "react-icons/fa";
+
+export default function PropertyDetailsPage() {
+  const { id } = useParams();
+
+  const [property, setProperty] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProperty() {
+      try {
+        const response = await fetch(`/api/properties/${id}`);
+
+        const data = await response.json();
+
+        setProperty(data.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (id) {
+      fetchProperty();
+    }
+  }, [id]);
+
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (!property) {
+    return <h2>Property not found.</h2>;
+  }
+
+  return (
+    <div className="property-details-page">
+      <div className="property-details-header">
+        <div>
+          <h1>{property.title}</h1>
+
+          <p>{property.location.city}</p>
+        </div>
+
+        <div className={`property-status ${property.status.replace("_", "-")}`}>
+          {property.status}
+        </div>
+      </div>
+
+      {/* Large Property Image */}
+      <div className="property-main-image">
+        <img
+          src={
+            property.images && property.images.length > 0
+              ? property.images[0]
+              : "/images/property-placeholder.jpg"
+          }
+          alt={property.title}
+        />
+      </div>
+      <div className="property-info-grid">
+        <div className="info-card price-card">
+          <span>
+            <FaMoneyBillWave className="info-icon" />
+            Price
+          </span>
+
+          <h3>
+            {property.price.toLocaleString()} {property.currency}
+          </h3>
+        </div>
+
+        <div className="info-card">
+          <span>
+            <FaHome className="info-icon" />
+            Property Type
+          </span>
+          <h3>
+            {property.propertyType.charAt(0).toUpperCase() +
+              property.propertyType.slice(1)}
+          </h3>
+        </div>
+        <div className="info-card">
+          <span>
+            <FaBuilding className="info-icon" />
+            Floor
+          </span>
+
+          <h3>{property.floorNumber || "-"}</h3>
+        </div>
+
+        <div className="info-card">
+          <span>
+            <FaCreditCard className="info-icon" />
+            Payment
+          </span>
+
+          <h3>
+            {property.paymentType === "full_payment"
+              ? "Full Payment"
+              : "Installment"}
+          </h3>
+        </div>
+
+        <div className="info-card">
+          <span>
+            <FaBed className="info-icon" />
+            Bedrooms
+          </span>
+          <h3>{property.bedrooms || "-"}</h3>
+        </div>
+
+        <div className="info-card">
+          <span>
+            <FaBath className="info-icon" />
+            Bathrooms
+          </span>
+          <h3>{property.bathrooms || "-"}</h3>
+        </div>
+
+        <div className="info-card">
+          <span>
+            <FaRulerCombined className="info-icon" />
+            Net Area
+          </span>
+          <h3>{property.area || "-"} m²</h3>
+        </div>
+
+        <div className="info-card">
+          <span>
+            <FaParking className="info-icon" />
+            Parking
+          </span>
+          <h3>{property.parkingSpace ? "Yes" : "No"}</h3>
+        </div>
+      </div>
+      <div className="property-section">
+        <h2>Description</h2>
+
+        <p>{property.description || "No description available."}</p>
+      </div>
+      <div className="property-section">
+        <h2>
+          <FaMapMarkerAlt className="section-icon" />
+          Location
+        </h2>
+
+        <p>
+          <strong>City:</strong> {property.location.city}
+        </p>
+
+        <p>
+          <strong>Sub City:</strong> {property.location.subCity || "-"}
+        </p>
+
+        <p>
+          <strong>Address:</strong> {property.location.address || "-"}
+        </p>
+      </div>
+      <div className="property-section">
+        <h2>
+          <FaPhone className="section-icon" />
+          Owner Information
+        </h2>
+
+        <p>
+          <strong>Phone:</strong> {property.ownerPhone || "-"}
+        </p>
+      </div>
+      {property.virtualTour && (
+        <div className="property-section">
+          <h2>
+            <FaVideo className="section-icon" />
+            Virtual Tour
+          </h2>
+
+          <a
+            href={property.virtualTour}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="tour-btn"
+          >
+            Open Virtual Tour
+          </a>
+        </div>
+      )}
+      <div className="property-actions">
+        <Link href={`/manager/properties/${property._id}/edit`}>
+          <button className="edit-btn">
+            <FaEdit />
+            Edit Property
+          </button>
+        </Link>
+
+        <button className="delete-btn">
+          <FaTrash /> Delete Property
+        </button>
+      </div>
+    </div>
+  );
+}
 
