@@ -2,46 +2,76 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Property from "@/models/Property";
 
-// GET ALL PROPERTIES
-export async function GET() {
+export async function GET(request, { params }) {
+  const { id } = await params;
+
   try {
     await connectDB();
 
-    const properties = await Property.find().sort({ createdAt: -1 });
+    const property = await Property.findById(id);
 
-    return NextResponse.json(
-      {
-        success: true,
-        data: properties,
-      },
-      { status: 200 },
-    );
+    if (!property) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Property not found",
+        },
+        {
+          status: 404,
+        },
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      data: property,
+    });
   } catch (error) {
     return NextResponse.json(
       {
         success: false,
         message: error.message,
       },
-      { status: 500 },
+      {
+        status: 500,
+      },
     );
   }
 }
-
-// CREATE PROPERTY
-export async function POST(request) {
+// UPDATE PROPERTY
+export async function PUT(request, { params }) {
   try {
     await connectDB();
 
+    const { id } = await params;
+
     const body = await request.json();
 
-    const property = await Property.create(body);
+    const updatedProperty = await Property.findByIdAndUpdate(id, body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedProperty) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Property not found",
+        },
+        {
+          status: 404,
+        },
+      );
+    }
 
     return NextResponse.json(
       {
         success: true,
-        data: property,
+        data: updatedProperty,
       },
-      { status: 201 },
+      {
+        status: 200,
+      },
     );
   } catch (error) {
     return NextResponse.json(
@@ -49,7 +79,9 @@ export async function POST(request) {
         success: false,
         message: error.message,
       },
-      { status: 400 },
+      {
+        status: 500,
+      },
     );
   }
 }
