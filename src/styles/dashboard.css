@@ -5,14 +5,22 @@
 }
 
 .dashboard-main {
-  flex: 1;
+  margin-left: 235px;
+
+  width: calc(100% - 235px);
+
+  min-height: 100vh;
+
   display: flex;
   flex-direction: column;
+
   background: #ffffff;
 }
 
 .dashboard-content {
   flex: 1;
+
   padding: 30px;
+
   background: #ffffff;
 }
