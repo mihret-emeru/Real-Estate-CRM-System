@@ -52,39 +52,66 @@
 }
 
 .property-actions {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  margin-top: 20px;
+}
+
+.property-actions a {
+  width: 100%;
+  text-decoration: none;
 }
 
 .property-actions button {
-  flex: 1;
-  padding: 10px;
+  width: 100%;
+  padding: 10px 14px;
+
   border: none;
+  outline: none;
+
   border-radius: 8px;
-  cursor: pointer;
+
+  color: white;
+
+  font-size: 14px;
   font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
 }
 
 .view-btn {
   background: #3b82f6;
-  color: white;
 }
 
 .edit-btn {
   background: #f59e0b;
-  color: white;
 }
 
 .delete-btn {
   background: #ef4444;
-  color: white;
 }
+
+.view-btn:hover {
+  background: #2563eb;
+}
+
+.edit-btn:hover {
+  background: #d97706;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
+
 .property-image {
   width: 100%;
   aspect-ratio: 16 / 10;
   overflow: hidden;
   border-radius: 10px;
+
+  position: relative;
 }
 
 .property-image img {
@@ -93,13 +120,21 @@
   object-fit: cover;
 }
 .status-badge {
-  display: inline-block;
-  padding: 5px 12px;
-  border-radius: 20px;
+  position: absolute;
+
+  top: 15px;
+  right: 15px;
+
+  padding: 7px 14px;
+
+  border-radius: 999px;
+
   font-size: 13px;
   font-weight: 600;
-  margin-bottom: 12px;
+
   text-transform: capitalize;
+
+  z-index: 2;
 }
 
 .status-badge.available {
@@ -124,9 +159,24 @@
 
 .property-info {
   display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #e5e7eb;
+  align-items: center;
+  gap: 125px;
+
+  margin-top: 20px;
+  margin-bottom: 25px;
+
+  color: #555;
 }
 
+.property-info span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-weight: 500;
+}
+
+.property-info svg {
+  color: #808080; /* gold */
+  font-size: 20px;
+}
