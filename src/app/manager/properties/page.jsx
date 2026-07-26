@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import "@/styles/property.css";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaBed, FaBath, FaRulerCombined } from "react-icons/fa";
 
 export default function PropertiesPage() {
   const [properties, setProperties] = useState([]);
@@ -29,6 +29,30 @@ export default function PropertiesPage() {
 
   if (loading) {
     return <h1>Loading properties...</h1>;
+  }
+
+  async function handleDelete(id) {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this property?",
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`/api/properties/${id}`, {
+        method: "DELETE",
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setProperties((prev) => prev.filter((property) => property._id !== id));
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -59,10 +83,9 @@ export default function PropertiesPage() {
                   }
                   alt={property.title}
                 />
-              </div>
-
-              <div className={`status-badge ${property.status}`}>
-                {property.status}
+                <div className={`status-badge ${property.status}`}>
+                  {property.status}
+                </div>
               </div>
 
               <h2>{property.title}</h2>
@@ -81,19 +104,37 @@ export default function PropertiesPage() {
               </p>
 
               <div className="property-info">
-                <span>🛏 {property.bedrooms}</span>
+                <span>
+                  <FaBed />
+                  {property.bedrooms || "-"}
+                </span>
 
-                <span>🛁 {property.bathrooms}</span>
+                <span>
+                  <FaBath />
+                  {property.bathrooms || "-"}
+                </span>
 
-                <span>📐 {property.area} m²</span>
+                <span>
+                  <FaRulerCombined />
+                  {property.area || "-"} m²
+                </span>
               </div>
 
               <div className="property-actions">
-                <button className="view-btn">View</button>
+                <Link href={`/manager/properties/${property._id}`}>
+                  <button className="view-btn">View</button>
+                </Link>
 
-                <button className="edit-btn">Edit</button>
+                <Link href={`/manager/properties/${property._id}/edit`}>
+                  <button className="edit-btn">Edit</button>
+                </Link>
 
-                <button className="delete-btn">Delete</button>
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(property._id)}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}
