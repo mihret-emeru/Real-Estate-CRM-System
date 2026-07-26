@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import "@/styles/property-details.css";
 import {
   FaMoneyBillWave,
@@ -22,6 +22,7 @@ import {
 
 export default function PropertyDetailsPage() {
   const { id } = useParams();
+  const router = useRouter();
 
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -46,12 +47,36 @@ export default function PropertyDetailsPage() {
     }
   }, [id]);
 
-  if (loading) {
-    return <h2>Loading...</h2>;
+  async function handleDelete() {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this property?",
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`/api/properties/${id}`, {
+        method: "DELETE",
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        router.push("/manager/properties");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  if (!property) {
-    return <h2>Property not found.</h2>;
+  if (loading || !property) {
+    return (
+      <div className="property-details-page">
+        <h2>Loading property...</h2>
+      </div>
+    );
   }
 
   return (
@@ -206,14 +231,15 @@ export default function PropertyDetailsPage() {
         </div>
       )}
       <div className="property-actions">
-        <Link href={`/manager/properties/${property._id}/edit`}>
-          <button className="edit-btn">
-            <FaEdit />
-            Edit Property
-          </button>
+        <Link
+          href={`/manager/properties/${property._id}/edit`}
+          className="details-edit-btn"
+        >
+          <FaEdit />
+          <span>Edit Property</span>
         </Link>
 
-        <button className="delete-btn">
+        <button className="details-delete-btn" onClick={handleDelete}>
           <FaTrash /> Delete Property
         </button>
       </div>
