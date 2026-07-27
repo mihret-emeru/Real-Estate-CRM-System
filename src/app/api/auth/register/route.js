@@ -1,6 +1,7 @@
 import connectDB from "@/lib/mongodb";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
+import Lead from "@/models/Lead";
 
 export async function POST(request) {
   try {
@@ -60,6 +61,7 @@ export async function POST(request) {
       name,
       email,
       phone,
+
       password: hashedPassword,
 
       role: "client",
@@ -69,6 +71,17 @@ export async function POST(request) {
       minBudget,
       maxBudget,
       currency,
+    });
+
+    // Create automatic lead
+    await Lead.create({
+      fullName: user.name,
+      email: user.email,
+      phone: user.phone,
+      source: "client_registration",
+      status: "new",
+      leadScore: 10,
+      client: user._id,
     });
 
     return Response.json(
