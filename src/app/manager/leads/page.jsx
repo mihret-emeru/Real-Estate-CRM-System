@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import LeadTable from "@/components/leads/LeadTable";
+import "@/styles/leaddetails.css";
 
 export default function LeadsPage() {
   const [leads, setLeads] = useState([]);
@@ -67,4 +68,3 @@ export default function LeadsPage() {
     </div>
   );
 }
-
