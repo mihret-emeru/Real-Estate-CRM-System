@@ -4,6 +4,8 @@
 @import "@/styles/dashboard.css";
 @import "@/styles/sidebar.css";
 @import "@/styles/topnavbar.css";
+@import "@/styles/leaddetails.css";
+
 * {
   margin: 0;
   padding: 0;
