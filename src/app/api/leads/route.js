@@ -8,7 +8,22 @@ export async function POST(request) {
 
     const body = await request.json();
 
-    const lead = await Lead.create(body);
+    const leadData = {
+      ...body,
+
+      activities: [
+        {
+          type: "created",
+          message: `Lead created from ${body.source}`,
+        },
+      ],
+    };
+
+    console.log(leadData);
+
+    const lead = await Lead.create(leadData);
+
+    console.log(lead);
 
     return NextResponse.json(
       {
@@ -61,4 +76,3 @@ export async function GET() {
     );
   }
 }
-
