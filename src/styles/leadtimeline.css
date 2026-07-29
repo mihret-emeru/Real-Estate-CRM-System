@@ -1,1 +1,166 @@
+.lead-timeline {
+  position: relative;
+
+  margin-top: 20px;
+
+  padding-left: 25px;
+}
+
+.lead-timeline::before {
+  content: "";
+
+  position: absolute;
+
+  left: 8px;
+
+  top: 0;
+
+  bottom: 0;
+
+  width: 2px;
+
+  background: #e5e7eb;
+}
+
+.timeline-item {
+  position: relative;
+
+  margin-bottom: 25px;
+}
+
+.timeline-dot {
+  position: absolute;
+
+  left: -23px;
+
+  top: 5px;
+
+  width: 14px;
+
+  height: 14px;
+
+  border-radius: 50%;
+
+  background: var(--primary);
+
+  border: 3px solid white;
+
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+.timeline-content {
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  padding: 16px;
+}
+
+.timeline-content h4 {
+  margin-bottom: 8px;
+
+  font-size: 15px;
+
+  color: #1f2937;
+
+  text-transform: capitalize;
+}
+
+.timeline-content p {
+  color: #4b5563;
+
+  margin-bottom: 8px;
+}
+
+.timeline-content span {
+  font-size: 12px;
+
+  color: #9ca3af;
+}
+
+.empty-timeline {
+  color: #9ca3af;
+
+  font-style: italic;
+
+  padding: 15px 0;
+}
+.timeline-icon {
+  width: 40px;
+
+  height: 40px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  position: absolute;
+
+  left: -36px;
+
+  color: white;
+}
+.timeline-icon.created {
+  background: #22c55e;
+}
+
+.timeline-icon.status_change {
+  background: #3b82f6;
+}
+
+.timeline-icon.note {
+  background: #f59e0b;
+}
+
+.timeline-icon.call {
+  background: #8b5cf6;
+}
+
+.timeline-icon.email {
+  background: #06b6d4;
+}
+
+.timeline-icon.meeting {
+  background: #ef4444;
+}
+.timeline-message {
+  white-space: pre-line;
+
+  line-height: 1.7;
+
+  color: #4b5563;
+
+  margin-top: 8px;
+}
+.note-history {
+  margin-top: 15px;
+
+  padding: 12px;
+
+  background: #f9fafb;
+
+  border-radius: 10px;
+}
+
+.note-history div {
+  margin-bottom: 12px;
+}
+
+.note-history strong {
+  font-size: 13px;
+
+  color: #374151;
+}
+
+.note-history p {
+  margin-top: 5px;
+
+  color: #6b7280;
+}
 
