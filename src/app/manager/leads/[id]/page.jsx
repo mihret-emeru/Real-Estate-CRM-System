@@ -2,7 +2,21 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FaChartLine, FaFire, FaFlag, FaGlobe } from "react-icons/fa";
+import LeadTimeline from "@/components/leads/LeadTimeline";
+import {
+  FaChartLine,
+  FaFire,
+  FaFlag,
+  FaGlobe,
+  FaUser,
+  FaEnvelope,
+  FaPhone,
+  FaArrowLeft,
+  FaStickyNote,
+  FaAddressBook,
+  FaEdit,
+  FaTrash,
+} from "react-icons/fa";
 
 import { useParams, useRouter } from "next/navigation";
 import { calculateLeadLevel } from "@/utils/leadScore";
@@ -68,13 +82,45 @@ export default function LeadDetailsPage() {
     }
   }
 
+  function formatLeadSource(source) {
+    switch (source) {
+      case "client_registration":
+        return "Client Registration";
+
+      case "website":
+        return "Website";
+
+      case "facebook_ad":
+        return "Facebook Ad";
+
+      case "phone_call":
+        return "Phone Call";
+
+      case "office_visit":
+        return "Office Visit";
+
+      case "referral":
+        return "Referral";
+
+      default:
+        return source
+          .replaceAll("_", " ")
+          .replace(/\b\w/g, (c) => c.toUpperCase());
+    }
+  }
+
   return (
     <div className="lead-details-page">
       <div className="lead-details-header">
         <div>
+          <Link href="/manager/leads" className="back-link">
+            <FaArrowLeft />
+            Back to Leads
+          </Link>
+
           <h1>{lead.fullName}</h1>
 
-          <p>{lead.source.replace("_", " ")}</p>
+          <p>{formatLeadSource(lead.source)}</p>
         </div>
 
         <div className={`lead-status ${lead.status}`}>{lead.status}</div>
@@ -116,45 +162,73 @@ export default function LeadDetailsPage() {
         </div>
       </div>
       <div className="property-section">
-        <h2>Contact Information</h2>
+        <h2 className="section-title">
+          <FaAddressBook />
+          Contact Information
+        </h2>
 
         <div className="contact-grid">
           <div className="contact-item">
-            <span>Full Name</span>
-            <h4>{lead.fullName}</h4>
+            <div className="contact-icon">
+              <FaUser />
+            </div>
+            <div className="contact-content">
+              <span>Full Name</span>
+              <h4>{lead.fullName}</h4>
+            </div>
           </div>
 
           <div className="contact-item">
-            <span>Email</span>
-            <h4>{lead.email}</h4>
+            <div className="contact-icon">
+              <FaEnvelope />
+            </div>
+            <div className="contact-content">
+              <span>Email</span>
+              <h4>{lead.email}</h4>
+            </div>
           </div>
 
           <div className="contact-item">
-            <span>Phone</span>
-            <h4>{lead.phone}</h4>
+            <div className="contact-icon">
+              <FaPhone />
+            </div>
+            <div className="contact-content">
+              <span>Phone</span>
+              <h4>{lead.phone}</h4>
+            </div>
           </div>
         </div>
       </div>
       <div className="property-section">
-        <h2>Notes</h2>
-
+        <h2 className="section-title">
+          <FaStickyNote />
+          Notes
+        </h2>
         <div className="lead-note-box">
-          {lead.notes || "No notes available."}
+          {lead.notes ? (
+            lead.notes
+          ) : (
+            <span className="empty-note">No notes have been added yet.</span>
+          )}
         </div>
+        <h2>Activity Timeline</h2>
+
+        <LeadTimeline activities={lead.activities} />
       </div>
-      <div className="property-actions">
+      <div className="details-actions">
         <Link
           href={`/manager/leads/${lead._id}/edit`}
           className="details-edit-btn"
         >
+          <FaEdit />
           Edit Lead
         </Link>
 
         <button className="details-delete-btn" onClick={handleDelete}>
+          <FaTrash />
           Delete Lead
         </button>
       </div>
     </div>
   );
 }
-
