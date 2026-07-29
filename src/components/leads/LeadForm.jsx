@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import CustomDropdown from "@/components/common/CustomDropdown";
 
 export default function LeadForm({
   initialData = {},
@@ -66,36 +67,76 @@ export default function LeadForm({
           placeholder="Enter phone number"
           required
         />
-        <h2>Lead Source</h2>
+        <div className="form-row">
+          <div className="form-group">
+            <label>Lead Source</label>
 
-        <label>Source</label>
+            <CustomDropdown
+              name="source"
+              value={formData.source}
+              onChange={(value) =>
+                setFormData({
+                  ...formData,
+                  source: value,
+                })
+              }
+              options={[
+                {
+                  value: "phone_call",
+                  label: "Phone Call",
+                },
+                {
+                  value: "office_visit",
+                  label: "Office Visit",
+                },
+                {
+                  value: "referral",
+                  label: "Referral",
+                },
+              ]}
+            />
+          </div>
 
-        <select
-          name="source"
-          value={formData.source}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select Lead Source</option>
-
-          <option value="phone_call">Phone Call</option>
-
-          <option value="office_visit">Office Visit</option>
-
-          <option value="referral">Referral</option>
-        </select>
-        <h2>Lead Status</h2>
-
-        <label>Status</label>
-
-        <select name="status" value={formData.status} onChange={handleChange}>
-          <option value="new">New</option>
-          <option value="contacted">Contacted</option>
-          <option value="qualified">Qualified</option>
-          <option value="negotiation">Negotiation</option>
-          <option value="won">Won</option>
-          <option value="lost">Lost</option>
-        </select>
+          <div className="form-group">
+            <label>Lead Status</label>
+            <CustomDropdown
+              name="status"
+              value={formData.status}
+              onChange={(value) =>
+                setFormData({
+                  ...formData,
+                  status: value,
+                })
+              }
+              options={[
+                {
+                  value: "new",
+                  label: "New",
+                },
+                {
+                  value: "contacted",
+                  label: "Contacted",
+                },
+                {
+                  value: "qualified",
+                  label: "Qualified",
+                },
+                {
+                  value: "negotiation",
+                  label: "Negotiation",
+                },
+                {
+                  value: "won",
+                  label: "Won",
+                },
+                {
+                  value: "lost",
+                  label: "Lost",
+                },
+              ]}
+            />
+          </div>
+        </div>
 
         <h2>Notes</h2>
 
