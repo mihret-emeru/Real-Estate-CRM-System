@@ -2,6 +2,7 @@
 import LeadStatusBadge from "./LeadStatusBadge";
 import LeadScoreBadge from "./LeadScoreBadge";
 import LeadActions from "./LeadActions";
+import { formatLeadSource } from "@/utils/leadFormat";
 
 export default function LeadTable({ leads = [], onDelete }) {
   return (
@@ -31,7 +32,7 @@ export default function LeadTable({ leads = [], onDelete }) {
               <tr key={lead._id}>
                 <td>{lead.fullName}</td>
                 <td>{lead.phone}</td>
-                <td>{lead.source}</td>
+                <td>{formatLeadSource(lead.source)}</td>
                 <td>{lead.leadScore}</td>
 
                 <td>
@@ -51,4 +52,3 @@ export default function LeadTable({ leads = [], onDelete }) {
     </div>
   );
 }
-
