@@ -65,6 +65,42 @@ const leadSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    activities: [
+      new mongoose.Schema(
+        {
+          type: {
+            type: String,
+            enum: [
+              "created",
+              "status_change",
+              "note",
+              "call",
+              "meeting",
+              "email",
+            ],
+            required: true,
+          },
+
+          message: {
+            type: String,
+            required: true,
+          },
+
+          oldValue: {
+            type: String,
+          },
+
+          newValue: {
+            type: String,
+          },
+          createdAt: {
+            type: Date,
+            default: Date.now,
+          },
+        },
+        { _id: false },
+      ),
+    ],
   },
   {
     timestamps: true,
@@ -72,4 +108,3 @@ const leadSchema = new mongoose.Schema(
 );
 
 export default mongoose.models.Lead || mongoose.model("Lead", leadSchema);
-
