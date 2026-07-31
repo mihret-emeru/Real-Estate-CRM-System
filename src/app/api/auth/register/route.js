@@ -2,6 +2,7 @@ import connectDB from "@/lib/mongodb";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import Lead from "@/models/Lead";
+import { LEAD_SCORE } from "@/utils/leadScore";
 
 export async function POST(request) {
   try {
@@ -80,7 +81,7 @@ export async function POST(request) {
       phone: user.phone,
       source: "client_registration",
       status: "new",
-      leadScore: 10,
+      leadScore: LEAD_SCORE.CLIENT_REGISTRATION,
       client: user._id,
     });
 
