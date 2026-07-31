@@ -1,1 +1,41 @@
+.contract-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  text-transform: capitalize;
+}
+
+.contract-status.draft {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.contract-status.pending_signature {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.contract-status.signed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.contract-status.completed {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.contract-status.cancelled {
+  background: #fee2e2;
+  color: #b91c1c;
+}
 
