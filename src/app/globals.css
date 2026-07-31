@@ -5,6 +5,9 @@
 @import "@/styles/sidebar.css";
 @import "@/styles/topnavbar.css";
 @import "@/styles/leaddetails.css";
+@import "@/styles/leadform.css";
+@import "@/styles/leadmanagement.css";
+@import "@/styles/leadtimeline.css";
 
 * {
   margin: 0;
