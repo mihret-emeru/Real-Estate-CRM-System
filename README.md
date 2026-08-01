@@ -9,23 +9,23 @@
 The **Real Estate CRM System** is a modern web-based platform that streamlines real estate operations through a centralized management system. It enables administrators, managers, agents, and clients to efficiently manage properties, customer relationships, sales, contracts, and daily business activities.
 ##  Technology Stack
 
-### Frontend
+## Frontend
 
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
-### Backend
+## Backend
 
 ![Next.js API Routes](https://img.shields.io/badge/Next.js_API_Routes-000000?style=for-the-badge&logo=next.js&logoColor=white)
 ![NextAuth.js](https://img.shields.io/badge/NextAuth.js-000000?style=for-the-badge)
 
-### Database
+## Database
 
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=for-the-badge)
-#### Key Features
+## Key Features
 
 - AI-Powered Property Recommendations
 - Map-Based Property Search
@@ -40,6 +40,6 @@ The **Real Estate CRM System** is a modern web-based platform that streamlines r
 - Reports & Analytics Dashboard
 - Secure Role-Based Authentication
 - Responsive Design for Desktop, Tablet & Mobile
-##### Credits
+## Credits
 
-Real Estate CRM  System was created by Mercy and currently a work in progress.
+Real Estate CRM System was created by Mercy and currently a work in progress.
