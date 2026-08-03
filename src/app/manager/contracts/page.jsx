@@ -47,7 +47,15 @@ export default function ContractsPage() {
           <p>Manage property sale contracts</p>
         </div>
 
-        <Link href="/manager/contracts/add">+ Create Contract</Link>
+        <div className="page-actions">
+          <Link href="/manager/contracts/add">
+            <button className="primary-btn">+ Create Contract</button>
+          </Link>
+
+          <Link href="/manager/contracts/upload">
+            <button className="secondary-btn">+ Upload Signed Contract</button>
+          </Link>
+        </div>
       </div>
 
       <ContractSummaryCards contracts={contracts} />
@@ -56,4 +64,3 @@ export default function ContractsPage() {
     </div>
   );
 }
-
