@@ -34,7 +34,7 @@ const contractSchema = new mongoose.Schema(
 
     salePrice: {
       type: Number,
-      required: true,
+      default: null,
     },
 
     downPayment: {
@@ -44,7 +44,7 @@ const contractSchema = new mongoose.Schema(
 
     remainingBalance: {
       type: Number,
-      required: true,
+      default: null,
     },
 
     installmentMonths: {
@@ -81,6 +81,33 @@ const contractSchema = new mongoose.Schema(
       },
     },
 
+    paymentSchedule: [
+      {
+        installmentNumber: {
+          type: Number,
+        },
+
+        dueDate: {
+          type: Date,
+        },
+
+        amount: {
+          type: Number,
+        },
+
+        status: {
+          type: String,
+          enum: ["pending", "paid", "overdue"],
+          default: "pending",
+        },
+
+        paidDate: {
+          type: Date,
+          default: null,
+        },
+      },
+    ],
+
     terms: {
       type: String,
       default: "",
@@ -97,4 +124,3 @@ const contractSchema = new mongoose.Schema(
 
 export default mongoose.models.Contract ||
   mongoose.model("Contract", contractSchema);
-
