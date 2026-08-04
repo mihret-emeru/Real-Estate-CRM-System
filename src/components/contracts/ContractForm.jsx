@@ -5,6 +5,7 @@ import CustomDropdown from "@/components/common/CustomDropdown";
 import PaymentSchedulePreview from "@/components/contracts/PaymentSchedulePreview";
 
 export default function ContractForm({
+  initialData,
   onSubmit,
   submitText = "Create Contract",
   mode = "generated",
@@ -14,22 +15,24 @@ export default function ContractForm({
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [paymentSchedule, setPaymentSchedule] = useState([]);
 
-  const [formData, setFormData] = useState({
-    client: "",
-    property: "",
+  const [formData, setFormData] = useState(
+    initialData || {
+      client: "",
+      property: "",
 
-    salePrice: "",
-    downPayment: "",
-    remainingBalance: "",
-    installmentMonths: "",
-    installmentAmount: "",
-    paymentFrequency: "monthly",
-    terms: "",
-    startDate: "",
-    endDate: "",
-    contractFile: null,
-    contractDate: "",
-  });
+      salePrice: "",
+      downPayment: "",
+      remainingBalance: "",
+      installmentMonths: "",
+      installmentAmount: "",
+      paymentFrequency: "monthly",
+      terms: "",
+      startDate: "",
+      endDate: "",
+      contractFile: null,
+      contractDate: "",
+    },
+  );
 
   useEffect(() => {
     async function loadData() {
@@ -187,42 +190,64 @@ export default function ContractForm({
       <div className="form-section">
         <h2>Contract Information</h2>
 
-        <CustomDropdown
-          value={formData.client}
-          options={clients.map((client) => ({
-            value: client._id,
-            label: client.name,
-          }))}
-          placeholder="Select Client"
-          onChange={(value) => {
-            setFormData((prev) => ({
-              ...prev,
-              client: value,
-            }));
-          }}
-        />
+        {initialData ? (
+          <input
+            type="text"
+            value={
+              clients.find((client) => client._id === formData.client)?.name ||
+              ""
+            }
+            readOnly
+          />
+        ) : (
+          <CustomDropdown
+            value={formData.client}
+            options={clients.map((client) => ({
+              value: client._id,
+              label: client.name,
+            }))}
+            placeholder="Select Client"
+            onChange={(value) => {
+              setFormData((prev) => ({
+                ...prev,
+                client: value,
+              }));
+            }}
+          />
+        )}
 
-        <CustomDropdown
-          value={formData.property}
-          options={properties.map((property) => ({
-            value: property._id,
-            label: property.title,
-          }))}
-          placeholder="Select Property"
-          onChange={(value) => {
-            const property = properties.find((item) => item._id === value);
+        {initialData ? (
+          <input
+            type="text"
+            value={
+              properties.find((property) => property._id === formData.property)
+                ?.title || ""
+            }
+            readOnly
+          />
+        ) : (
+          <CustomDropdown
+            value={formData.property}
+            options={properties.map((property) => ({
+              value: property._id,
+              label: property.title,
+            }))}
+            placeholder="Select Property"
+            onChange={(value) => {
+              const property = properties.find((item) => item._id === value);
 
-            if (!property) return;
+              if (!property) return;
 
-            setSelectedProperty(property);
+              setSelectedProperty(property);
 
-            setFormData((prev) => ({
-              ...prev,
-              property: value,
-              salePrice: property.price,
-            }));
-          }}
-        />
+              setFormData((prev) => ({
+                ...prev,
+                property: value,
+                salePrice: property.price,
+              }));
+            }}
+          />
+        )}
 
         {mode === "generated" && (
           <>
@@ -249,7 +274,7 @@ export default function ContractForm({
 
                 let remaining = null;
 
-                if (contractType === "generated") {
+                if (mode === "generated") {
                   remaining = Math.max(salePrice - downPayment, 0);
                 }
 
@@ -326,13 +351,17 @@ export default function ContractForm({
               }}
             />
 
-            <label>Installment Amount</label>
+            {!initialData && (
+              <>
+                <label>Installment Amount</label>
 
-            <input
-              type="number"
-              value={Number(formData.installmentAmount).toFixed(2)}
-              readOnly
-            />
+                <input
+                  type="number"
+                  value={Number(formData.installmentAmount).toFixed(2)}
+                  readOnly
+                />
+              </>
+            )}
 
             <label>Start Date</label>
 
