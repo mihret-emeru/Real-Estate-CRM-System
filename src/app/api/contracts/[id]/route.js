@@ -90,4 +90,46 @@ export async function PUT(request, { params }) {
     );
   }
 }
+export async function DELETE(request, { params }) {
+  try {
+    await connectDB();
 
+    const { id } = await params;
+
+    const deletedContract = await Contract.findByIdAndDelete(id);
+
+    if (!deletedContract) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Contract not found",
+        },
+        {
+          status: 404,
+        },
+      );
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Contract deleted successfully",
+      },
+      {
+        status: 200,
+      },
+    );
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message,
+      },
+      {
+        status: 500,
+      },
+    );
+  }
+}
