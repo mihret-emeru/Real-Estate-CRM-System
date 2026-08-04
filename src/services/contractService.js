@@ -51,8 +51,14 @@ export async function deleteContract(id) {
     method: "DELETE",
   });
 
-  const data = await response.json();
+  const text = await response.text();
 
-  return data;
+  if (!text) {
+    return {
+      success: false,
+      message: "Empty server response",
+    };
+  }
+
+  return JSON.parse(text);
 }
-
