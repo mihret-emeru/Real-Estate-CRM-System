@@ -5,6 +5,7 @@ import ContractForm from "@/components/contracts/ContractForm";
 import { uploadContractFile } from "@/services/uploadService";
 import { createContract } from "@/services/contractService";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function UploadSignedContractPage() {
   const router = useRouter();
@@ -77,6 +78,9 @@ export default function UploadSignedContractPage() {
     <div className="page-container">
       <h1>Upload Signed Contract</h1>
 
+      <Link href="/manager/contracts" className="back-link">
+        ← Back to Contracts
+      </Link>
       <ContractForm
         mode="uploaded"
         submitText="Upload Contract"
@@ -85,4 +89,3 @@ export default function UploadSignedContractPage() {
     </div>
   );
 }
-
