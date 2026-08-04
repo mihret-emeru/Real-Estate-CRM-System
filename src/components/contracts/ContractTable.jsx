@@ -41,7 +41,11 @@ export default function ContractTable({ contracts, onDelete }) {
 
                 <td>{contract.property?.title}</td>
 
-                <td>${Number(contract.salePrice).toLocaleString()}</td>
+                <td>
+                  {contract.contractType === "uploaded"
+                    ? "—"
+                    : `${Number(contract.salePrice).toLocaleString()} ETB`}
+                </td>
 
                 <td>
                   <ContractStatusBadge status={contract.status} />
@@ -50,10 +54,7 @@ export default function ContractTable({ contracts, onDelete }) {
                 <td>{new Date(contract.createdAt).toLocaleDateString()}</td>
 
                 <td>
-                  <ContractActions
-                    contractId={contract._id}
-                    onDelete={onDelete}
-                  />
+                  <ContractActions contract={contract} onDelete={onDelete} />
                 </td>
               </tr>
             ))
@@ -63,4 +64,3 @@ export default function ContractTable({ contracts, onDelete }) {
     </div>
   );
 }
-
