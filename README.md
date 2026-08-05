@@ -42,4 +42,4 @@ The **Real Estate CRM System** is a modern web-based platform that streamlines r
 - Responsive Design for Desktop, Tablet & Mobile
 ## Credits
 
-Real Estate CRM System was created by Mercy and currently a work in progress.
+Real Estate CRM System was created by (https://github.com/mihret-emeru) and currently a work in progress.
