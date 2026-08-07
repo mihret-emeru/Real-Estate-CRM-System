@@ -1,9 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import CustomDropdown from "@/components/common/CustomDropdown";
 import "@/styles/add-property.css";
+
+const PropertyLocationPicker = dynamic(
+  () => import("@/components/properties/PropertyLocationPicker"),
+  {
+    ssr: false,
+    loading: () => <p>Loading map...</p>,
+  },
+);
 
 export default function AddPropertyPage() {
   const [formData, setFormData] = useState({
@@ -17,6 +27,8 @@ export default function AddPropertyPage() {
     city: "",
     subCity: "",
     address: "",
+    latitude: "",
+    longitude: "",
     bedrooms: "",
     bathrooms: "",
     floorNumber: "",
@@ -25,12 +37,32 @@ export default function AddPropertyPage() {
     parkingSpace: false,
     virtualTour: "",
     ownerPhone: "",
+    assignedAgent: "",
   });
 
   const { data: session } = useSession();
   const router = useRouter();
   const [imagePreview, setImagePreview] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
+  const [agents, setAgents] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    async function fetchAgents() {
+      try {
+        const response = await fetch("/api/agents");
+        const data = await response.json();
+
+        if (data.success) {
+          setAgents(data.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch agents:", error);
+      }
+    }
+
+    fetchAgents();
+  }, []);
 
   function handleImageChange(e) {
     const files = Array.from(e.target.files);
@@ -53,6 +85,11 @@ export default function AddPropertyPage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    // Prevent duplicate submissions
+    if (submitting) return;
+
+    setSubmitting(true);
 
     try {
       let imageUrls = [];
@@ -88,12 +125,18 @@ export default function AddPropertyPage() {
         body: JSON.stringify({
           ...formData,
 
+          assignedAgent: formData.assignedAgent || null,
+
           images: imageUrls,
 
           location: {
             city: formData.city,
             subCity: formData.subCity,
             address: formData.address,
+
+            latitude: formData.latitude ? Number(formData.latitude) : null,
+
+            longitude: formData.longitude ? Number(formData.longitude) : null,
           },
 
           createdBy: session.user.id,
@@ -106,9 +149,13 @@ export default function AddPropertyPage() {
         router.push("/manager/properties");
       } else {
         console.error(data.message);
+        alert(data.message);
       }
     } catch (error) {
       console.error(error);
+      alert("Failed to create property.");
+    } finally {
+      setSubmitting(false);
     }
   }
   return (
@@ -243,6 +290,51 @@ export default function AddPropertyPage() {
             onChange={handleChange}
             placeholder="Address"
           />
+          <div className="form-row">
+            <div>
+              <label>Latitude</label>
+              <input
+                type="number"
+                step="any"
+                name="latitude"
+                value={formData.latitude}
+                onChange={handleChange}
+                placeholder="Example: 8.9806"
+              />
+            </div>
+
+            <div>
+              <label>Longitude</label>
+              <input
+                type="number"
+                step="any"
+                name="longitude"
+                value={formData.longitude}
+                onChange={handleChange}
+                placeholder="Example: 38.7578"
+              />
+            </div>
+          </div>
+
+          <div className="property-location-picker-section">
+            <label>Select Property Location on Map</label>
+
+            <PropertyLocationPicker
+              latitude={formData.latitude}
+              longitude={formData.longitude}
+              onLocationSelect={({ latitude, longitude }) => {
+                setFormData((prev) => ({
+                  ...prev,
+                  latitude: latitude.toFixed(6),
+                  longitude: longitude.toFixed(6),
+                }));
+              }}
+            />
+
+            <p className="location-helper-text">
+              Click on the map to select the property's exact location.
+            </p>
+          </div>
 
           <h2>Property Details</h2>
           <div className="form-row">
@@ -324,6 +416,40 @@ export default function AddPropertyPage() {
             </div>
           </div>
 
+          <div className="property-agent-assignment">
+            <h2>Agent Assignment</h2>
+
+            <label>Assigned Agent</label>
+
+            <CustomDropdown
+              value={formData.assignedAgent}
+              options={[
+                {
+                  value: "",
+                  label: "No Agent Assigned",
+                },
+                ...agents.map((agent) => ({
+                  value: agent._id,
+                  label: agent.name,
+                })),
+              ]}
+              placeholder="Select Agent"
+              onChange={(value) => {
+                setFormData((prev) => ({
+                  ...prev,
+                  assignedAgent: value,
+                }));
+              }}
+            />
+            <div className="agent-assignment-info">
+              {formData.assignedAgent ? (
+                <p>Agent will be assigned when you save this property.</p>
+              ) : (
+                <p>No agent will be assigned to this property.</p>
+              )}
+            </div>
+          </div>
+
           <h2>Media</h2>
 
           <label>Property Images</label>
@@ -347,7 +473,9 @@ export default function AddPropertyPage() {
           <label>Owner Phone</label>
           <input type="text" placeholder="Owner phone number" />
 
-          <button type="submit">Save Property</button>
+          <button type="submit" disabled={submitting}>
+            {submitting ? "Saving Property..." : "Save Property"}
+          </button>
         </div>
       </form>
     </div>
