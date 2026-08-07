@@ -3,11 +3,19 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import "@/styles/property.css";
-import { FaPlus, FaBed, FaBath, FaRulerCombined } from "react-icons/fa";
+import CustomDropdown from "@/components/common/CustomDropdown";
+import {
+  FaPlus,
+  FaBed,
+  FaBath,
+  FaRulerCombined,
+  FaFilter,
+} from "react-icons/fa";
 
 export default function PropertiesPage() {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [statusFilter, setStatusFilter] = useState("all");
 
   useEffect(() => {
     async function fetchProperties() {
@@ -55,24 +63,55 @@ export default function PropertiesPage() {
     }
   }
 
+  const filteredProperties =
+    statusFilter === "all"
+      ? properties
+      : properties.filter((property) => property.status === statusFilter);
+
   return (
     <div>
       <div className="property-header">
         <h1>Property Management</h1>
 
-        <Link href="/manager/properties/add">
-          <button className="add-property-btn">
-            <FaPlus />
-            <span>Add Property</span>
-          </button>
-        </Link>
+        <div className="property-header-actions">
+          <CustomDropdown
+            icon={<FaFilter />}
+            value={statusFilter}
+            onChange={setStatusFilter}
+            options={[
+              {
+                value: "all",
+                label: "All Properties",
+              },
+              {
+                value: "available",
+                label: "Available",
+              },
+              {
+                value: "sold",
+                label: "Sold",
+              },
+              {
+                value: "reserved",
+                label: "Reserved",
+              },
+            ]}
+          />
+
+          <Link href="/manager/properties/add">
+            <button className="add-property-btn">
+              <FaPlus />
+              <span>Add Property</span>
+            </button>
+          </Link>
+        </div>
       </div>
 
       {properties.length === 0 ? (
         <p>No properties found.</p>
       ) : (
         <div className="property-list">
-          {properties.map((property) => (
+          {filteredProperties.map((property) => (
             <div className="property-card" key={property._id}>
               <div className="property-image">
                 <img
