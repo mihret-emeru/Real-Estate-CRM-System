@@ -2,7 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import CustomDropdown from "@/components/common/CustomDropdown";
+import dynamic from "next/dynamic";
 import "@/styles/add-property.css";
+
+const PropertyLocationPicker = dynamic(
+  () => import("@/components/properties/PropertyLocationPicker"),
+  {
+    ssr: false,
+    loading: () => <p>Loading map...</p>,
+  },
+);
 
 export default function EditPropertyPage() {
   const { id } = useParams();
@@ -20,6 +30,8 @@ export default function EditPropertyPage() {
     city: "",
     subCity: "",
     address: "",
+    latitude: "",
+    longitude: "",
 
     bedrooms: "",
     bathrooms: "",
@@ -31,10 +43,12 @@ export default function EditPropertyPage() {
 
     virtualTour: "",
     ownerPhone: "",
+    assignedAgent: "",
   });
   const [loading, setLoading] = useState(true);
   const [selectedImages, setSelectedImages] = useState([]);
   const [imagePreview, setImagePreview] = useState([]);
+  const [agents, setAgents] = useState([]);
 
   useEffect(() => {
     async function fetchProperty() {
@@ -58,6 +72,9 @@ export default function EditPropertyPage() {
           city: property.location?.city || "",
           subCity: property.location?.subCity || "",
           address: property.location?.address || "",
+          latitude: property.location?.latitude || "",
+
+          longitude: property.location?.longitude || "",
 
           bedrooms: property.bedrooms || "",
           bathrooms: property.bathrooms || "",
@@ -69,6 +86,9 @@ export default function EditPropertyPage() {
 
           virtualTour: property.virtualTour || "",
           ownerPhone: property.ownerPhone || "",
+
+          assignedAgent:
+            property.assignedAgent?._id || property.assignedAgent || "",
         });
         setImagePreview(property.images || []);
       } catch (error) {
@@ -82,6 +102,23 @@ export default function EditPropertyPage() {
       fetchProperty();
     }
   }, [id]);
+
+  useEffect(() => {
+    async function fetchAgents() {
+      try {
+        const response = await fetch("/api/agents");
+        const data = await response.json();
+
+        if (data.success) {
+          setAgents(data.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch agents:", error);
+      }
+    }
+
+    fetchAgents();
+  }, []);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -140,12 +177,16 @@ export default function EditPropertyPage() {
         body: JSON.stringify({
           ...formData,
 
+          assignedAgent: formData.assignedAgent || null,
+
           images: imageUrls,
 
           location: {
             city: formData.city,
             subCity: formData.subCity,
             address: formData.address,
+            latitude: formData.latitude ? Number(formData.latitude) : null,
+            longitude: formData.longitude ? Number(formData.longitude) : null,
           },
         }),
       });
@@ -295,6 +336,52 @@ export default function EditPropertyPage() {
             placeholder="Address"
           />
 
+          <div className="form-row">
+            <div>
+              <label>Latitude</label>
+              <input
+                type="number"
+                step="any"
+                name="latitude"
+                value={formData.latitude}
+                onChange={handleChange}
+                placeholder="Example: 8.9806"
+              />
+            </div>
+
+            <div>
+              <label>Longitude</label>
+              <input
+                type="number"
+                step="any"
+                name="longitude"
+                value={formData.longitude}
+                onChange={handleChange}
+                placeholder="Example: 38.7578"
+              />
+            </div>
+          </div>
+
+          <div className="property-location-picker-section">
+            <label>Select Property Location on Map</label>
+
+            <PropertyLocationPicker
+              latitude={formData.latitude}
+              longitude={formData.longitude}
+              onLocationSelect={({ latitude, longitude }) => {
+                setFormData((prev) => ({
+                  ...prev,
+                  latitude: latitude.toFixed(6),
+                  longitude: longitude.toFixed(6),
+                }));
+              }}
+            />
+
+            <p className="location-helper-text">
+              Click on the map to change the property's location.
+            </p>
+          </div>
+
           <h2>Property Details</h2>
           <div className="form-row">
             <div>
@@ -373,6 +460,39 @@ export default function EditPropertyPage() {
                 <label>Parking Available</label>
               </div>
             </div>
+          </div>
+
+          <h2>Agent Assignment</h2>
+
+          <label>Assigned Agent</label>
+
+          <CustomDropdown
+            value={formData.assignedAgent}
+            options={[
+              {
+                value: "",
+                label: "No Agent Assigned",
+              },
+              ...agents.map((agent) => ({
+                value: agent._id,
+                label: agent.name,
+              })),
+            ]}
+            placeholder="Select Agent"
+            onChange={(value) => {
+              setFormData((prev) => ({
+                ...prev,
+                assignedAgent: value,
+              }));
+            }}
+          />
+
+          <div className="agent-assignment-info">
+            {formData.assignedAgent ? (
+              <p>Selected agent will be assigned when you save changes.</p>
+            ) : (
+              <p>No agent will be assigned to this property.</p>
+            )}
           </div>
 
           <h2>Media</h2>
