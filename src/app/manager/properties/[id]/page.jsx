@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import CustomDropdown from "@/components/common/CustomDropdown";
 import "@/styles/property-details.css";
+import dynamic from "next/dynamic";
 import {
   FaMoneyBillWave,
   FaHome,
@@ -20,21 +22,42 @@ import {
   FaTrash,
 } from "react-icons/fa";
 
+const PropertyLocationView = dynamic(
+  () => import("@/components/properties/PropertyLocationView"),
+  {
+    ssr: false,
+    loading: () => <p>Loading location map...</p>,
+  },
+);
+
 export default function PropertyDetailsPage() {
   const { id } = useParams();
   const router = useRouter();
 
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [agents, setAgents] = useState([]);
+  const [selectedAgent, setSelectedAgent] = useState("");
+  const [assigningAgent, setAssigningAgent] = useState(false);
 
   useEffect(() => {
     async function fetchProperty() {
       try {
         const response = await fetch(`/api/properties/${id}`);
-
         const data = await response.json();
 
-        setProperty(data.data);
+        if (data.success) {
+          setProperty(data.data);
+
+          setSelectedAgent(data.data.assignedAgent?._id || "");
+        }
+
+        const agentsResponse = await fetch("/api/agents");
+        const agentsData = await agentsResponse.json();
+
+        if (agentsData.success) {
+          setAgents(agentsData.data);
+        }
       } catch (error) {
         console.error(error);
       } finally {
@@ -46,6 +69,41 @@ export default function PropertyDetailsPage() {
       fetchProperty();
     }
   }, [id]);
+
+  async function handleAssignAgent() {
+    try {
+      setAssigningAgent(true);
+
+      const response = await fetch(`/api/properties/${id}/assign-agent`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          agentId: selectedAgent || null,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setProperty(data.data);
+
+        alert(
+          selectedAgent
+            ? "Agent assigned successfully."
+            : "Agent unassigned successfully.",
+        );
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Failed to assign agent.");
+    } finally {
+      setAssigningAgent(false);
+    }
+  }
 
   async function handleDelete() {
     const confirmDelete = window.confirm(
@@ -185,6 +243,7 @@ export default function PropertyDetailsPage() {
 
         <p>{property.description || "No description available."}</p>
       </div>
+
       <div className="property-section">
         <h2>
           <FaMapMarkerAlt className="section-icon" />
@@ -192,16 +251,21 @@ export default function PropertyDetailsPage() {
         </h2>
 
         <p>
-          <strong>City:</strong> {property.location.city}
+          <strong>City:</strong> {property.location?.city || "-"}
         </p>
 
         <p>
-          <strong>Sub City:</strong> {property.location.subCity || "-"}
+          <strong>Sub City:</strong> {property.location?.subCity || "-"}
         </p>
 
         <p>
-          <strong>Address:</strong> {property.location.address || "-"}
+          <strong>Address:</strong> {property.location?.address || "-"}
         </p>
+
+        <PropertyLocationView
+          latitude={property.location?.latitude}
+          longitude={property.location?.longitude}
+        />
       </div>
       <div className="property-section">
         <h2>
@@ -213,6 +277,29 @@ export default function PropertyDetailsPage() {
           <strong>Phone:</strong> {property.ownerPhone || "-"}
         </p>
       </div>
+
+      <div className="property-section">
+        <h2>Agent Assignment</h2>
+
+        {property.assignedAgent ? (
+          <>
+            <p>
+              <strong>Name:</strong> {property.assignedAgent.name}
+            </p>
+
+            <p>
+              <strong>Email:</strong> {property.assignedAgent.email || "-"}
+            </p>
+
+            <p>
+              <strong>Phone:</strong> {property.assignedAgent.phone || "-"}
+            </p>
+          </>
+        ) : (
+          <p>No agent assigned.</p>
+        )}
+      </div>
+
       {property.virtualTour && (
         <div className="property-section">
           <h2>
