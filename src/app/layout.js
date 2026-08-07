@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter, Playfair_Display } from "next/font/google";
 import SessionProvider from "@/components/providers/SessionProvider";
+import "leaflet/dist/leaflet.css";
 
 const inter = Inter({
   subsets: ["latin"],
