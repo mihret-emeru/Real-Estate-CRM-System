@@ -2,76 +2,21 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Property from "@/models/Property";
 
-export async function GET(request, { params }) {
-  const { id } = await params;
-
+// GET ALL PROPERTIES
+export async function GET() {
   try {
     await connectDB();
 
-    const property = await Property.findById(id);
-
-    if (!property) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Property not found",
-        },
-        {
-          status: 404,
-        },
-      );
-    }
-
-    return NextResponse.json({
-      success: true,
-      data: property,
-    });
-  } catch (error) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: error.message,
-      },
-      {
-        status: 500,
-      },
-    );
-  }
-}
-// UPDATE PROPERTY
-export async function PUT(request, { params }) {
-  try {
-    await connectDB();
-
-    const { id } = await params;
-
-    const body = await request.json();
-
-    const updatedProperty = await Property.findByIdAndUpdate(id, body, {
-      new: true,
-      runValidators: true,
-    });
-
-    if (!updatedProperty) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Property not found",
-        },
-        {
-          status: 404,
-        },
-      );
-    }
+    const properties = await Property.find()
+      .populate("assignedAgent", "name email phone")
+      .sort({ createdAt: -1 });
 
     return NextResponse.json(
       {
         success: true,
-        data: updatedProperty,
+        data: properties,
       },
-      {
-        status: 200,
-      },
+      { status: 200 },
     );
   } catch (error) {
     return NextResponse.json(
@@ -79,9 +24,39 @@ export async function PUT(request, { params }) {
         success: false,
         message: error.message,
       },
+      { status: 500 },
+    );
+  }
+}
+
+// CREATE PROPERTY
+export async function POST(request) {
+  try {
+    await connectDB();
+
+    const body = await request.json();
+
+    const property = await Property.create(body);
+
+    const populatedProperty = await Property.findById(property._id).populate(
+      "assignedAgent",
+      "name email phone",
+    );
+
+    return NextResponse.json(
       {
-        status: 500,
+        success: true,
+        data: populatedProperty,
       },
+      { status: 201 },
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message,
+      },
+      { status: 400 },
     );
   }
 }
