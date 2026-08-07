@@ -8,7 +8,10 @@ export async function GET(request, { params }) {
   try {
     await connectDB();
 
-    const property = await Property.findById(id);
+    const property = await Property.findById(id).populate(
+      "assignedAgent",
+      "name email phone",
+    );
 
     if (!property) {
       return NextResponse.json(
@@ -38,6 +41,7 @@ export async function GET(request, { params }) {
     );
   }
 }
+
 // UPDATE PROPERTY
 export async function PUT(request, { params }) {
   try {
@@ -50,7 +54,7 @@ export async function PUT(request, { params }) {
     const updatedProperty = await Property.findByIdAndUpdate(id, body, {
       new: true,
       runValidators: true,
-    });
+    }).populate("assignedAgent", "name email phone");
 
     if (!updatedProperty) {
       return NextResponse.json(
@@ -85,6 +89,7 @@ export async function PUT(request, { params }) {
     );
   }
 }
+
 // DELETE PROPERTY
 export async function DELETE(request, { params }) {
   try {
@@ -122,4 +127,3 @@ export async function DELETE(request, { params }) {
     );
   }
 }
-
