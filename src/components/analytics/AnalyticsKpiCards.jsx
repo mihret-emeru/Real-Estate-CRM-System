@@ -1,40 +1,57 @@
 "use client";
 
-export default function AnalyticsKpiCards({ cards = [] }) {
-  if (!Array.isArray(cards) || cards.length === 0) {
-    return null;
-  }
+import "@/styles/analytics-kpi.css";
 
+import {
+  FaUsers,
+  FaChartLine,
+  FaMoneyBillWave,
+  FaHome,
+  FaCreditCard,
+} from "react-icons/fa";
+
+const iconMap = {
+  leads: FaUsers,
+  sales: FaChartLine,
+  revenue: FaMoneyBillWave,
+  properties: FaHome,
+  payments: FaCreditCard,
+};
+
+export default function AnalyticsKpiCards({ cards = [] }) {
   return (
     <div className="analytics-kpi-grid">
-      {cards.map((card) => (
-        <div className="analytics-kpi-card" key={card.id}>
-          <div className="analytics-kpi-card-content">
-            <span className="analytics-kpi-label">{card.label}</span>
+      {cards.map((card) => {
+        const Icon = iconMap[card.id] || FaChartLine;
 
-            <strong className="analytics-kpi-value">{card.value}</strong>
+        return (
+          <div className="analytics-kpi-card" key={card.id}>
+            <div className="analytics-kpi-main">
+              <div className="analytics-kpi-icon">
+                <Icon />
+              </div>
 
-            {card.description && (
-              <p className="analytics-kpi-description">{card.description}</p>
+              <div className="analytics-kpi-content">
+                <div className="analytics-kpi-label">{card.label}</div>
+              </div>
+            </div>
+            <div className="analytics-kpi-value">
+              {Number(card.value || 0).toLocaleString()}
+            </div>
+
+            {card.change !== null && card.change !== undefined && (
+              <div
+                className={`analytics-kpi-change ${
+                  card.change >= 0 ? "positive" : "negative"
+                }`}
+              >
+                <span>{card.change >= 0 ? "↑" : "↓"}</span>
+                {Math.abs(card.change)}%<small>vs previous period</small>
+              </div>
             )}
           </div>
-
-          {card.change !== null && card.change !== undefined && (
-            <div
-              className={`analytics-kpi-change ${
-                card.change >= 0 ? "positive" : "negative"
-              }`}
-            >
-              <span>{card.change >= 0 ? "↑" : "↓"}</span>
-
-              <span>{Math.abs(card.change)}%</span>
-
-              <small>vs previous period</small>
-            </div>
-          )}
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
-
