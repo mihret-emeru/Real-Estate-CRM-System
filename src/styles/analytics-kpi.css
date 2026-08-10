@@ -1,1 +1,322 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+import AnalyticsFilters from "@/components/analytics/AnalyticsFilters";
+import AnalyticsKpiCards from "@/components/analytics/AnalyticsKpiCards";
+import AnalyticsEmptyState from "@/components/analytics/AnalyticsEmptyState";
+import AnalyticsChart from "@/components/analytics/AnalyticsChart";
+import AnalyticsSection from "@/components/analytics/AnalyticsSection";
+import AnalyticsConversionRate from "@/components/analytics/AnalyticsConversionRate";
+import "@/styles/analytics.css";
+
+export default function AnalyticsPage() {
+  const [analytics, setAnalytics] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  async function fetchAnalytics(filters = {}) {
+    try {
+      setLoading(true);
+
+      const params = new URLSearchParams({
+        period: filters.period || "30-days",
+        comparison: filters.comparison || "previous",
+      });
+
+      if (filters.startDate) {
+        params.set("startDate", filters.startDate);
+      }
+
+      if (filters.endDate) {
+        params.set("endDate", filters.endDate);
+      }
+
+      const response = await fetch(`/api/analytics?${params.toString()}`);
+
+      const result = await response.json();
+
+      if (!result.success) {
+        alert(result.message || "Failed to load analytics.");
+        return;
+      }
+
+      setAnalytics(result.data);
+    } catch (error) {
+      console.error("Failed to load analytics:", error);
+
+      alert("Failed to load analytics.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchAnalytics({
+      period: "30-days",
+      comparison: "previous",
+    });
+  }, []);
+
+  return (
+    <div className="analytics-page">
+      <div className="analytics-page-header">
+        <h1>Analytics</h1>
+
+        <p>Monitor business performance and trends.</p>
+      </div>
+
+      <AnalyticsFilters onFilterChange={fetchAnalytics} />
+
+      {loading ? (
+        <div className="analytics-loading">Loading analytics...</div>
+      ) : !analytics ? (
+        <AnalyticsEmptyState />
+      ) : (
+        <>
+          <AnalyticsKpiCards cards={analytics.kpis} />
+
+          <AnalyticsSection title="Lead Analytics">
+            <AnalyticsChart
+              type="line"
+              title="Leads Over Time"
+              color="leads"
+              data={{
+                labels: analytics.leads.overTime.labels,
+
+                datasets: [
+                  {
+                    label: "Leads",
+                    data: analytics.leads.overTime.values,
+                    tension: 0.3,
+                  },
+                ],
+              }}
+            />
+
+            <AnalyticsChart
+              type="bar"
+              title="Leads by Source"
+              data={{
+                labels: [
+                  "Website",
+                  "Facebook",
+                  "Client Registration",
+                  "Phone Call",
+                  "Office Visit",
+                  "Referral",
+                ],
+
+                datasets: [
+                  {
+                    label: "Leads",
+
+                    data: [
+                      analytics.leads.sourceCounts?.website || 0,
+
+                      analytics.leads.sourceCounts?.facebook || 0,
+
+                      analytics.leads.sourceCounts?.client_registration || 0,
+
+                      analytics.leads.sourceCounts?.phone_call || 0,
+
+                      analytics.leads.sourceCounts?.office_visit || 0,
+
+                      analytics.leads.sourceCounts?.referral || 0,
+                    ],
+                  },
+                ],
+              }}
+            />
+            <AnalyticsChart
+              type="doughnut"
+              title="Lead Status Distribution"
+              data={{
+                labels: [
+                  "New",
+                  "Contacted",
+                  "Qualified",
+                  "Negotiation",
+                  "Won",
+                  "Lost",
+                ],
+
+                datasets: [
+                  {
+                    label: "Leads",
+
+                    data: [
+                      analytics.leads.statusCounts?.new || 0,
+                      analytics.leads.statusCounts?.contacted || 0,
+                      analytics.leads.statusCounts?.qualified || 0,
+                      analytics.leads.statusCounts?.negotiation || 0,
+                      analytics.leads.statusCounts?.won || 0,
+                      analytics.leads.statusCounts?.lost || 0,
+                    ],
+                  },
+                ],
+              }}
+            />
+            <AnalyticsConversionRate
+              rate={analytics.leads.conversion?.rate || 0}
+            />
+            <AnalyticsChart
+              type="bar"
+              title="Lead → Won Conversion"
+              data={{
+                labels: ["Total Leads", "Won Leads"],
+
+                datasets: [
+                  {
+                    label: "Leads",
+
+                    data: [
+                      analytics.leads.conversion?.total || 0,
+
+                      analytics.leads.conversion?.won || 0,
+                    ],
+                  },
+                ],
+              }}
+            />
+          </AnalyticsSection>
+          <AnalyticsSection title="Sales Analytics">
+            <AnalyticsChart
+              type="line"
+              title="Sales Over Time"
+              color="sales"
+              data={{
+                labels: analytics.sales.overTime.labels,
+
+                datasets: [
+                  {
+                    label: "Sales",
+
+                    data: analytics.sales.overTime.sales,
+
+                    tension: 0.3,
+                  },
+                ],
+              }}
+            />
+
+            <AnalyticsChart
+              type="bar"
+              title="Sales Value Over Time"
+              data={{
+                labels: analytics.sales.overTime.labels,
+
+                datasets: [
+                  {
+                    label: "Sales Value",
+
+                    data: analytics.sales.overTime.value,
+                  },
+                ],
+              }}
+            />
+          </AnalyticsSection>
+          <AnalyticsSection title="Property Analytics">
+            <AnalyticsChart
+              type="doughnut"
+              title="Properties by Type"
+              color="properties"
+              data={{
+                labels: Object.keys(analytics.properties.typeCounts),
+
+                datasets: [
+                  {
+                    label: "Properties",
+
+                    data: Object.values(analytics.properties.typeCounts),
+                  },
+                ],
+              }}
+            />
+            <AnalyticsChart
+              type="bar"
+              title="Property Status"
+              data={{
+                labels: ["Available", "Sold", "Reserved", "Rented", "Pending"],
+
+                datasets: [
+                  {
+                    label: "Properties",
+
+                    data: [
+                      analytics.properties.statusCounts?.available || 0,
+
+                      analytics.properties.statusCounts?.sold || 0,
+
+                      analytics.properties.statusCounts?.reserved || 0,
+
+                      analytics.properties.statusCounts?.rented || 0,
+
+                      analytics.properties.statusCounts?.pending || 0,
+                    ],
+                  },
+                ],
+              }}
+            />
+          </AnalyticsSection>
+          <AnalyticsSection title="Payment Analytics">
+            <AnalyticsChart
+              type="line"
+              title="Payments Collected Over Time"
+              color="payments"
+              data={{
+                labels: analytics.payments.overTime.labels,
+
+                datasets: [
+                  {
+                    label: "Payments Collected",
+
+                    data: analytics.payments.overTime.values,
+
+                    tension: 0.3,
+                  },
+                ],
+              }}
+            />
+
+            <AnalyticsChart
+              type="doughnut"
+              title="Payment Status Distribution"
+              data={{
+                labels: [
+                  "Pending",
+                  "Pending Verification",
+                  "Paid",
+                  "Rejected",
+                  "Review Required",
+                  "Overdue",
+                ],
+
+                datasets: [
+                  {
+                    label: "Payments",
+
+                    data: [
+                      analytics.payments.statusCounts?.pending || 0,
+
+                      analytics.payments.statusCounts?.pending_verification ||
+                        0,
+
+                      analytics.payments.statusCounts?.paid || 0,
+
+                      analytics.payments.statusCounts?.rejected || 0,
+
+                      analytics.payments.statusCounts?.review_required || 0,
+
+                      analytics.payments.statusCounts?.overdue || 0,
+                    ],
+                  },
+                ],
+              }}
+            />
+          </AnalyticsSection>
+        </>
+      )}
+    </div>
+  );
+}
 
