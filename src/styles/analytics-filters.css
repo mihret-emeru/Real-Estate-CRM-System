@@ -1,1 +1,91 @@
+.analytics-filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  margin-bottom: 28px;
+  padding: 18px;
+
+  background: #ffffff;
+  border: 1px solid #e8e3da;
+  border-radius: 14px;
+}
+
+.analytics-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.analytics-filter-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+}
+
+.analytics-filter-group input {
+  height: 40px;
+  padding: 0 12px;
+
+  border: 1px solid #ddd7cd;
+  border-radius: 8px;
+
+  background: #fff;
+  color: #333;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  outline: none;
+}
+
+.analytics-filter-group input:focus {
+  border-color: #9b8061;
+}
+
+.analytics-apply-btn {
+  height: 40px;
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #9b8061;
+  color: #fff;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.analytics-apply-btn:hover {
+  background: #866c50;
+}
+
+.analytics-apply-btn:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 900px) {
+  .analytics-filters {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .analytics-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .analytics-filter-group,
+  .analytics-filter-group .custom-dropdown,
+  .analytics-apply-btn {
+    width: 100%;
+  }
+}
 
