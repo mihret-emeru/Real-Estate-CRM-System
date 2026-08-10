@@ -7,6 +7,8 @@ import AnalyticsKpiCards from "@/components/analytics/AnalyticsKpiCards";
 import AnalyticsEmptyState from "@/components/analytics/AnalyticsEmptyState";
 import AnalyticsChart from "@/components/analytics/AnalyticsChart";
 import AnalyticsSection from "@/components/analytics/AnalyticsSection";
+import AnalyticsConversionRate from "@/components/analytics/AnalyticsConversionRate";
+import "@/styles/analytics.css";
 
 export default function AnalyticsPage() {
   const [analytics, setAnalytics] = useState(null);
@@ -77,6 +79,7 @@ export default function AnalyticsPage() {
             <AnalyticsChart
               type="line"
               title="Leads Over Time"
+              color="leads"
               data={{
                 labels: analytics.leads.overTime.labels,
 
@@ -153,11 +156,9 @@ export default function AnalyticsPage() {
                 ],
               }}
             />
-            <div className="analytics-conversion-rate">
-              <span>Lead → Won Conversion Rate</span>
-
-              <strong>{analytics.leads.conversion?.rate || 0}%</strong>
-            </div>
+            <AnalyticsConversionRate
+              rate={analytics.leads.conversion?.rate || 0}
+            />
             <AnalyticsChart
               type="bar"
               title="Lead → Won Conversion"
@@ -182,6 +183,7 @@ export default function AnalyticsPage() {
             <AnalyticsChart
               type="line"
               title="Sales Over Time"
+              color="sales"
               data={{
                 labels: analytics.sales.overTime.labels,
 
@@ -217,6 +219,7 @@ export default function AnalyticsPage() {
             <AnalyticsChart
               type="doughnut"
               title="Properties by Type"
+              color="properties"
               data={{
                 labels: Object.keys(analytics.properties.typeCounts),
 
@@ -259,6 +262,7 @@ export default function AnalyticsPage() {
             <AnalyticsChart
               type="line"
               title="Payments Collected Over Time"
+              color="payments"
               data={{
                 labels: analytics.payments.overTime.labels,
 
@@ -315,4 +319,3 @@ export default function AnalyticsPage() {
     </div>
   );
 }
-
