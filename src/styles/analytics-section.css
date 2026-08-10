@@ -1,1 +1,28 @@
+.analytics-section {
+  margin-bottom: 36px;
+}
+
+.analytics-section-header {
+  margin-bottom: 18px;
+}
+
+.analytics-section-header h2 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #2d2d2d;
+}
+
+.analytics-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .analytics-chart-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
