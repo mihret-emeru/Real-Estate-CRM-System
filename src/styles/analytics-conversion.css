@@ -1,1 +1,43 @@
+.analytics-conversion-card {
+  width: 100%;
+  min-height: 300px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: #ffffff;
+  border: 1px solid #e8e3da;
+  border-radius: 14px;
+
+  box-sizing: border-box;
+}
+
+.analytics-conversion-header {
+  margin-bottom: 18px;
+}
+
+.analytics-conversion-header span {
+  font-size: 16px;
+  font-weight: 600;
+  color: #292929;
+}
+
+.analytics-conversion-value {
+  font-size: 48px;
+  line-height: 1;
+  font-weight: 700;
+  color: #4f7c68;
+}
+
+.analytics-conversion-card p {
+  max-width: 320px;
+  margin: 14px 0 0;
+
+  font-size: 13px;
+  line-height: 1.5;
+  color: #888;
+}
 
