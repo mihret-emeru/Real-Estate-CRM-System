@@ -1,1 +1,30 @@
+.report-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 20px;
+  margin-left: -12px;
+}
+
+.report-header > div:last-child {
+  transform: translateY(-20px);
+}
+.report-header h1 {
+  margin: 0;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 32px;
+  font-weight: 800;
+
+  color: #02483e;
+}
+
+.report-header p {
+  margin: 4px 0 0;
+
+  font-size: 14px;
+  color: #777;
+}
 
