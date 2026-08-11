@@ -1,1 +1,190 @@
+.manager-dashboard {
+  width: 100%;
+}
+
+/* ================================
+   Dashboard Header
+================================ */
+
+.manager-dashboard-header {
+  margin-bottom: 24px;
+}
+
+.manager-dashboard-header h1 {
+  margin: 0;
+
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  font-weight: 800;
+
+  color: #02483e;
+}
+
+.manager-dashboard-header p {
+  margin: 6px 0 0;
+
+  font-size: 14px;
+  color: #777;
+}
+
+/* ================================
+   KPI Cards
+================================ */
+
+/* ================================
+   Manager Dashboard KPI Cards
+================================ */
+
+.manager-dashboard-kpis .analytics-kpi-grid {
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.manager-dashboard-kpis .analytics-kpi-card {
+  min-height: 120px;
+  padding: 14px 12px;
+  border-radius: 11px;
+}
+
+/* KPI header */
+
+.manager-dashboard-kpis .analytics-kpi-header {
+  gap: 7px;
+  margin-bottom: 3px;
+}
+
+/* Icon */
+
+.manager-dashboard-kpis .analytics-kpi-icon {
+  width: 28px;
+  height: 28px;
+
+  margin: 0;
+
+  font-size: 13px;
+  border-radius: 7px;
+}
+
+/* Label */
+
+.manager-dashboard-kpis .analytics-kpi-label {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Value */
+
+.manager-dashboard-kpis .analytics-kpi-value {
+  margin-top: 3px;
+  font-size: 24px;
+}
+
+/* Change */
+
+.manager-dashboard-kpis .analytics-kpi-change {
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+/* ================================
+   Manager KPI Icon Colors
+================================ */
+
+/* Manager Dashboard KPI icon colors */
+
+/* Properties */
+.manager-dashboard-kpis .analytics-kpi-card:nth-child(1) .analytics-kpi-icon {
+  color: #2f7d5a;
+  background: #e8f5ee;
+}
+
+/* Leads */
+.manager-dashboard-kpis .analytics-kpi-card:nth-child(2) .analytics-kpi-icon {
+  color: #3976b8;
+  background: #eaf2fb;
+}
+
+/* Sales */
+.manager-dashboard-kpis .analytics-kpi-card:nth-child(3) .analytics-kpi-icon {
+  color: #b07a19;
+  background: #fbf3df;
+}
+
+/* Revenue */
+.manager-dashboard-kpis .analytics-kpi-card:nth-child(4) .analytics-kpi-icon {
+  color: #8a4f9e;
+  background: #f4eafa;
+}
+
+/* Payments */
+.manager-dashboard-kpis .analytics-kpi-card:nth-child(5) .analytics-kpi-icon {
+  color: #2d7f83;
+  background: #e7f5f5;
+}
+
+/* ================================
+   Charts Grid
+================================ */
+
+.manager-dashboard-chart-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* ================================
+   Business Performance
+================================ */
+
+.manager-dashboard-performance {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* ================================
+   Needs Attention
+================================ */
+
+.manager-dashboard-attention {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+/* ================================
+   Tablet
+================================ */
+
+@media (max-width: 1000px) {
+  .manager-dashboard-chart-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================================
+   Mobile
+================================ */
+
+@media (max-width: 600px) {
+  .manager-dashboard-header {
+    margin-bottom: 20px;
+  }
+
+  .manager-dashboard-header h1 {
+    font-size: 27px;
+  }
+
+  .manager-dashboard-header p {
+    font-size: 13px;
+  }
+
+  .manager-dashboard-chart-grid {
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+}
 
