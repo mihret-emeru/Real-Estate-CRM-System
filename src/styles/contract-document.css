@@ -1,1 +1,96 @@
+.contract-document {
+  width: 100%;
+  margin-top: 20px;
+  padding: 24px;
+
+  background: #ffffff;
+  border: 1px solid #e8ecea;
+  border-radius: 12px;
+
+  box-sizing: border-box;
+}
+
+.contract-document h2 {
+  margin: 0 0 20px;
+
+  font-family: "Playfair Display", serif;
+  font-size: 21px;
+  font-weight: 700;
+  color: #02483e;
+}
+
+.contract-document p {
+  margin: 10px 0;
+
+  font-size: 14px;
+  color: #667085;
+}
+
+.contract-document strong {
+  color: #344054;
+  font-weight: 600;
+}
+
+.document-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-top: 22px;
+}
+
+.view-document-btn,
+.download-document-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 38px;
+  padding: 0 16px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  box-sizing: border-box;
+}
+
+.view-document-btn {
+  color: #ffffff;
+  background: #02483e;
+}
+
+.download-document-btn {
+  color: #02483e;
+  background: #e7f2ef;
+  border: 1px solid #d5e7e2;
+}
+
+.view-document-btn:hover {
+  background: #013b33;
+}
+
+.download-document-btn:hover {
+  background: #dcece8;
+}
+
+@media (max-width: 600px) {
+  .contract-document {
+    padding: 18px;
+  }
+
+  .document-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .view-document-btn,
+  .download-document-btn {
+    width: 100%;
+  }
+}
 
