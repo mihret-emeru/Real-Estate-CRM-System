@@ -1,43 +1,50 @@
 "use client";
 
 import Link from "next/link";
+import "@/styles/contract-actions.css";
+
 import { FaEye, FaEdit, FaTrash, FaUpload, FaDownload } from "react-icons/fa";
 
-export default function ContractActions({ contractId, onDelete }) {
+export default function ContractActions({ contract, onDelete }) {
   return (
     <div className="contract-actions">
+      {/* View */}
       <Link
-        href={`/manager/contracts/${contractId}`}
+        href={`/manager/contracts/${contract._id}`}
         className="contract-view-btn"
       >
         <FaEye />
       </Link>
 
-      <Link
-        href={`/manager/contracts/${contractId}/edit`}
-        className="contract-edit-btn"
-      >
-        <FaEdit />
-      </Link>
+      {/* Generated Contract */}
+      {contract.contractType === "generated" && (
+        <Link
+          href={`/manager/contracts/${contract._id}/edit`}
+          className="contract-edit-btn"
+        >
+          <FaEdit />
+        </Link>
+      )}
 
-      <Link
-        href={`/manager/contracts/${contractId}/upload`}
-        className="contract-upload-btn"
-      >
-        <FaUpload />
-      </Link>
+      {/* Uploaded Contract */}
+      {contract.contractType === "uploaded" && contract.document?.fileUrl && (
+        <a
+          href={contract.document.fileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="contract-download-btn"
+        >
+          <FaDownload />
+        </a>
+      )}
 
-      <button className="contract-download-btn">
-        <FaDownload />
-      </button>
-
+      {/* Delete */}
       <button
         className="contract-delete-btn"
-        onClick={() => onDelete(contractId)}
+        onClick={() => onDelete(contract._id)}
       >
         <FaTrash />
       </button>
     </div>
   );
 }
-
