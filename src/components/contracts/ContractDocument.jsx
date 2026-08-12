@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import "@/styles/contract-document.css";
 
 export default function ContractDocument({ contract }) {
   if (contract.contractType !== "uploaded") {
