@@ -1,4 +1,5 @@
 "use client";
+import "@/styles/contract-summary-cards.css";
 
 export default function ContractSummaryCards({ contracts }) {
   const totalContracts = contracts.length;
@@ -9,7 +10,8 @@ export default function ContractSummaryCards({ contracts }) {
   ).length;
 
   const completedContracts = contracts.filter(
-    (contract) => contract.status === "completed",
+    (contract) =>
+      contract.status === "completed" || contract.status === "signed",
   ).length;
 
   const cancelledContracts = contracts.filter(
@@ -50,4 +52,3 @@ export default function ContractSummaryCards({ contracts }) {
     </div>
   );
 }
-
