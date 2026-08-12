@@ -1,1 +1,64 @@
+.add-contract-page {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.add-contract-page .page-title {
+  margin-bottom: 20px;
+}
+
+.add-contract-page .page-title h1 {
+  margin: 0;
+
+  color: #02483e;
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.add-contract-page .page-title p {
+  margin: 5px 0 0;
+
+  color: #777;
+  font-size: 14px;
+}
+
+.add-contract-page .contract-form-card {
+  width: 100%;
+  max-width: 900px;
+
+  padding: 0;
+
+  background: transparent;
+  border: none;
+  border-radius: 0;
+
+  box-sizing: border-box;
+}
+
+.add-contract-page .back-link {
+  display: inline-block;
+
+  margin-bottom: 16px;
+
+  color: #02483e;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+.add-contract-page .back-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+  .add-contract-page .contract-form-card {
+    max-width: 100%;
+  }
+}
 
