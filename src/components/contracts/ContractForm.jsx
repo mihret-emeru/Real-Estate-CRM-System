@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import CustomDropdown from "@/components/common/CustomDropdown";
 import PaymentSchedulePreview from "@/components/contracts/PaymentSchedulePreview";
+import "@/styles/contract-form.css";
 
 export default function ContractForm({
   initialData,
@@ -14,25 +15,27 @@ export default function ContractForm({
   const [properties, setProperties] = useState([]);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [paymentSchedule, setPaymentSchedule] = useState([]);
+  const [formData, setFormData] = useState(() => {
+    const data = initialData || {};
 
-  const [formData, setFormData] = useState(
-    initialData || {
-      client: "",
-      property: "",
+    return {
+      client: data.client || "",
+      property: data.property || "",
 
-      salePrice: "",
-      downPayment: "",
-      remainingBalance: "",
-      installmentMonths: "",
-      installmentAmount: "",
-      paymentFrequency: "monthly",
-      terms: "",
-      startDate: "",
-      endDate: "",
+      salePrice: data.salePrice ?? "",
+      downPayment: data.downPayment ?? "",
+      remainingBalance: data.remainingBalance ?? "",
+      installmentMonths: data.installmentMonths ?? "",
+      installmentAmount: data.installmentAmount ?? "",
+      paymentFrequency: data.paymentFrequency || "monthly",
+
+      terms: data.terms || "",
+      startDate: data.startDate || "",
+      endDate: data.endDate || "",
       contractFile: null,
-      contractDate: "",
-    },
-  );
+      contractDate: data.contractDate || "",
+    };
+  });
 
   useEffect(() => {
     async function loadData() {
@@ -249,7 +252,7 @@ export default function ContractForm({
           />
         )}
 
-        {mode === "generated" && (
+        {(mode === "generated" || mode === "uploaded") && (
           <>
             <label>Sale Price</label>
 
@@ -274,9 +277,7 @@ export default function ContractForm({
 
                 let remaining = null;
 
-                if (mode === "generated") {
-                  remaining = Math.max(salePrice - downPayment, 0);
-                }
+                remaining = Math.max(salePrice - downPayment, 0);
 
                 setFormData((prev) => ({
                   ...prev,
