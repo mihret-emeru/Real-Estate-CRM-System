@@ -1,1 +1,186 @@
+.contract-form {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.form-section {
+  width: 100%;
+  padding: 26px;
+  background: #ffffff;
+  border: 1px solid #e6ebe9;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.form-section h2 {
+  margin: 0 0 24px;
+  color: #02483e;
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.form-section label {
+  display: block;
+  margin: 18px 0 7px;
+
+  color: #344054;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.form-section input,
+.form-section textarea {
+  width: 100%;
+  box-sizing: border-box;
+
+  border: 1px solid #d9e1df;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #344054;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.form-section input {
+  height: 42px;
+  padding: 0 12px;
+}
+
+.form-section textarea {
+  min-height: 120px;
+  padding: 12px;
+  resize: vertical;
+}
+
+.form-section input:focus,
+.form-section textarea:focus {
+  border-color: #02483e;
+  box-shadow: 0 0 0 3px rgba(2, 72, 62, 0.08);
+}
+
+.form-section input[readonly] {
+  background: #f7f9f8;
+  color: #667085;
+}
+
+.form-section input[type="file"] {
+  height: auto;
+  padding: 10px 12px;
+  cursor: pointer;
+  background: #ffffff;
+}
+
+.submit-btn {
+  display: block;
+
+  width: 100%;
+  max-width: 220px;
+  min-height: 42px;
+
+  margin: 20px 0 0 auto;
+  padding: 0 20px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #02483e;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: #013b33;
+}
+
+.payment-preview {
+  width: 100%;
+  margin-top: 24px;
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  background: #f8faf9;
+  border: 1px solid #e6ebe9;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.payment-preview h3 {
+  margin: 0 0 16px;
+
+  color: #02483e;
+  font-family: "Playfair Display", serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.payment-preview table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 500px;
+}
+
+.payment-preview th,
+.payment-preview td {
+  padding: 11px 12px;
+  border-bottom: 1px solid #e6ebe9;
+
+  text-align: left;
+  font-size: 13px;
+}
+
+.payment-preview th {
+  color: #667085;
+  background: #f1f5f3;
+  font-weight: 600;
+}
+
+.payment-preview td {
+  color: #344054;
+}
+
+.pending-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 5px 9px;
+
+  border-radius: 999px;
+
+  background: #fff4d6;
+  color: #8a5a00;
+
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+@media (max-width: 700px) {
+  .contract-form {
+    max-width: 100%;
+  }
+
+  .form-section {
+    padding: 20px;
+  }
+
+  .submit-btn {
+    max-width: none;
+  }
+}
 
