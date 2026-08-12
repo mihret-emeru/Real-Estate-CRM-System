@@ -3,6 +3,7 @@
 import InfoCard from "@/components/common/InfoCard";
 import PaymentScheduleTable from "./PaymentScheduleTable";
 import ContractDocument from "./ContractDocument";
+import "@/styles/contract-details.css";
 
 export default function ContractDetails({ contract, setContract }) {
   return (
@@ -29,47 +30,50 @@ export default function ContractDetails({ contract, setContract }) {
         </p>
 
         <p>
-          <strong>Price:</strong>
+          <strong>Price:</strong>{" "}
           {Number(contract.property?.price).toLocaleString()} ETB
         </p>
       </InfoCard>
 
-      <InfoCard title="Financial Summary">
-        <p>
-          <strong>Sale Price:</strong>
-          {Number(contract.salePrice).toLocaleString()} ETB
-        </p>
+      {/* Financial Summary only for generated contracts */}
+      {contract.contractType === "generated" && (
+        <InfoCard title="Financial Summary">
+          <p>
+            <strong>Sale Price:</strong>{" "}
+            {Number(contract.salePrice).toLocaleString()} ETB
+          </p>
 
-        <p>
-          <strong>Down Payment:</strong>
-          {Number(contract.downPayment).toLocaleString()} ETB
-        </p>
+          <p>
+            <strong>Down Payment:</strong>{" "}
+            {Number(contract.downPayment).toLocaleString()} ETB
+          </p>
 
-        <p>
-          <strong>Remaining Balance:</strong>
-          {Number(contract.remainingBalance).toLocaleString()} ETB
-        </p>
+          <p>
+            <strong>Remaining Balance:</strong>{" "}
+            {Number(contract.remainingBalance).toLocaleString()} ETB
+          </p>
 
-        <p>
-          <strong>Installment Months:</strong>
-          {contract.installmentMonths}
-        </p>
+          <p>
+            <strong>Installment Months:</strong> {contract.installmentMonths}
+          </p>
 
-        <p>
-          <strong>Payment Frequency:</strong>
-          {contract.paymentFrequency}
-        </p>
+          <p>
+            <strong>Payment Frequency:</strong> {contract.paymentFrequency}
+          </p>
 
-        <p>
-          <strong>Status:</strong>
-          {contract.status}
-        </p>
-      </InfoCard>
+          <p>
+            <strong>Status:</strong> {contract.status}
+          </p>
+        </InfoCard>
+      )}
 
-      <PaymentScheduleTable schedule={contract.paymentSchedule} />
+      {/* Payment Schedule only for generated contracts */}
+      {contract.contractType === "generated" && (
+        <PaymentScheduleTable schedule={contract.paymentSchedule} />
+      )}
 
+      {/* Handles both generated & uploaded */}
       <ContractDocument contract={contract} onUpdate={setContract} />
     </div>
   );
 }
-
