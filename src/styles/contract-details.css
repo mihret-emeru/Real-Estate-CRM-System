@@ -1,1 +1,136 @@
+.contract-details {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  padding: 4px 0 32px;
+  box-sizing: border-box;
+}
+
+.contract-details h1 {
+  margin: 0 0 22px;
+
+  font-family: "Playfair Display", serif;
+  font-size: 30px;
+  font-weight: 700;
+
+  color: #02483e;
+}
+
+/* Info cards */
+
+.contract-details .info-card {
+  width: 100%;
+  margin-bottom: 16px;
+
+  padding: 20px;
+
+  background: #ffffff;
+  border: 1px solid #e8eceb;
+  border-radius: 12px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  box-sizing: border-box;
+}
+
+.contract-details .info-card h2 {
+  margin: 0 0 16px;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  color: #02483e;
+}
+
+.contract-details .info-card p {
+  margin: 0 0 10px;
+
+  font-size: 14px;
+  line-height: 1.5;
+
+  color: #555;
+}
+
+.contract-details .info-card p:last-child {
+  margin-bottom: 0;
+}
+
+.contract-details .info-card strong {
+  color: #333;
+  font-weight: 600;
+}
+
+/* Financial values */
+
+.contract-details .info-card p strong + * {
+  color: #02483e;
+}
+
+/* Payment schedule */
+
+.contract-details .payment-schedule-table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 16px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+  border: 1px solid #e8eceb;
+  border-radius: 12px;
+
+  box-sizing: border-box;
+}
+
+/* Prevent long content from causing horizontal page scroll */
+
+.contract-details * {
+  box-sizing: border-box;
+}
+
+.contract-details p,
+.contract-details h1,
+.contract-details h2,
+.contract-details h3 {
+  overflow-wrap: anywhere;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .contract-details h1 {
+    font-size: 27px;
+    margin-bottom: 18px;
+  }
+
+  .contract-details .info-card {
+    padding: 17px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .contract-details {
+    padding-bottom: 24px;
+  }
+
+  .contract-details h1 {
+    font-size: 24px;
+  }
+
+  .contract-details .info-card {
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .contract-details .info-card h2 {
+    font-size: 15px;
+  }
+
+  .contract-details .info-card p {
+    font-size: 13px;
+  }
+}
 
