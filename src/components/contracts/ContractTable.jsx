@@ -1,49 +1,67 @@
 "use client";
 
-import Link from "next/link";
+import ContractStatusBadge from "./ContractStatusBadge";
+import ContractActions from "./ContractActions";
+import "@/styles/contract-table.css";
 
-import { FaEye, FaEdit, FaTrash, FaUpload, FaDownload } from "react-icons/fa";
-
-export default function ContractActions({ contract, onDelete }) {
+export default function ContractTable({ contracts, onDelete }) {
   return (
-    <div className="contract-actions">
-      {/* View */}
-      <Link
-        href={`/manager/contracts/${contract._id}`}
-        className="contract-view-btn"
-      >
-        <FaEye />
-      </Link>
+    <div className="contract-table-container">
+      <table className="contract-table">
+        <thead>
+          <tr>
+            <th>Contract #</th>
 
-      {/* Generated Contract */}
-      {contract.contractType === "generated" && (
-        <Link
-          href={`/manager/contracts/${contract._id}/edit`}
-          className="contract-edit-btn"
-        >
-          <FaEdit />
-        </Link>
-      )}
+            <th>Client</th>
 
-      {/* Uploaded Contract */}
-      {contract.contractType === "uploaded" && contract.document?.fileUrl && (
-        <a
-          href={contract.document.fileUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="contract-download-btn"
-        >
-          <FaDownload />
-        </a>
-      )}
+            <th>Property</th>
 
-      {/* Delete */}
-      <button
-        className="contract-delete-btn"
-        onClick={() => onDelete(contract._id)}
-      >
-        <FaTrash />
-      </button>
+            <th>Sale Price</th>
+
+            <th>Status</th>
+
+            <th>Created</th>
+
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {contracts.length === 0 ? (
+            <tr>
+              <td colSpan="7" className="empty-state">
+                No contracts found.
+              </td>
+            </tr>
+          ) : (
+            contracts.map((contract) => (
+              <tr key={contract._id}>
+                <td>{contract.contractNumber}</td>
+
+                <td>{contract.client?.name}</td>
+
+                <td>{contract.property?.title}</td>
+
+                <td>
+                  {contract.contractType === "uploaded"
+                    ? "—"
+                    : `${Number(contract.salePrice).toLocaleString()} ETB`}
+                </td>
+
+                <td>
+                  <ContractStatusBadge status={contract.status} />
+                </td>
+
+                <td>{new Date(contract.createdAt).toLocaleDateString()}</td>
+
+                <td>
+                  <ContractActions contract={contract} onDelete={onDelete} />
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
     </div>
   );
 }
