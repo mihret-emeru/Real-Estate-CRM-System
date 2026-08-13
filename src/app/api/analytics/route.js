@@ -212,49 +212,75 @@ async function getAnalyticsData(start, end) {
 ===================================================== */
 
 function buildKpis(current, previous) {
+  const currentSalesContracts = current.contracts.filter(
+    (contract) =>
+      contract.status === "signed" || contract.status === "completed",
+  );
+
   const currentValues = {
     leads: current.leads.length,
 
-    sales: current.contracts.filter(
-      (contract) =>
-        contract.status === "signed" || contract.status === "completed",
-    ).length,
+    sales: currentSalesContracts.length,
 
-    revenue: current.contracts.reduce(
+    revenue: currentSalesContracts.reduce(
       (total, contract) => total + (Number(contract.salePrice) || 0),
       0,
     ),
 
     properties: current.properties.length,
 
-    payments: current.payments.reduce(
-      (total, payment) => total + (Number(payment.paidAmount) || 0),
-      0,
-    ),
-  };
-
-  const previousValues = previous
-    ? {
-        leads: previous.leads.length,
-
-        sales: previous.contracts.filter(
+    payments:
+      current.contracts
+        .filter(
           (contract) =>
             contract.status === "signed" || contract.status === "completed",
-        ).length,
-
-        revenue: previous.contracts.reduce(
-          (total, contract) => total + (Number(contract.salePrice) || 0),
+        )
+        .reduce(
+          (total, contract) => total + (Number(contract.downPayment) || 0),
           0,
-        ),
+        ) +
+      current.payments.reduce(
+        (total, payment) => total + (Number(payment.paidAmount) || 0),
+        0,
+      ),
+  };
 
-        properties: previous.properties.length,
+  let previousValues = null;
 
-        payments: previous.payments.reduce(
+  if (previous) {
+    const previousSalesContracts = previous.contracts.filter(
+      (contract) =>
+        contract.status === "signed" || contract.status === "completed",
+    );
+
+    previousValues = {
+      leads: previous.leads.length,
+
+      sales: previousSalesContracts.length,
+
+      revenue: previousSalesContracts.reduce(
+        (total, contract) => total + (Number(contract.salePrice) || 0),
+        0,
+      ),
+
+      properties: previous.properties.length,
+
+      payments:
+        previous.contracts
+          .filter(
+            (contract) =>
+              contract.status === "signed" || contract.status === "completed",
+          )
+          .reduce(
+            (total, contract) => total + (Number(contract.downPayment) || 0),
+            0,
+          ) +
+        previous.payments.reduce(
           (total, payment) => total + (Number(payment.paidAmount) || 0),
           0,
         ),
-      }
-    : null;
+    };
+  }
 
   return [
     createKpi(
@@ -278,7 +304,7 @@ function buildKpis(current, previous) {
       "Revenue",
       currentValues.revenue,
       previousValues?.revenue,
-      "Total contract value",
+      "Revenue from completed or signed contracts",
     ),
 
     createKpi(
@@ -298,7 +324,6 @@ function buildKpis(current, previous) {
     ),
   ];
 }
-
 function createKpi(id, label, value, previousValue, description) {
   let change = null;
 
@@ -700,4 +725,3 @@ function buildPaymentsOverTime(payments, period, start, end) {
     values,
   };
 }
-
