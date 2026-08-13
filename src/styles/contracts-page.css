@@ -1,1 +1,111 @@
+.contracts-page {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.contracts-page .page-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  margin-bottom: 24px;
+}
+
+.contracts-page .page-title h1 {
+  margin: 0;
+
+  color: #02483e;
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.contracts-page .page-title p {
+  margin: 5px 0 0;
+
+  color: #777;
+  font-size: 14px;
+}
+
+.contracts-page .page-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.contracts-page .page-actions a {
+  text-decoration: none;
+}
+
+.contracts-page .primary-btn,
+.contracts-page .secondary-btn {
+  min-height: 40px;
+
+  padding: 0 16px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.contracts-page .primary-btn {
+  border: 1px solid #02483e;
+  background: #02483e;
+  color: #ffffff;
+}
+
+.contracts-page .primary-btn:hover {
+  background: #013b33;
+}
+
+.contracts-page .secondary-btn {
+  border: 1px solid #d4ddda;
+  background: #ffffff;
+  color: #02483e;
+}
+
+.contracts-page .secondary-btn:hover {
+  background: #f6f9f8;
+}
+
+@media (max-width: 800px) {
+  .contracts-page .page-title {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .contracts-page .page-actions {
+    width: 100%;
+  }
+
+  .contracts-page .page-actions a {
+    flex: 1;
+  }
+
+  .contracts-page .primary-btn,
+  .contracts-page .secondary-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .contracts-page .page-actions {
+    flex-direction: column;
+  }
+
+  .contracts-page .page-actions a {
+    width: 100%;
+  }
+}
 
