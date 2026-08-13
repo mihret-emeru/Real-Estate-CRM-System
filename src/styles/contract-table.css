@@ -1,1 +1,112 @@
+.contract-table-container {
+  width: 100%;
+  overflow-x: auto;
+  background: #ffffff;
+  border: 1px solid #e6ebe9;
+  border-radius: 10px;
+}
+
+.contract-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.contract-table th {
+  padding: 14px 16px;
+  background: #f7f9f8;
+
+  color: #667085;
+
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+
+  border-bottom: 1px solid #e6ebe9;
+  white-space: nowrap;
+}
+
+.contract-table td {
+  padding: 14px 16px;
+
+  color: #344054;
+
+  font-size: 13px;
+
+  border-bottom: 1px solid #eef1f0;
+  white-space: nowrap;
+}
+
+.contract-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.contract-table tbody tr:hover {
+  background: #fafcfb;
+}
+
+.contract-table td:first-child {
+  color: #02483e;
+  font-weight: 600;
+}
+
+.contract-table .empty-state {
+  padding: 40px 20px;
+
+  color: #98a2b3;
+  text-align: center;
+  font-size: 14px;
+}
+
+.contract-table .contract-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contract-table .contract-actions a,
+.contract-table .contract-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  border-radius: 6px;
+  border: 1px solid #e1e7e5;
+
+  background: #ffffff;
+
+  cursor: pointer;
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.contract-table .contract-view-btn {
+  color: #02483e;
+}
+
+.contract-table .contract-edit-btn {
+  color: #2563eb;
+}
+
+.contract-table .contract-download-btn {
+  color: #8a5a00;
+}
+
+.contract-table .contract-delete-btn {
+  color: #b42318;
+}
+
+.contract-table .contract-actions a:hover,
+.contract-table .contract-actions button:hover {
+  background: #f5f8f7;
+  border-color: #cfd8d5;
+}
 
