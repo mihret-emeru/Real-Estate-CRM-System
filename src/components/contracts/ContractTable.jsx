@@ -42,11 +42,7 @@ export default function ContractTable({ contracts, onDelete }) {
 
                 <td>{contract.property?.title}</td>
 
-                <td>
-                  {contract.contractType === "uploaded"
-                    ? "—"
-                    : `${Number(contract.salePrice).toLocaleString()} ETB`}
-                </td>
+                <td>{Number(contract.salePrice || 0).toLocaleString()} ETB</td>
 
                 <td>
                   <ContractStatusBadge status={contract.status} />
