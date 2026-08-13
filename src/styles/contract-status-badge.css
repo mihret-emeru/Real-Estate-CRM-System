@@ -1,1 +1,42 @@
+.contract-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: capitalize;
+
+  white-space: nowrap;
+}
+
+.contract-status.pending {
+  color: #8a5a00;
+  background: #fff4d6;
+}
+
+.contract-status.active {
+  color: #027a68;
+  background: #e7f6f2;
+}
+
+.contract-status.completed {
+  color: #2563eb;
+  background: #eaf2ff;
+}
+
+.contract-status.cancelled {
+  color: #b42318;
+  background: #fdecec;
+}
+
+.contract-status.expired {
+  color: #667085;
+  background: #f2f4f7;
+}
 
