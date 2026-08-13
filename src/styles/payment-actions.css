@@ -1,1 +1,88 @@
+.payment-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.payment-approve-btn,
+.payment-reject-btn {
+  padding: 8px 14px;
+
+  border: none;
+  border-radius: 6px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.payment-approve-btn {
+  color: #237a4b;
+  background: #e4f5eb;
+}
+
+.payment-approve-btn:hover {
+  background: #d3eddd;
+}
+
+.payment-reject-btn {
+  color: #b42323;
+  background: #fde8e8;
+}
+
+.payment-reject-btn:hover {
+  background: #f9d7d7;
+}
+
+.payment-actions button:active {
+  transform: translateY(1px);
+}
+
+.confirmation-modal label {
+  display: block;
+
+  margin-top: 16px;
+  margin-bottom: 6px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #444;
+}
+
+.confirmation-modal textarea {
+  width: 100%;
+
+  padding: 10px 12px;
+
+  border: 1px solid #ddd8d0;
+  border-radius: 7px;
+
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+
+  color: #333;
+  background: #fff;
+
+  resize: vertical;
+
+  outline: none;
+}
+
+.confirmation-modal textarea:focus {
+  border-color: #02483e;
+  box-shadow: 0 0 0 2px rgba(2, 72, 62, 0.08);
+}
+
+.confirmation-modal p {
+  margin: 8px 0;
+
+  font-size: 14px;
+  color: #555;
+}
 
