@@ -9,19 +9,48 @@ export default function ContractDetails({ contract, setContract }) {
   return (
     <div className="contract-details">
       <h1>Contract Details</h1>
+      <InfoCard title="Customer Information">
+        {contract.client ? (
+          <>
+            <p>
+              <strong>Type:</strong> Registered Client
+            </p>
 
-      <InfoCard title="Client Information">
-        <p>
-          <strong>Name:</strong> {contract.client?.name}
-        </p>
+            <p>
+              <strong>Name:</strong> {contract.client.name}
+            </p>
 
-        <p>
-          <strong>Email:</strong> {contract.client?.email}
-        </p>
+            <p>
+              <strong>Email:</strong> {contract.client.email}
+            </p>
 
-        <p>
-          <strong>Phone:</strong> {contract.client?.phone}
-        </p>
+            <p>
+              <strong>Phone:</strong> {contract.client.phone || "-"}
+            </p>
+          </>
+        ) : contract.lead ? (
+          <>
+            <p>
+              <strong>Type:</strong> Qualified Lead
+            </p>
+
+            <p>
+              <strong>Name:</strong> {contract.lead.fullName}
+            </p>
+
+            <p>
+              <strong>Email:</strong> {contract.lead.email}
+            </p>
+
+            <p>
+              <strong>Phone:</strong> {contract.lead.phone || "-"}
+            </p>
+          </>
+        ) : (
+          <p>
+            <strong>Customer:</strong> -
+          </p>
+        )}
       </InfoCard>
 
       <InfoCard title="Property Information">
