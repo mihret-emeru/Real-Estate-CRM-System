@@ -11,7 +11,7 @@ const contractSchema = new mongoose.Schema(
     client: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      default: null,
     },
 
     property: {
@@ -60,8 +60,8 @@ const contractSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ["draft", "pending_signature", "signed", "completed", "cancelled"],
-      default: "draft",
+      enum: ["pending_signature", "signed", "completed", "cancelled"],
+      default: "pending_signature",
     },
 
     contractType: {
@@ -121,6 +121,22 @@ const contractSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+contractSchema.pre("validate", function () {
+  if (!this.client && !this.lead) {
+    this.invalidate(
+      "client",
+      "A contract must have either a registered client or a qualified lead.",
+    );
+  }
+
+  if (this.client && this.lead) {
+    this.invalidate(
+      "client",
+      "A contract cannot have both a registered client and a lead.",
+    );
+  }
+});
 
 export default mongoose.models.Contract ||
   mongoose.model("Contract", contractSchema);
