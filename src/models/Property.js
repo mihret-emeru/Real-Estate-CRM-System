@@ -14,23 +14,21 @@ const PropertySchema = new mongoose.Schema(
 
     propertyType: {
       type: String,
-      enum: [
-        "house",
-        "apartment",
-        "villa",
-        "condominium",
-        "commercial",
-        "land",
-      ],
+      enum: ["apartment", "villa", "commercial"],
       required: true,
     },
 
     status: {
       type: String,
-      enum: ["available", "sold", "rented", "pending"],
+      enum: ["available", "reserved", "sold"],
       default: "available",
     },
 
+    assignedAgent: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
     // Pricing
     price: {
       type: Number,
@@ -65,10 +63,12 @@ const PropertySchema = new mongoose.Schema(
 
       latitude: {
         type: Number,
+        default: null,
       },
 
       longitude: {
         type: Number,
+        default: null,
       },
     },
 
@@ -139,4 +139,3 @@ const PropertySchema = new mongoose.Schema(
 
 export default mongoose.models.Property ||
   mongoose.model("Property", PropertySchema);
-
