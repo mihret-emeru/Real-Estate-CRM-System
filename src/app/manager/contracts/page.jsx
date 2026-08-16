@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import "@/styles/contracts-page.css";
 
 import { getContracts, deleteContract } from "@/services/contractService";
 
