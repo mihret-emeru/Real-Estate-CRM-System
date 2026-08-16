@@ -24,10 +24,14 @@ export default function EditContractPage() {
 
         setContract({
           ...data,
-          client: data.client._id,
-          property: data.property._id,
+
+          client: data.client?._id || null,
+          lead: data.lead?._id || null,
+          property: data.property?._id || "",
 
           startDate: data.startDate ? data.startDate.substring(0, 10) : "",
+
+          contractDate: data.startDate ? data.startDate.substring(0, 10) : "",
         });
       }
     }
@@ -70,4 +74,3 @@ export default function EditContractPage() {
     </div>
   );
 }
-
