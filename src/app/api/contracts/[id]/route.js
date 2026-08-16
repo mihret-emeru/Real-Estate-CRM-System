@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Contract from "@/models/Contract";
+import Property from "@/models/Property";
 
 export async function GET(request, { params }) {
   try {
@@ -12,6 +13,7 @@ export async function GET(request, { params }) {
 
     const contract = await Contract.findById(id)
       .populate("client", "name email phone")
+      .populate("lead", "fullName email phone status")
       .populate("property", "title price")
       .populate("manager", "name email");
 
@@ -55,12 +57,9 @@ export async function PUT(request, { params }) {
 
     const body = await request.json();
 
-    const updatedContract = await Contract.findByIdAndUpdate(id, body, {
-      new: true,
-      runValidators: true,
-    });
+    const contract = await Contract.findById(id);
 
-    if (!updatedContract) {
+    if (!contract) {
       return NextResponse.json(
         {
           success: false,
@@ -72,9 +71,46 @@ export async function PUT(request, { params }) {
       );
     }
 
+    // ==========================================
+    // Update contract
+    // ==========================================
+
+    Object.assign(contract, body);
+
+    await contract.save();
+
+    // ==========================================
+    // Update property according to contract status
+    // ==========================================
+
+    const property = await Property.findById(contract.property);
+
+    if (property) {
+      if (contract.status === "pending_signature") {
+        property.status = "reserved";
+      }
+
+      if (contract.status === "signed" || contract.status === "completed") {
+        property.status = "sold";
+      }
+
+      if (contract.status === "cancelled") {
+        property.status = "available";
+      }
+
+      await property.save();
+    }
+
+    // If contract is cancelled, release property
+    if (body.status === "cancelled" && existingContract.property) {
+      await Property.findByIdAndUpdate(existingContract.property, {
+        status: "available",
+      });
+    }
+
     return NextResponse.json({
       success: true,
-      data: updatedContract,
+      data: contract,
     });
   } catch (error) {
     console.error(error);
@@ -96,9 +132,9 @@ export async function DELETE(request, { params }) {
 
     const { id } = await params;
 
-    const deletedContract = await Contract.findByIdAndDelete(id);
+    const contract = await Contract.findById(id);
 
-    if (!deletedContract) {
+    if (!contract) {
       return NextResponse.json(
         {
           success: false,
@@ -110,15 +146,74 @@ export async function DELETE(request, { params }) {
       );
     }
 
+    await Contract.findByIdAndDelete(id);
+
+    await Property.findByIdAndUpdate(contract.property, {
+      status: "available",
+    });
+    return NextResponse.json({
+      success: true,
+      message: "Contract deleted successfully and property is available again.",
+    });
+  } catch (error) {
+    console.error(error);
+
     return NextResponse.json(
       {
-        success: true,
-        message: "Contract deleted successfully",
+        success: false,
+        message: error.message,
       },
       {
-        status: 200,
+        status: 500,
       },
     );
+  }
+}
+export async function PATCH(request, { params }) {
+  try {
+    await connectDB();
+
+    const { id } = await params;
+
+    const contract = await Contract.findById(id);
+
+    if (!contract) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Contract not found",
+        },
+        {
+          status: 404,
+        },
+      );
+    }
+
+    if (contract.status === "completed") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "A completed contract cannot be cancelled.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    contract.status = "cancelled";
+
+    await contract.save();
+
+    await Property.findByIdAndUpdate(contract.property, {
+      status: "available",
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: "Contract cancelled and property is available again.",
+      data: contract,
+    });
   } catch (error) {
     console.error(error);
 
