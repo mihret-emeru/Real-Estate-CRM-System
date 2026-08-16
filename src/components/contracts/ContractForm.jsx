@@ -12,14 +12,22 @@ export default function ContractForm({
   mode = "generated",
 }) {
   const [clients, setClients] = useState([]);
+  const [qualifiedLeads, setQualifiedLeads] = useState([]);
   const [properties, setProperties] = useState([]);
   const [selectedProperty, setSelectedProperty] = useState(null);
+  const [customerType, setCustomerType] = useState(
+    initialData?.lead ? "lead" : "client",
+  );
+  const [clientSearch, setClientSearch] = useState("");
+  const [leadSearch, setLeadSearch] = useState("");
+  const [propertySearch, setPropertySearch] = useState("");
   const [paymentSchedule, setPaymentSchedule] = useState([]);
   const [formData, setFormData] = useState(() => {
     const data = initialData || {};
 
     return {
-      client: data.client || "",
+      client: data.client || null,
+      lead: data.lead || null,
       property: data.property || "",
 
       salePrice: data.salePrice ?? "",
@@ -47,6 +55,14 @@ export default function ContractForm({
           setClients(clientsData.data);
         }
 
+        // Load qualified leads
+        const qualifiedLeadsResponse = await fetch("/api/leads/qualified");
+        const qualifiedLeadsData = await qualifiedLeadsResponse.json();
+
+        if (qualifiedLeadsData.success) {
+          setQualifiedLeads(qualifiedLeadsData.data);
+        }
+
         const propertiesResponse = await fetch("/api/properties/available");
 
         const propertiesData = await propertiesResponse.json();
@@ -61,6 +77,21 @@ export default function ContractForm({
 
     loadData();
   }, []);
+
+  useEffect(() => {
+    if (!initialData?.property || properties.length === 0) {
+      return;
+    }
+
+    const property = properties.find(
+      (item) => item._id === initialData.property,
+    );
+
+    if (property) {
+      setPropertySearch(property.title);
+      setSelectedProperty(property);
+    }
+  }, [initialData, properties]);
 
   function handleChange(name, value) {
     setFormData({
@@ -188,37 +219,185 @@ export default function ContractForm({
     formData.startDate,
   ]);
 
+  const filteredClients = clients.filter((client) =>
+    client.name?.toLowerCase().includes(clientSearch.toLowerCase()),
+  );
+
+  const filteredQualifiedLeads = qualifiedLeads.filter((lead) =>
+    lead.fullName?.toLowerCase().includes(leadSearch.toLowerCase()),
+  );
+
+  const filteredProperties = properties.filter((property) =>
+    property.title?.toLowerCase().includes(propertySearch.toLowerCase()),
+  );
+
   return (
     <form className="contract-form" onSubmit={handleSubmit}>
       <div className="form-section">
         <h2>Contract Information</h2>
+        <label>Customer Type</label>
 
         {initialData ? (
           <input
             type="text"
-            value={
-              clients.find((client) => client._id === formData.client)?.name ||
-              ""
-            }
+            value={formData.lead ? "Qualified Lead" : "Registered Client"}
             readOnly
           />
         ) : (
           <CustomDropdown
-            value={formData.client}
-            options={clients.map((client) => ({
-              value: client._id,
-              label: client.name,
-            }))}
-            placeholder="Select Client"
+            value={customerType}
+            options={[
+              {
+                value: "client",
+                label: "Registered Client",
+              },
+              {
+                value: "lead",
+                label: "Qualified Lead",
+              },
+            ]}
+            placeholder="Select Customer Type"
             onChange={(value) => {
+              setCustomerType(value);
+
+              setClientSearch("");
+              setLeadSearch("");
+
               setFormData((prev) => ({
                 ...prev,
-                client: value,
+                client: null,
+                lead: null,
               }));
             }}
           />
         )}
 
+        {/* =========================================
+    REGISTERED CLIENT
+========================================= */}
+
+        {customerType === "client" ? (
+          initialData ? (
+            <input
+              type="text"
+              value={
+                clients.find((client) => client._id === formData.client)
+                  ?.name || ""
+              }
+              readOnly
+            />
+          ) : (
+            <>
+              <label>Client</label>
+
+              <input
+                type="text"
+                placeholder="Search client name..."
+                value={
+                  formData.client
+                    ? clients.find((client) => client._id === formData.client)
+                        ?.name || clientSearch
+                    : clientSearch
+                }
+                onChange={(e) => {
+                  setClientSearch(e.target.value);
+
+                  setFormData((prev) => ({
+                    ...prev,
+                    client: null,
+                    lead: null,
+                  }));
+                }}
+              />
+
+              {clientSearch.trim() && !formData.client && (
+                <div className="contract-search-results">
+                  {filteredClients.length > 0 ? (
+                    filteredClients.slice(0, 8).map((client) => (
+                      <button
+                        type="button"
+                        key={client._id}
+                        className="contract-search-result"
+                        onClick={() => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            client: client._id,
+                            lead: null,
+                          }));
+
+                          setClientSearch(client.name);
+                        }}
+                      >
+                        {client.name}
+                      </button>
+                    ))
+                  ) : (
+                    <div className="contract-search-no-results">
+                      No registered client found.
+                    </div>
+                  )}
+                </div>
+              )}
+            </>
+          )
+        ) : (
+          /* =========================================
+     QUALIFIED LEAD
+  ========================================= */
+
+          <>
+            <label>Qualified Lead</label>
+
+            <input
+              type="text"
+              placeholder="Search qualified lead..."
+              value={
+                formData.lead
+                  ? qualifiedLeads.find((lead) => lead._id === formData.lead)
+                      ?.fullName || leadSearch
+                  : leadSearch
+              }
+              onChange={(e) => {
+                setLeadSearch(e.target.value);
+
+                setFormData((prev) => ({
+                  ...prev,
+                  lead: null,
+                  client: null,
+                }));
+              }}
+            />
+
+            {leadSearch.trim() && !formData.lead && (
+              <div className="contract-search-results">
+                {filteredQualifiedLeads.length > 0 ? (
+                  filteredQualifiedLeads.slice(0, 8).map((lead) => (
+                    <button
+                      type="button"
+                      key={lead._id}
+                      className="contract-search-result"
+                      onClick={() => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          lead: lead._id,
+                          client: null,
+                        }));
+
+                        setLeadSearch(lead.fullName);
+                      }}
+                    >
+                      {lead.fullName}
+                    </button>
+                  ))
+                ) : (
+                  <div className="contract-search-no-results">
+                    No qualified lead found.
+                  </div>
+                )}
+              </div>
+            )}
+          </>
+        )}
         {initialData ? (
           <input
             type="text"
@@ -229,27 +408,64 @@ export default function ContractForm({
             readOnly
           />
         ) : (
-          <CustomDropdown
-            value={formData.property}
-            options={properties.map((property) => ({
-              value: property._id,
-              label: property.title,
-            }))}
-            placeholder="Select Property"
-            onChange={(value) => {
-              const property = properties.find((item) => item._id === value);
+          <>
+            <label>Property</label>
 
-              if (!property) return;
+            <input
+              type="text"
+              placeholder="Search property..."
+              value={
+                formData.property
+                  ? properties.find(
+                      (property) => property._id === formData.property,
+                    )?.title || propertySearch
+                  : propertySearch
+              }
+              onChange={(e) => {
+                setPropertySearch(e.target.value);
 
-              setSelectedProperty(property);
+                setFormData((prev) => ({
+                  ...prev,
+                  property: "",
+                }));
+              }}
+            />
 
-              setFormData((prev) => ({
-                ...prev,
-                property: value,
-                salePrice: property.price,
-              }));
-            }}
-          />
+            {propertySearch.trim() && !formData.property && (
+              <div className="contract-search-results">
+                {filteredProperties.length > 0 ? (
+                  filteredProperties.slice(0, 8).map((property) => (
+                    <button
+                      type="button"
+                      key={property._id}
+                      className="contract-search-result"
+                      onClick={() => {
+                        setSelectedProperty(property);
+
+                        setFormData((prev) => ({
+                          ...prev,
+                          property: property._id,
+                          salePrice: property.price,
+                        }));
+
+                        setPropertySearch(property.title);
+                      }}
+                    >
+                      <span>{property.title}</span>
+
+                      <small>
+                        {Number(property.price || 0).toLocaleString()} ETB
+                      </small>
+                    </button>
+                  ))
+                ) : (
+                  <div className="contract-search-no-results">
+                    No available property found.
+                  </div>
+                )}
+              </div>
+            )}
+          </>
         )}
 
         {(mode === "generated" || mode === "uploaded") && (
