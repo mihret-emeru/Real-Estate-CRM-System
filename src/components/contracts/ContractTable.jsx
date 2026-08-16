@@ -38,7 +38,9 @@ export default function ContractTable({ contracts, onDelete }) {
               <tr key={contract._id}>
                 <td>{contract.contractNumber}</td>
 
-                <td>{contract.client?.name}</td>
+                <td>
+                  {contract.client?.name || contract.lead?.fullName || "-"}
+                </td>
 
                 <td>{contract.property?.title}</td>
 
