@@ -1,8 +1,8 @@
 "use client";
 
-import { Bar, Line, Pie, Doughnut } from "react-chartjs-2";
+import { Bar, Line, Doughnut } from "react-chartjs-2";
+
 import "@/styles/report-chart.css";
-import { chartColors } from "@/utils/chartColors";
 
 import {
   Chart as ChartJS,
@@ -15,6 +15,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+
+import { chartColors } from "@/utils/chartColors";
 
 ChartJS.register(
   CategoryScale,
@@ -32,14 +34,82 @@ export default function ReportChart({ type = "bar", data, title }) {
     return null;
   }
 
+  function getChartData() {
+    if (!data?.datasets) {
+      return data;
+    }
+
+    return {
+      ...data,
+
+      datasets: data.datasets.map((dataset) => {
+        /*
+         * Doughnut chart
+         * Uses the same reusable palette
+         * as AnalyticsChart.
+         */
+        if (type === "doughnut") {
+          return {
+            ...dataset,
+
+            backgroundColor: chartColors.palette,
+
+            borderColor: "#ffffff",
+
+            borderWidth: 2,
+          };
+        }
+
+        /*
+         * Bar chart
+         * Applies only to bar charts.
+         */
+        if (type === "bar") {
+          return {
+            ...dataset,
+
+            backgroundColor: chartColors.palette,
+
+            borderColor: "#ffffff",
+
+            borderWidth: 1,
+
+            barThickness: 28,
+
+            maxBarThickness: 32,
+
+            borderRadius: 6,
+          };
+        }
+
+        /*
+         * Other report charts
+         * Keep the original data untouched.
+         */
+        return {
+          ...dataset,
+        };
+      }),
+    };
+  }
+
   const chartOptions = {
     responsive: true,
+
     maintainAspectRatio: false,
 
     plugins: {
       legend: {
         display: true,
+
         position: "bottom",
+
+        labels: {
+          boxWidth: 12,
+          boxHeight: 12,
+          padding: 14,
+          usePointStyle: false,
+        },
       },
 
       title: {
@@ -48,45 +118,18 @@ export default function ReportChart({ type = "bar", data, title }) {
       },
     },
   };
-  function getChartData() {
-  if (!data?.datasets) {
-    return data;
-  }
 
-  return {
-    ...data,
-
-    datasets: data.datasets.map((dataset) => ({
-      ...dataset,
-
-      backgroundColor:
-        type === "doughnut" || type === "pie"
-          ? chartColors
-          : dataset.backgroundColor,
-
-      borderColor:
-        type === "doughnut" || type === "pie"
-          ? "#ffffff"
-          : dataset.borderColor,
-
-      borderWidth:
-        type === "doughnut" || type === "pie"
-          ? 2
-          : dataset.borderWidth,
-    })),
-  };
-}
+  const chartData = getChartData();
 
   return (
     <div className="report-chart">
-      {type === "bar" && <Bar data={data} options={chartOptions} />}
+      {type === "bar" && <Bar data={chartData} options={chartOptions} />}
 
-      {type === "line" && <Line data={data} options={chartOptions} />}
+      {type === "line" && <Line data={chartData} options={chartOptions} />}
 
-      {type === "pie" && <Pie data={data} options={chartOptions} />}
-
-      {type === "doughnut" && <Doughnut data={data} options={chartOptions} />}
+      {type === "doughnut" && (
+        <Doughnut data={chartData} options={chartOptions} />
+      )}
     </div>
   );
 }
-
