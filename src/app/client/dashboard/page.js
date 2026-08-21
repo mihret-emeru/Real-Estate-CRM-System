@@ -1,9 +1,15 @@
-import DashboardLayout from "@/components/dashboard/DashboardLayout";
+"use client";
+
+import ClientHero from "@/components/client/ClientHero";
+import ClientPropertySection from "@/components/client/ClientPropertySection";
+import "@/styles/property.css";
 
 export default function ClientDashboard() {
   return (
-    <DashboardLayout>
-      <h1>Client Dashboard</h1>
-    </DashboardLayout>
+    <div className="client-home-page">
+      <ClientHero />
+
+      <ClientPropertySection />
+    </div>
   );
 }
