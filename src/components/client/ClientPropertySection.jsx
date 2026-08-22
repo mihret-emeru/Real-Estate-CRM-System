@@ -154,15 +154,19 @@ export default function ClientPropertySection() {
 
       <div className="client-properties-grid">
         {properties.map((property) => (
-          <ClientPropertyCard
-            key={property._id}
-            property={property}
-            isSaved={savedPropertyIds.includes(property._id)}
-            onSave={handleSave}
-          />
+          <div key={property._id}>
+            <ClientPropertyCard
+              property={property}
+              isSaved={savedPropertyIds.includes(property._id)}
+              onSave={handleSave}
+            />
+
+            <small>Score: {property.recommendationScore}</small>
+
+            <small>{property.recommendationReasons?.join(", ")}</small>
+          </div>
         ))}
       </div>
     </section>
   );
 }
-
