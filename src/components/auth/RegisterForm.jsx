@@ -226,14 +226,14 @@ export default function RegisterForm() {
             </div>
 
             <div className="register-field">
-              <label>Preferred City</label>
+              <label>Preferred Location</label>
 
               <div className="register-input">
                 <input
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  placeholder="Addis Ababa"
+                  placeholder="e.g. Bole, Mexico, Saris"
                 />
               </div>
             </div>
@@ -314,4 +314,3 @@ export default function RegisterForm() {
     </div>
   );
 }
-
