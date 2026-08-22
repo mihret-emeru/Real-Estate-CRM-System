@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import CustomDropdown from "@/components/common/CustomDropdown";
 import dynamic from "next/dynamic";
 import "@/styles/add-property.css";
@@ -205,6 +206,9 @@ export default function EditPropertyPage() {
 
   return (
     <div className="add-property-page">
+      <Link href={`/manager/properties/${id}`} className="property-back-link">
+        ← Back to Property
+      </Link>
       <div className="page-title">
         <h1>Edit Property</h1>
         <p>Update property information</p>
@@ -240,12 +244,11 @@ export default function EditPropertyPage() {
                 onChange={handleChange}
               >
                 <option value="">Select Type</option>
-                <option value="house">House</option>
+
                 <option value="apartment">Apartment</option>
                 <option value="villa">Villa</option>
-                <option value="condominium">Condominium</option>
+
                 <option value="commercial">Commercial</option>
-                <option value="land">Land</option>
               </select>
             </div>
 
@@ -305,13 +308,13 @@ export default function EditPropertyPage() {
 
           <div className="form-row">
             <div>
-              <label>City</label>
+              <label>Preferred Location</label>
               <input
                 type="text"
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
-                placeholder="City"
+                placeholder="e.g. Bole, Mexico, Saris"
               />
             </div>
 
@@ -322,7 +325,7 @@ export default function EditPropertyPage() {
                 name="subCity"
                 value={formData.subCity}
                 onChange={handleChange}
-                placeholder="Sub city"
+                placeholder="e.g. Yeka, Lideta, Arada"
               />
             </div>
           </div>
@@ -333,7 +336,7 @@ export default function EditPropertyPage() {
             name="address"
             value={formData.address}
             onChange={handleChange}
-            placeholder="Address"
+            placeholder="e.g. King George VI Street"
           />
 
           <div className="form-row">
