@@ -9,4 +9,3 @@ export default async function generateContractNumber() {
 
   return `CTR-${year}-${sequence}`;
 }
-

@@ -111,4 +111,9 @@
   object-fit: cover;
   border-radius: 10px;
 }
-
+.agent-assignment-info p {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #6b7280;
+}

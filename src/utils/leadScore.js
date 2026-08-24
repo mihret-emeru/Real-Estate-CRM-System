@@ -23,4 +23,3 @@ export function calculateLeadLevel(score) {
 
   return "cold";
 }
-

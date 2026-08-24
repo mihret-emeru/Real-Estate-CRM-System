@@ -64,13 +64,13 @@ export default function EditLeadPage() {
         <h1>Edit Lead</h1>
         <p>Update lead information</p>
       </div>
-
-      <LeadForm
-        initialData={lead}
-        onSubmit={handleUpdateLead}
-        submitText="Update Lead"
-      />
+      <div className="lead-form-card">
+        <LeadForm
+          initialData={lead}
+          onSubmit={handleUpdateLead}
+          submitText="Update Lead"
+        />
+      </div>
     </div>
   );
 }
-

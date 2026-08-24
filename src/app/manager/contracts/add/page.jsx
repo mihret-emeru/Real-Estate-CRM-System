@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 
 import ContractForm from "@/components/contracts/ContractForm";
 import { createContract } from "@/services/contractService";
+import "@/styles/add-contract-page.css";
 import Link from "next/link";
 
 export default function AddContractPage() {
@@ -31,6 +32,9 @@ export default function AddContractPage() {
 
   return (
     <div className="add-contract-page">
+      <Link href="/manager/contracts" className="back-link">
+        ← Back to Contracts
+      </Link>
       <div className="page-title">
         <h1>Create Contract</h1>
 
@@ -38,9 +42,6 @@ export default function AddContractPage() {
       </div>
 
       <div className="contract-form-card">
-        <Link href="/manager/contracts" className="back-link">
-          ← Back to Contracts
-        </Link>
         <ContractForm
           onSubmit={handleCreateContract}
           submitText="Create Contract"
@@ -49,4 +50,3 @@ export default function AddContractPage() {
     </div>
   );
 }
-

@@ -1,4 +1,5 @@
 "use client";
+import "@/styles/analytics-empty.css";
 
 export default function AnalyticsEmptyState({
   title = "No Analytics Available",
@@ -14,4 +15,3 @@ export default function AnalyticsEmptyState({
     </div>
   );
 }
-

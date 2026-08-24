@@ -1,5 +1,7 @@
 "use client";
 
+import "@/styles/analytics-section.css";
+
 export default function AnalyticsSection({
   title = "",
   children,
@@ -13,8 +15,7 @@ export default function AnalyticsSection({
         </div>
       )}
 
-      <div className="analytics-section-content">{children}</div>
+      <div className="analytics-chart-grid">{children}</div>
     </section>
   );
 }
-

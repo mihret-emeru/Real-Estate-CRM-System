@@ -8,8 +8,10 @@ export function checkOverduePayment(payment) {
   }
 
   const today = new Date();
-
   const dueDate = new Date(payment.dueDate);
+
+  today.setHours(0, 0, 0, 0);
+  dueDate.setHours(0, 0, 0, 0);
 
   if (dueDate < today && payment.paymentStatus === "pending") {
     return "overdue";
@@ -17,4 +19,3 @@ export function checkOverduePayment(payment) {
 
   return payment.paymentStatus;
 }
-

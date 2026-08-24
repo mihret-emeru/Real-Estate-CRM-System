@@ -1,6 +1,7 @@
 "use client";
 
 import { FaFilePdf, FaFileExcel } from "react-icons/fa";
+import "@/styles/report-actions.css";
 
 export default function ReportActions({
   onExportPDF,
@@ -31,4 +32,3 @@ export default function ReportActions({
     </div>
   );
 }
-

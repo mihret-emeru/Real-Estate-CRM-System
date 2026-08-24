@@ -362,4 +362,3 @@ function buildNeedsAttention({ leads, contracts, payments }) {
     pendingVerification,
   };
 }
-

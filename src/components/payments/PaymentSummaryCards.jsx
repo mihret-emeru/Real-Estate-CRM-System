@@ -1,3 +1,11 @@
+import "@/styles/payment-summary-cards.css";
+import {
+  FaMoneyBillWave,
+  FaCheckCircle,
+  FaWallet,
+  FaExclamationTriangle,
+} from "react-icons/fa";
+
 export default function PaymentSummaryCards({ payments }) {
   const totalExpected = payments.reduce(
     (sum, payment) => sum + Number(payment.expectedAmount || 0),
@@ -24,25 +32,28 @@ export default function PaymentSummaryCards({ payments }) {
   return (
     <div className="payment-summary">
       <div className="summary-card">
+        <FaMoneyBillWave />
         <h3>Total Expected Revenue</h3>
         <p>{totalExpected.toLocaleString()} ETB</p>
       </div>
 
       <div className="summary-card">
+        <FaCheckCircle />
         <h3>Collected Amount</h3>
         <p>{totalCollected.toLocaleString()} ETB</p>
       </div>
 
       <div className="summary-card">
+        <FaWallet />
         <h3>Outstanding Balance</h3>
         <p>{outstanding.toLocaleString()} ETB</p>
       </div>
 
       <div className="summary-card">
+        <FaExclamationTriangle />
         <h3>Overdue Amount</h3>
         <p>{overdue.toLocaleString()} ETB</p>
       </div>
     </div>
   );
 }
-

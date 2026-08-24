@@ -12,4 +12,3 @@ export const chartColors = {
 
   palette: ["#45B5C4", "#D9ABFF", "#F9D423", "#3F8F8A", "#FB6B41", "#FE4365"],
 };
-

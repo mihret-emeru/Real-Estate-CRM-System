@@ -10,4 +10,3 @@ export async function uploadContractFile(file) {
 
   return await response.json();
 }
-

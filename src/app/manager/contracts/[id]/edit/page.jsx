@@ -28,6 +28,7 @@ export default function EditContractPage() {
           client: data.client?._id || null,
           lead: data.lead?._id || null,
           property: data.property?._id || "",
+          propertyTitle: data.property?.title || "",
 
           startDate: data.startDate ? data.startDate.substring(0, 10) : "",
 

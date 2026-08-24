@@ -143,4 +143,3 @@ paymentSchema.pre("validate", function () {
 
 export default mongoose.models.Payment ||
   mongoose.model("Payment", paymentSchema);
-

@@ -136,4 +136,3 @@ async function importProperties() {
 }
 
 importProperties();
-

@@ -17,14 +17,36 @@ export default function PropertiesPage() {
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState("all");
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const propertiesPerPage = 10;
+
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 10,
+    total: 0,
+    totalPages: 1,
+  });
+
   useEffect(() => {
     async function fetchProperties() {
       try {
-        const response = await fetch("/api/properties");
+        const response = await fetch(
+          `/api/properties?page=${currentPage}&limit=${propertiesPerPage}${
+            statusFilter !== "all" ? `&status=${statusFilter}` : ""
+          }`,
+        );
 
         const data = await response.json();
 
         setProperties(data.data || []);
+        setPagination(
+          data.pagination || {
+            page: currentPage,
+            limit: propertiesPerPage,
+            total: 0,
+            totalPages: 1,
+          },
+        );
       } catch (error) {
         console.error("Failed to fetch properties:", error);
       } finally {
@@ -33,10 +55,10 @@ export default function PropertiesPage() {
     }
 
     fetchProperties();
-  }, []);
+  }, [currentPage, statusFilter]);
 
   if (loading) {
-    return <h1>Loading properties...</h1>;
+    return "Loading properties...";
   }
 
   async function handleDelete(id) {
@@ -63,10 +85,10 @@ export default function PropertiesPage() {
     }
   }
 
-  const filteredProperties =
-    statusFilter === "all"
-      ? properties
-      : properties.filter((property) => property.status === statusFilter);
+  function handleStatusChange(value) {
+    setStatusFilter(value);
+    setCurrentPage(1);
+  }
 
   return (
     <div>
@@ -77,7 +99,7 @@ export default function PropertiesPage() {
           <CustomDropdown
             icon={<FaFilter />}
             value={statusFilter}
-            onChange={setStatusFilter}
+            onChange={handleStatusChange}
             options={[
               {
                 value: "all",
@@ -111,7 +133,7 @@ export default function PropertiesPage() {
         <p>No properties found.</p>
       ) : (
         <div className="property-list">
-          {filteredProperties.map((property) => (
+          {properties.map((property) => (
             <div className="property-card" key={property._id}>
               <div className="property-image">
                 <img
@@ -179,6 +201,43 @@ export default function PropertiesPage() {
           ))}
         </div>
       )}
+
+      {pagination.totalPages > 1 && (
+        <div className="property-pagination">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((page) => page - 1)}
+          >
+            Previous
+          </button>
+
+          {Array.from(
+            { length: pagination.totalPages },
+            (_, index) => index + 1,
+          ).map((pageNumber) => (
+            <button
+              key={pageNumber}
+              className={currentPage === pageNumber ? "active" : ""}
+              onClick={() => setCurrentPage(pageNumber)}
+            >
+              {pageNumber}
+            </button>
+          ))}
+
+          <button
+            disabled={currentPage === pagination.totalPages}
+            onClick={() => setCurrentPage((page) => page + 1)}
+          >
+            Next
+          </button>
+        </div>
+      )}
+
+      <p className="property-pagination-info">
+        Showing {(currentPage - 1) * propertiesPerPage + 1} -{" "}
+        {Math.min(currentPage * propertiesPerPage, pagination.total)} of{" "}
+        {pagination.total} properties
+      </p>
     </div>
   );
 }

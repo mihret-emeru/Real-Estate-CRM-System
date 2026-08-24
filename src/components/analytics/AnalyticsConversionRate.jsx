@@ -18,4 +18,3 @@ export default function AnalyticsConversionRate({ rate = 0 }) {
     </div>
   );
 }
-

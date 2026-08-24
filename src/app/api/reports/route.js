@@ -209,16 +209,62 @@ async function generateLeadReport(start, end) {
   const newLeads = leads.filter((lead) => lead.status === "new").length;
 
   const contacted = leads.filter((lead) => lead.status === "contacted").length;
+  const qualifiedLeads = await Lead.find({
+    activities: {
+      $elemMatch: {
+        type: "status_change",
+        newValue: "qualified",
+        createdAt: {
+          $gte: start,
+          $lte: end,
+        },
+      },
+    },
+  });
 
-  const qualified = leads.filter((lead) => lead.status === "qualified").length;
+  const wonLeads = await Lead.find({
+    activities: {
+      $elemMatch: {
+        type: "status_change",
+        newValue: "won",
+        createdAt: {
+          $gte: start,
+          $lte: end,
+        },
+      },
+    },
+  });
 
-  const negotiation = leads.filter(
-    (lead) => lead.status === "negotiation",
-  ).length;
+  const negotiationLeads = await Lead.find({
+    activities: {
+      $elemMatch: {
+        type: "status_change",
+        newValue: "negotiation",
+        createdAt: {
+          $gte: start,
+          $lte: end,
+        },
+      },
+    },
+  });
 
-  const won = leads.filter((lead) => lead.status === "won").length;
+  const lostLeads = await Lead.find({
+    activities: {
+      $elemMatch: {
+        type: "status_change",
+        newValue: "lost",
+        createdAt: {
+          $gte: start,
+          $lte: end,
+        },
+      },
+    },
+  });
 
-  const lost = leads.filter((lead) => lead.status === "lost").length;
+  const qualified = qualifiedLeads.length;
+  const won = wonLeads.length;
+  const negotiation = negotiationLeads.length;
+  const lost = lostLeads.length;
 
   const conversionRate =
     totalLeads > 0 ? ((won / totalLeads) * 100).toFixed(1) : "0.0";
@@ -426,25 +472,66 @@ async function generateAgentPerformanceReport(start, end) {
     role: "agent",
   }).select("name email phone");
 
+  // ==========================================
+  // ALL ASSIGNED PROPERTIES
+  // ==========================================
+
   const properties = await Property.find({
     assignedAgent: {
       $ne: null,
     },
+  }).select("assignedAgent");
+
+  // ==========================================
+  // SALES DURING SELECTED PERIOD
+  // ==========================================
+
+  const contracts = await Contract.find({
+    createdAt: {
+      $gte: start,
+      $lte: end,
+    },
+
+    status: {
+      $in: ["signed", "completed"],
+    },
+  }).populate({
+    path: "property",
+    select: "assignedAgent",
   });
 
+  // ==========================================
+  // CALCULATE AGENT PERFORMANCE
+  // ==========================================
+
   const performance = agents.map((agent) => {
+    // ------------------------------------------
+    // Assigned properties
+    // ------------------------------------------
+
     const agentProperties = properties.filter(
       (property) => property.assignedAgent?.toString() === agent._id.toString(),
     );
 
     const assignedProperties = agentProperties.length;
 
-    const soldProperties = agentProperties.filter(
-      (property) => property.status === "sold",
+    // ------------------------------------------
+    // Sales in selected period
+    // ------------------------------------------
+
+    const agentSales = contracts.filter(
+      (contract) =>
+        contract.property?.assignedAgent?.toString() === agent._id.toString(),
     );
 
-    const revenue = soldProperties.reduce(
-      (total, property) => total + (Number(property.price) || 0),
+    const soldProperties = agentSales.length;
+
+    // ------------------------------------------
+    // Revenue in selected period
+    // ------------------------------------------
+
+    const revenue = agentSales.reduce(
+      (total, contract) => total + (Number(contract.salePrice) || 0),
       0,
     );
 
@@ -453,11 +540,18 @@ async function generateAgentPerformanceReport(start, end) {
       name: agent.name,
       email: agent.email,
       phone: agent.phone || "-",
+
       assignedProperties,
-      soldProperties: soldProperties.length,
+
+      soldProperties,
+
       revenue,
     };
   });
+
+  // ==========================================
+  // RESPONSE
+  // ==========================================
 
   return NextResponse.json({
     success: true,
@@ -472,6 +566,7 @@ async function generateAgentPerformanceReport(start, end) {
           value: agents.length,
           description: "Registered agents",
         },
+
         {
           id: "assigned",
           label: "Assigned Properties",
@@ -481,6 +576,7 @@ async function generateAgentPerformanceReport(start, end) {
           ),
           description: "Properties assigned to agents",
         },
+
         {
           id: "sold",
           label: "Properties Sold",
@@ -488,15 +584,16 @@ async function generateAgentPerformanceReport(start, end) {
             (total, agent) => total + agent.soldProperties,
             0,
           ),
-          description: "Sold properties",
+          description: "Properties sold during selected period",
         },
+
         {
           id: "revenue",
           label: "Total Revenue",
           value: `${performance
             .reduce((total, agent) => total + agent.revenue, 0)
             .toLocaleString()} ETB`,
-          description: "Revenue from assigned properties",
+          description: "Revenue generated during selected period",
         },
       ],
 
@@ -505,18 +602,22 @@ async function generateAgentPerformanceReport(start, end) {
           key: "name",
           label: "Agent",
         },
+
         {
           key: "email",
           label: "Email",
         },
+
         {
           key: "assignedProperties",
           label: "Assigned Properties",
         },
+
         {
           key: "soldProperties",
           label: "Sold",
         },
+
         {
           key: "revenue",
           label: "Revenue",
@@ -528,14 +629,16 @@ async function generateAgentPerformanceReport(start, end) {
 
       chart: {
         type: "bar",
+
         title: "Agent Performance",
+
         data: {
           labels: performance.map((agent) => agent.name),
 
           datasets: [
             {
-              label: "Assigned Properties",
-              data: performance.map((agent) => agent.assignedProperties),
+              label: "Properties Sold",
+              data: performance.map((agent) => agent.soldProperties),
             },
           ],
         },
@@ -555,6 +658,7 @@ async function generateSalesReport(start, end) {
     },
   })
     .populate("client", "name email")
+    .populate("lead", "fullName email phone status")
     .populate("property", "title propertyType")
     .populate("manager", "name email")
     .sort({ createdAt: -1 });
@@ -602,7 +706,7 @@ async function generateSalesReport(start, end) {
   const rows = contracts.map((contract) => ({
     ...contract.toObject(),
 
-    client: contract.client,
+    client: contract.client?.name || contract.lead?.fullName || "-",
     property: contract.property,
     manager: contract.manager,
 
@@ -953,4 +1057,3 @@ async function generateOverviewReport(start, end) {
     { status: 200 },
   );
 }
-

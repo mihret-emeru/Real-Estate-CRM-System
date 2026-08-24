@@ -3,6 +3,7 @@
 import { useState } from "react";
 import PaymentApprovalModal from "./PaymentApprovalModal";
 import ConfirmationModal from "@/components/common/ConfirmationModal";
+import "@/styles/payment-actions.css";
 
 export default function PaymentActions({ payment, onUpdate }) {
   const [showModal, setShowModal] = useState(false);
@@ -114,4 +115,3 @@ export default function PaymentActions({ payment, onUpdate }) {
     </>
   );
 }
-

@@ -101,13 +101,6 @@ export async function PUT(request, { params }) {
       await property.save();
     }
 
-    // If contract is cancelled, release property
-    if (body.status === "cancelled" && existingContract.property) {
-      await Property.findByIdAndUpdate(existingContract.property, {
-        status: "available",
-      });
-    }
-
     return NextResponse.json({
       success: true,
       data: contract,
@@ -154,65 +147,6 @@ export async function DELETE(request, { params }) {
     return NextResponse.json({
       success: true,
       message: "Contract deleted successfully and property is available again.",
-    });
-  } catch (error) {
-    console.error(error);
-
-    return NextResponse.json(
-      {
-        success: false,
-        message: error.message,
-      },
-      {
-        status: 500,
-      },
-    );
-  }
-}
-export async function PATCH(request, { params }) {
-  try {
-    await connectDB();
-
-    const { id } = await params;
-
-    const contract = await Contract.findById(id);
-
-    if (!contract) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Contract not found",
-        },
-        {
-          status: 404,
-        },
-      );
-    }
-
-    if (contract.status === "completed") {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "A completed contract cannot be cancelled.",
-        },
-        {
-          status: 400,
-        },
-      );
-    }
-
-    contract.status = "cancelled";
-
-    await contract.save();
-
-    await Property.findByIdAndUpdate(contract.property, {
-      status: "available",
-    });
-
-    return NextResponse.json({
-      success: true,
-      message: "Contract cancelled and property is available again.",
-      data: contract,
     });
   } catch (error) {
     console.error(error);

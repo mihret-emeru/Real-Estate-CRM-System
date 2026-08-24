@@ -1,3 +1,4 @@
+import "@/styles/report-table.css";
 export default function ReportTable({ title, columns = [], data = [] }) {
   function renderCell(row, column) {
     let value;
@@ -10,6 +11,22 @@ export default function ReportTable({ title, columns = [], data = [] }) {
 
     if (value === null || value === undefined || value === "") {
       return "-";
+    }
+
+    if (
+      typeof value === "string" &&
+      !Number.isNaN(Date.parse(value)) &&
+      (column.key.toLowerCase().includes("date") ||
+        column.key.toLowerCase().includes("createdat") ||
+        column.key.toLowerCase().includes("updatedat"))
+    ) {
+      const date = new Date(value);
+
+      return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
     }
 
     if (typeof value === "object") {
@@ -51,4 +68,3 @@ export default function ReportTable({ title, columns = [], data = [] }) {
     </div>
   );
 }
-

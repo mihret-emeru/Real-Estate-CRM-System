@@ -48,10 +48,54 @@ export async function PUT(request, { params }) {
 
     const body = await request.json();
 
-    const updatedLead = await Lead.findByIdAndUpdate(id, body, {
-      new: true,
-      runValidators: true,
-    });
+    // Get current lead
+    const existingLead = await Lead.findById(id);
+
+    if (!existingLead) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Lead not found",
+        },
+        {
+          status: 404,
+        },
+      );
+    }
+
+    // Copy existing activities
+    const activities = [...existingLead.activities];
+    if (body.status && body.status !== existingLead.status) {
+      activities.push({
+        type: "status_change",
+        message: `Status changed from "${existingLead.status}" to "${body.status}"`,
+        oldValue: existingLead.status,
+        newValue: body.status,
+        createdAt: new Date(),
+      });
+    }
+    console.log("OLD NOTES:", existingLead.notes);
+    console.log("NEW NOTES:", body.notes);
+
+    if (body.notes !== undefined && body.notes !== existingLead.notes) {
+      activities.push({
+        type: "note",
+        message: "Notes updated",
+        oldValue: existingLead.notes,
+        newValue: body.notes,
+      });
+    }
+    const updatedLead = await Lead.findByIdAndUpdate(
+      id,
+      {
+        ...body,
+        activities,
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
 
     if (!updatedLead) {
       return NextResponse.json(
@@ -127,4 +171,3 @@ export async function DELETE(request, { params }) {
     );
   }
 }
-

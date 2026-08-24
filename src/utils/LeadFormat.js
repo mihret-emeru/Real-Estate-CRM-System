@@ -10,4 +10,3 @@ export function formatLeadSource(source) {
 
   return sources[source] || source;
 }
-

@@ -1,84 +1,70 @@
 "use client";
 
 import Image from "next/image";
-import {
-  FaHome,
-  FaBuilding,
-  FaHeart,
-  FaFileContract,
-  FaMoneyBillWave,
-  FaEnvelope,
-  FaUser,
-} from "react-icons/fa";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
+import { FaSignOutAlt } from "react-icons/fa";
+
+import { sidebarMenu } from "@/data/sidebarMenu";
 
 export default function Sidebar() {
+  const pathname = usePathname();
+  const { data: session } = useSession();
+
+  // Default to client if session hasn't loaded yet
+  const role = session?.user?.role || "client";
+
+  const menuItems = sidebarMenu[role] || [];
+
   return (
     <aside className="sidebar">
+      {/* Logo */}
       <div className="sidebar-header">
         <Image
           src="/images/logo.png"
           alt="Real Estate CRM"
-          width={60}
-          height={60}
+          width={42}
+          height={42}
           className="sidebar-logo"
         />
 
-        <h2>Real Estate CRM</h2>
+        <div className="sidebar-title">
+          <h2>Real Estate CRM</h2>
+        </div>
       </div>
 
+      {/* Menu */}
       <nav className="sidebar-menu">
         <ul>
-          <li>
-            <a href="#">
-              <FaHome />
-              <span>Dashboard</span>
-            </a>
-          </li>
+          {menuItems.map((item) => {
+            const Icon = item.icon;
 
-          <li>
-            <a href="#">
-              <FaBuilding />
-              <span>Properties</span>
-            </a>
-          </li>
-
-          <li>
-            <a href="#">
-              <FaHeart />
-              <span>Favorites</span>
-            </a>
-          </li>
-
-          <li>
-            <a href="#">
-              <FaFileContract />
-              <span>Contracts</span>
-            </a>
-          </li>
-
-          <li>
-            <a href="#">
-              <FaMoneyBillWave />
-              <span>Payments</span>
-            </a>
-          </li>
-
-          <li>
-            <a href="#">
-              <FaEnvelope />
-              <span>Messages</span>
-            </a>
-          </li>
-
-          <li>
-            <a href="#">
-              <FaUser />
-              <span>Profile</span>
-            </a>
-          </li>
+            return (
+              <li key={item.title}>
+                <Link
+                  href={item.href}
+                  className={pathname === item.href ? "active" : ""}
+                >
+                  <Icon />
+                  <span>{item.title}</span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
+
+      {/* Logout */}
+      <div className="sidebar-footer">
+        <button
+          className="logout-btn"
+          onClick={() => signOut({ callbackUrl: "/login" })}
+        >
+          <FaSignOutAlt />
+          <span>Logout</span>
+        </button>
+      </div>
     </aside>
   );
 }
-

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import "@/styles/report-filters.css";
 
 export default function ReportFilters({ onGenerate }) {
   const [reportType, setReportType] = useState("overview");

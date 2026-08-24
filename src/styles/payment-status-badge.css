@@ -1,0 +1,46 @@
+.payment-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px 10px;
+
+  border-radius: 6px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  text-transform: capitalize;
+
+  white-space: nowrap;
+}
+
+.payment-status.pending {
+  color: #9a6700;
+  background: #fff4d6;
+}
+
+.payment-status.pending_verification {
+  color: #1769aa;
+  background: #e3f2fd;
+}
+
+.payment-status.paid {
+  color: #237a4b;
+  background: #e4f5eb;
+}
+
+.payment-status.rejected {
+  color: #b42323;
+  background: #fde8e8;
+}
+
+.payment-status.review_required {
+  color: #7a4fa3;
+  background: #f1e8f8;
+}
+
+.payment-status.overdue {
+  color: #b42323;
+  background: #fde1e1;
+}

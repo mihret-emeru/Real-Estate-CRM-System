@@ -1,0 +1,344 @@
+/* ==========================================
+   CLIENT CONTRACTS PAGE
+   ========================================== */
+
+.client-contracts-page {
+  min-height: 100%;
+  padding: 32px;
+  background: var(--background-color, #f8f5ef);
+  color: var(--text-color, #2f3a34);
+}
+
+/* ==========================================
+   HEADER
+   ========================================== */
+
+.contracts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.contracts-header h1 {
+  margin: 0 0 8px;
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: #31443a;
+}
+
+.contracts-header p {
+  margin: 0;
+  max-width: 650px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #77766f;
+}
+
+/* ==========================================
+   LOADING
+   ========================================== */
+
+.contracts-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: #77766f;
+  font-size: 16px;
+}
+
+/* ==========================================
+   CONTRACT LIST
+   ========================================== */
+
+.contracts-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+/* ==========================================
+   CONTRACT CARD
+   ========================================== */
+
+.contract-card {
+  padding: 24px;
+  background: #fffdf9;
+  border: 1px solid #e7e0d4;
+  border-radius: 16px;
+  box-shadow: 0 5px 18px rgba(55, 67, 60, 0.06);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.contract-card:hover {
+  transform: translateY(-3px);
+  border-color: #d4c09a;
+  box-shadow: 0 10px 28px rgba(55, 67, 60, 0.1);
+}
+
+/* ==========================================
+   CARD HEADER
+   ========================================== */
+
+.contract-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #eee8dd;
+}
+
+.contract-label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9b8b68;
+}
+
+.contract-card-header h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  color: #31443a;
+}
+
+/* ==========================================
+   STATUS
+   ========================================== */
+
+.contract-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 11px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+
+.contract-status.pending_signature {
+  color: #806625;
+  background: #f6edd2;
+}
+
+.contract-status.signed {
+  color: #35634d;
+  background: #e2efe7;
+}
+
+.contract-status.completed {
+  color: #315c52;
+  background: #dcebe7;
+}
+
+.contract-status.cancelled {
+  color: #8a4d4d;
+  background: #f5e1df;
+}
+
+/* ==========================================
+   CONTRACT DETAILS
+   ========================================== */
+
+.contract-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 24px;
+  padding: 22px 0;
+}
+
+.contract-details > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.contract-details span {
+  font-size: 12px;
+  font-weight: 500;
+  color: #99958c;
+}
+
+.contract-details strong {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #3b463f;
+}
+
+/* ==========================================
+   ACTIONS
+   ========================================== */
+
+.contract-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 18px;
+  border-top: 1px solid #eee8dd;
+}
+
+.contract-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 9px 16px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Sign */
+
+.contract-sign-btn {
+  color: #fff;
+  background: #526b5d;
+}
+
+.contract-sign-btn:hover {
+  background: #41594d;
+  transform: translateY(-1px);
+}
+
+/* View */
+
+.contract-view-btn {
+  color: #526b5d;
+  background: #edf2ed;
+  border: 1px solid #d6e0d8;
+}
+
+.contract-view-btn:hover {
+  background: #e2ebe4;
+  border-color: #bdcfc2;
+}
+
+/* Download */
+
+.contract-download-btn {
+  color: #76633d;
+  background: #faf6eb;
+  border: 1px solid #e6d8b8;
+}
+
+.contract-download-btn:hover {
+  background: #f3ead4;
+  border-color: #d6c18f;
+}
+
+/* ==========================================
+   EMPTY STATE
+   ========================================== */
+
+.contracts-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 350px;
+  padding: 40px;
+  text-align: center;
+  background: #fffdf9;
+  border: 1px dashed #d8d0c3;
+  border-radius: 16px;
+}
+
+.contracts-empty h2 {
+  margin: 0 0 8px;
+  font-family: "Playfair Display", serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #31443a;
+}
+
+.contracts-empty p {
+  max-width: 430px;
+  margin: 0 0 22px;
+  color: #88857d;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.contracts-browse-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border-radius: 9px;
+  color: #fff;
+  background: #526b5d;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.contracts-browse-btn:hover {
+  background: #41594d;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 1000px) {
+  .contracts-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .client-contracts-page {
+    padding: 20px 15px;
+  }
+
+  .contracts-header {
+    margin-bottom: 22px;
+  }
+
+  .contracts-header h1 {
+    font-size: 27px;
+  }
+
+  .contract-card {
+    padding: 18px;
+  }
+
+  .contract-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contract-details {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .contract-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contract-actions a {
+    width: 100%;
+  }
+}

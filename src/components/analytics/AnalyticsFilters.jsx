@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import "@/styles/analytics-filters.css";
 
 export default function AnalyticsFilters({ onFilterChange }) {
   const [period, setPeriod] = useState("30-days");
@@ -143,4 +144,3 @@ export default function AnalyticsFilters({ onFilterChange }) {
     </section>
   );
 }
-

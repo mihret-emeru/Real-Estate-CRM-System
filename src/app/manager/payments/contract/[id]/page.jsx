@@ -204,4 +204,3 @@ export default function ContractPaymentsPage({ params }) {
     </div>
   );
 }
-

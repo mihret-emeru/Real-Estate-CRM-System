@@ -180,3 +180,144 @@
   color: #808080; /* gold */
   font-size: 20px;
 }
+.property-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 30px;
+}
+
+.property-header-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+.status-filter {
+  padding: 11px 16px;
+
+  border-radius: 10px;
+
+  border: 1px solid #e5e7eb;
+
+  background: white;
+
+  color: #4b5563;
+
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+.status-filter:focus {
+  outline: none;
+
+  border-color: var(--primary);
+}
+.property-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin: 28px 0 8px;
+}
+
+.property-pagination button {
+  min-width: 38px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  color: #374151;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.property-pagination button:hover:not(:disabled) {
+  background: #9de0ad;
+}
+
+.property-pagination button.active {
+  background: #1f2937;
+  color: #fff;
+  border-color: #1f2937;
+}
+
+.property-pagination button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.property-pagination-info {
+  text-align: center;
+  margin: 8px 0 24px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.property-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.property-back-link:hover {
+  color: #1f2937;
+}
+
+.client-property-card .property-image {
+  position: relative;
+}
+
+.client-property-card .property-save-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #ffffff;
+  color: #777;
+
+  cursor: pointer;
+
+  z-index: 10;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.client-property-card .property-save-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.client-property-card .property-save-btn:hover {
+  transform: scale(1.08);
+}
+
+.client-property-card .property-save-btn.saved {
+  color: #c96b6b;
+}

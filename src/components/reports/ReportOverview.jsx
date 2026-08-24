@@ -7,6 +7,7 @@ import {
   FaMoneyBillWave,
   FaUserTie,
 } from "react-icons/fa";
+import "@/styles/report-overview.css";
 
 export default function ReportOverview({
   title = "Daily Overview",
@@ -83,4 +84,3 @@ export default function ReportOverview({
     </section>
   );
 }
-

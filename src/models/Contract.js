@@ -80,6 +80,23 @@ const contractSchema = new mongoose.Schema(
         ref: "User",
       },
     },
+    signature: {
+      imageUrl: {
+        type: String,
+        default: null,
+      },
+
+      signedAt: {
+        type: Date,
+        default: null,
+      },
+
+      signedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        default: null,
+      },
+    },
 
     paymentSchedule: [
       {

@@ -399,14 +399,21 @@ export default function ContractForm({
           </>
         )}
         {initialData ? (
-          <input
-            type="text"
-            value={
-              properties.find((property) => property._id === formData.property)
-                ?.title || ""
-            }
-            readOnly
-          />
+          <>
+            <label>Property</label>
+
+            <input
+              type="text"
+              value={
+                initialData.propertyTitle ||
+                properties.find(
+                  (property) => property._id === formData.property,
+                )?.title ||
+                ""
+              }
+              readOnly
+            />
+          </>
         ) : (
           <>
             <label>Property</label>

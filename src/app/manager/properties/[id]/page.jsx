@@ -139,6 +139,9 @@ export default function PropertyDetailsPage() {
 
   return (
     <div className="property-details-page">
+      <Link href="/manager/properties" className="property-back-link">
+        ← Back to Properties
+      </Link>
       <div className="property-details-header">
         <div>
           <h1>{property.title}</h1>

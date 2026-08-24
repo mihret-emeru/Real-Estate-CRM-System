@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import CustomDropdown from "@/components/common/CustomDropdown";
 import "@/styles/add-property.css";
@@ -160,6 +161,9 @@ export default function AddPropertyPage() {
   }
   return (
     <div className="add-property-page">
+      <Link href="/manager/properties" className="property-back-link">
+        ← Back to Properties
+      </Link>
       <div className="page-title">
         <h1>Add New Property</h1>
         <p>Create and manage property listings</p>
@@ -195,12 +199,11 @@ export default function AddPropertyPage() {
                 onChange={handleChange}
               >
                 <option value="">Select Type</option>
-                <option value="house">House</option>
+
                 <option value="apartment">Apartment</option>
                 <option value="villa">Villa</option>
-                <option value="condominium">Condominium</option>
+
                 <option value="commercial">Commercial</option>
-                <option value="land">Land</option>
               </select>
             </div>
 
@@ -212,9 +215,8 @@ export default function AddPropertyPage() {
                 onChange={handleChange}
               >
                 <option value="available">Available</option>
-                <option value="sold">Sold</option>
-                <option value="rented">Rented</option>
-                <option value="pending">Pending</option>
+                <option value="sold">Reserved</option>
+                <option value="rented">Sold</option>
               </select>
             </div>
           </div>

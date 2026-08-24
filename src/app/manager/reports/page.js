@@ -27,6 +27,13 @@ export default function ReportsPage() {
     });
   }, []);
 
+  function formatLocalDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
   async function handleGenerateReport(filters) {
     try {
       setLoading(true);
@@ -38,39 +45,28 @@ export default function ReportsPage() {
       if (filters.reportPeriod === "daily") {
         const today = new Date();
 
-        startDate = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDate(),
-        )
-          .toISOString()
-          .split("T")[0];
-
+        startDate = formatLocalDate(today);
         endDate = startDate;
       }
 
       if (filters.reportPeriod === "monthly") {
         const today = new Date();
 
-        startDate = new Date(today.getFullYear(), today.getMonth(), 1)
-          .toISOString()
-          .split("T")[0];
+        startDate = formatLocalDate(
+          new Date(today.getFullYear(), today.getMonth(), 1),
+        );
 
-        endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0)
-          .toISOString()
-          .split("T")[0];
+        endDate = formatLocalDate(
+          new Date(today.getFullYear(), today.getMonth() + 1, 0),
+        );
       }
 
       if (filters.reportPeriod === "yearly") {
         const today = new Date();
 
-        startDate = new Date(today.getFullYear(), 0, 1)
-          .toISOString()
-          .split("T")[0];
+        startDate = formatLocalDate(new Date(today.getFullYear(), 0, 1));
 
-        endDate = new Date(today.getFullYear(), 11, 31)
-          .toISOString()
-          .split("T")[0];
+        endDate = formatLocalDate(new Date(today.getFullYear(), 11, 31));
       }
 
       const params = new URLSearchParams({
@@ -322,4 +318,3 @@ export default function ReportsPage() {
     </div>
   );
 }
-

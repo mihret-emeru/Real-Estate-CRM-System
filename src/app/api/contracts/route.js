@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 import connectDB from "@/lib/mongodb";
 import Contract from "@/models/Contract";
 import Property from "@/models/Property";
@@ -165,8 +167,61 @@ export async function GET() {
   try {
     await connectDB();
 
-    const contracts = await Contract.find()
-      .populate("client", "name email")
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Unauthorized.",
+        },
+        { status: 401 },
+      );
+    }
+
+    let query = {};
+
+    /*
+     * ==========================================
+     * CLIENT
+     * ==========================================
+     *
+     * A client can only see contracts belonging
+     * to that client.
+     */
+    if (session.user.role === "client") {
+      query = {
+        client: session.user.id,
+      };
+    } else if (
+      /*
+       * ==========================================
+       * MANAGER / ADMIN
+       * ==========================================
+       *
+       * Managers and admins can see all contracts.
+       */
+      session.user.role === "manager" ||
+      session.user.role === "admin"
+    ) {
+      query = {};
+    } else {
+      /*
+       * ==========================================
+       * OTHER ROLES
+       * ==========================================
+       */
+      return NextResponse.json(
+        {
+          success: false,
+          message: "You are not authorized to access contracts.",
+        },
+        { status: 403 },
+      );
+    }
+
+    const contracts = await Contract.find(query)
+      .populate("client", "name email phone")
       .populate("lead", "fullName email phone status")
       .populate("property", "title price")
       .populate("manager", "name email")
@@ -182,6 +237,8 @@ export async function GET() {
       },
     );
   } catch (error) {
+    console.error("Contracts GET error:", error);
+
     return NextResponse.json(
       {
         success: false,
