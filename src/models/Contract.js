@@ -64,6 +64,16 @@ const contractSchema = new mongoose.Schema(
       default: "pending_signature",
     },
 
+    clientSignature: {
+      type: String,
+      default: null,
+    },
+
+    clientSignedAt: {
+      type: Date,
+      default: null,
+    },
+
     contractType: {
       type: String,
       enum: ["generated", "uploaded"],
@@ -78,23 +88,6 @@ const contractSchema = new mongoose.Schema(
       uploadedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-      },
-    },
-    signature: {
-      imageUrl: {
-        type: String,
-        default: null,
-      },
-
-      signedAt: {
-        type: Date,
-        default: null,
-      },
-
-      signedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        default: null,
       },
     },
 

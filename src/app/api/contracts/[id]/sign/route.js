@@ -49,12 +49,6 @@ export async function POST(request, { params }) {
       );
     }
 
-    /*
-     * ==========================================
-     * FIND CONTRACT
-     * ==========================================
-     */
-
     const contract = await Contract.findById(id);
 
     if (!contract) {
@@ -68,18 +62,11 @@ export async function POST(request, { params }) {
     }
 
     /*
-     * ==========================================
-     * VERIFY CLIENT
-     * ==========================================
-     *
-     * The client signing the contract must be
-     * the client assigned to that contract.
+     * Make sure this contract belongs
+     * to the currently logged-in client.
      */
 
-    if (
-      !contract.client ||
-      String(contract.client) !== String(session.user.id)
-    ) {
+    if (String(contract.client) !== String(session.user.id)) {
       return NextResponse.json(
         {
           success: false,
@@ -90,73 +77,49 @@ export async function POST(request, { params }) {
     }
 
     /*
-     * ==========================================
-     * ONLY GENERATED CONTRACTS CAN BE SIGNED
-     * ==========================================
+     * Only generated contracts require
+     * client signing.
      */
 
     if (contract.contractType !== "generated") {
       return NextResponse.json(
         {
           success: false,
-          message: "Uploaded contracts do not require online signing.",
+          message: "Only generated contracts can be signed here.",
+        },
+        { status: 400 },
+      );
+    }
+
+    if (contract.status !== "pending_signature") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "This contract is no longer awaiting signature.",
         },
         { status: 400 },
       );
     }
 
     /*
-     * ==========================================
-     * CONTRACT MUST BE PENDING SIGNATURE
-     * ==========================================
+     * Save signature.
      */
 
-    if (contract.status !== "pending_signature") {
-      return NextResponse.json(
-        {
-          success: false,
-          message:
-            contract.status === "signed"
-              ? "This contract has already been signed."
-              : "This contract cannot be signed in its current status.",
-        },
-        { status: 409 },
-      );
-    }
-
-    /*
-     * ==========================================
-     * SAVE SIGNATURE
-     * ==========================================
-     */
-
-    contract.signature = {
-      imageUrl: signature,
-      signedAt: new Date(),
-      signedBy: session.user.id,
-    };
+    contract.clientSignature = signature;
+    contract.clientSignedAt = new Date();
 
     contract.status = "signed";
 
     await contract.save();
 
     /*
-     * ==========================================
-     * UPDATE PROPERTY
-     * ==========================================
+     * Property becomes sold after
+     * client signs the generated contract.
      */
 
-    if (contract.property) {
-      await Property.findByIdAndUpdate(contract.property, {
-        status: "sold",
-      });
-    }
-
-    /*
-     * ==========================================
-     * RESPONSE
-     * ==========================================
-     */
+    await Property.findByIdAndUpdate(contract.property, {
+      status: "sold",
+    });
 
     return NextResponse.json({
       success: true,

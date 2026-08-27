@@ -89,6 +89,11 @@ const paymentSchema = new mongoose.Schema(
       },
     },
 
+    chapaReceiptUrl: {
+      type: String,
+      default: "",
+    },
+
     transactionReference: {
       type: String,
       default: "",

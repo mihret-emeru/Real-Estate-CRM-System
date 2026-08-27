@@ -140,6 +140,17 @@ export default function ClientContractsPage() {
                     View Contract
                   </Link>
 
+                  {contract.contractType === "generated" &&
+                    (contract.status === "signed" ||
+                      contract.status === "completed") && (
+                      <a
+                        href={`/api/contracts/${contract._id}/download`}
+                        className="contract-download-btn"
+                      >
+                        Download Contract
+                      </a>
+                    )}
+
                   {hasUploadedDocument && (
                     <a
                       href={contract.document.fileUrl}

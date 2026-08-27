@@ -1,4 +1,7 @@
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+
+import { authOptions } from "@/lib/auth";
 import connectDB from "@/lib/mongodb";
 import Payment from "@/models/Payment";
 
@@ -6,52 +9,108 @@ export async function GET(request, { params }) {
   try {
     await connectDB();
 
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Unauthorized.",
+        },
+        { status: 401 },
+      );
+    }
+
     const { id } = await params;
 
     const payment = await Payment.findById(id)
       .populate("client", "name email phone")
       .populate("contract", "contractNumber status")
-      .populate("property", "title price")
+      .populate("property", "title price currency")
       .populate("verifiedBy", "name email");
 
     if (!payment) {
       return NextResponse.json(
         {
           success: false,
-          message: "Payment not found",
+          message: "Payment not found.",
         },
-        {
-          status: 404,
-        },
+        { status: 404 },
       );
     }
 
-    return NextResponse.json(
-      {
-        success: true,
-        data: payment,
-      },
-      {
-        status: 200,
-      },
-    );
+    // Client can only see their own payment.
+    if (
+      session.user.role === "client" &&
+      String(payment.client?._id || payment.client) !== String(session.user.id)
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "You are not authorized to view this payment.",
+        },
+        { status: 403 },
+      );
+    }
+
+    // Only manager/admin can access other users' payments.
+    if (
+      session.user.role !== "client" &&
+      session.user.role !== "manager" &&
+      session.user.role !== "admin"
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Forbidden.",
+        },
+        { status: 403 },
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      data: payment,
+    });
   } catch (error) {
-    console.error(error);
+    console.error("Payment GET error:", error);
 
     return NextResponse.json(
       {
         success: false,
         message: error.message,
       },
-      {
-        status: 500,
-      },
+      { status: 500 },
     );
   }
 }
+
 export async function PUT(request, { params }) {
   try {
     await connectDB();
+
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Unauthorized.",
+        },
+        { status: 401 },
+      );
+    }
+
+    // Only manager/admin can approve or reject.
+    if (session.user.role !== "manager" && session.user.role !== "admin") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Only managers can verify payments.",
+        },
+        { status: 403 },
+      );
+    }
 
     const { id } = await params;
 
@@ -63,47 +122,69 @@ export async function PUT(request, { params }) {
       return NextResponse.json(
         {
           success: false,
-          message: "Payment not found",
+          message: "Payment not found.",
         },
-        {
-          status: 404,
-        },
+        { status: 404 },
       );
     }
 
-    payment.paymentStatus = body.status || payment.paymentStatus;
+    const { status, paidAmount, verificationNotes } = body;
 
-    if (body.status === "paid") {
-      payment.paidAmount = body.paidAmount || payment.expectedAmount;
+    // Only these actions are allowed from manager verification.
+    if (!["paid", "rejected", "review_required"].includes(status)) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid payment verification status.",
+        },
+        { status: 400 },
+      );
+    }
+
+    payment.paymentStatus = status;
+
+    payment.verificationNotes = verificationNotes || payment.verificationNotes;
+
+    if (status === "paid") {
+      payment.paidAmount = Number(paidAmount) || Number(payment.expectedAmount);
 
       payment.paymentDate = new Date();
-
-      // Later replace with real logged-in manager ID
-      payment.verifiedBy = body.managerId || null;
-
+      payment.verifiedBy = session.user.id;
       payment.verifiedAt = new Date();
     }
 
-    payment.verificationNotes =
-      body.verificationNotes || payment.verificationNotes;
+    if (status === "rejected") {
+      payment.paidAmount = 0;
+      payment.verifiedBy = session.user.id;
+      payment.verifiedAt = new Date();
+    }
+
+    if (status === "review_required") {
+      payment.verifiedBy = session.user.id;
+      payment.verifiedAt = new Date();
+    }
 
     await payment.save();
 
     return NextResponse.json({
       success: true,
+      message:
+        status === "paid"
+          ? "Payment approved successfully."
+          : status === "rejected"
+            ? "Payment rejected successfully."
+            : "Payment marked for review.",
       data: payment,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Payment PUT error:", error);
 
     return NextResponse.json(
       {
         success: false,
         message: error.message,
       },
-      {
-        status: 500,
-      },
+      { status: 500 },
     );
   }
 }
