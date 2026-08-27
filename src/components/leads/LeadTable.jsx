@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import LeadStatusBadge from "./LeadStatusBadge";
 import LeadScoreBadge from "./LeadScoreBadge";
 import LeadActions from "./LeadActions";
-import { formatLeadSource } from "@/utils/leadFormat";
+import { formatLeadSource } from "@/utils/LeadFormat";
 
 export default function LeadTable({ leads = [], onDelete }) {
   const [page, setPage] = useState(1);
