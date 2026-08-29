@@ -1,1 +1,255 @@
+/* ============================================================
+   CLIENT FAVORITES PAGE
+   ============================================================ */
+
+.client-favorites-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+  color: #26382f;
+  overflow-x: clip;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.client-favorites-header {
+  margin-top: -20px;
+  margin-bottom: 28px;
+}
+
+.client-favorites-header span {
+  display: block;
+  margin-bottom: 7px;
+
+  color: #a88b55;
+
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.client-favorites-header h1 {
+  margin: 0;
+
+  color: #26382f;
+
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+}
+
+.client-favorites-header p {
+  margin: 8px 0 0;
+
+  color: #777;
+  font-size: 14px;
+}
+
+/* ============================================================
+   FAVORITES GRID
+   ============================================================ */
+
+.client-favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+
+  margin-left: -20px;
+}
+.client-favorites-grid .property-save-btn {
+  left: 14px;
+  right: auto;
+}
+
+/* ============================================================
+   FAVORITE PROPERTY CARD
+   ============================================================ */
+
+.client-favorites-grid .client-property-card {
+  height: 100%;
+}
+
+/* ============================================================
+   CARD ACTIONS
+   ============================================================ */
+
+.client-favorites-grid .property-actions {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+
+  margin-top: 18px;
+}
+
+.client-favorites-grid .client-view-property-btn,
+.client-favorites-grid .client-message-agent-btn {
+  flex: 1;
+
+  min-height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   VIEW PROPERTY
+   ============================================================ */
+
+.client-favorites-grid .client-view-property-btn {
+  padding: 0 16px;
+
+  background: #26382f;
+  color: #ffffff;
+
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.client-favorites-grid .client-view-property-btn:hover {
+  background: #344c40;
+  color: #ffffff;
+}
+
+/* ============================================================
+   MESSAGE AGENT
+   ============================================================ */
+
+.client-favorites-grid .client-message-agent-btn {
+  gap: 7px;
+
+  padding: 0 14px;
+
+  border: 1px solid #26382f;
+
+  background: #ffffff;
+  color: #26382f;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.client-favorites-grid .client-message-agent-btn svg {
+  flex-shrink: 0;
+  font-size: 13px;
+}
+
+.client-favorites-grid .client-message-agent-btn:hover:not(:disabled) {
+  background: #26382f;
+  color: #ffffff;
+}
+
+/* ============================================================
+   AGENT NOT ASSIGNED
+   ============================================================ */
+
+.client-favorites-grid .client-message-agent-btn.disabled,
+.client-favorites-grid .client-message-agent-btn:disabled {
+  border-color: #ddd5ca;
+
+  background: #f3efe9;
+  color: #aaa;
+
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+
+.client-favorites-empty {
+  min-height: 260px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px 25px;
+
+  border: 1px solid #e8dfd3;
+  border-radius: 16px;
+
+  background: #fffdf9;
+
+  text-align: center;
+}
+
+.client-favorites-empty h2 {
+  margin: 0 0 8px;
+
+  color: #26382f;
+
+  font-family: "Playfair Display", serif;
+  font-size: 21px;
+}
+
+.client-favorites-empty p {
+  max-width: 420px;
+
+  margin: 0;
+
+  color: #777;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   LOADING / ERROR
+   ============================================================ */
+
+.client-favorites-page > p {
+  color: #777;
+  font-size: 14px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .client-favorites-page {
+    padding: 22px 18px;
+  }
+
+  .client-favorites-header h1 {
+    font-size: 28px;
+  }
+
+  .client-favorites-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .client-favorites-grid .property-actions {
+    flex-direction: column;
+  }
+
+  .client-favorites-grid .client-view-property-btn,
+  .client-favorites-grid .client-message-agent-btn {
+    width: 100%;
+  }
+}
 
