@@ -1,1 +1,518 @@
+/* ============================================================
+   AGENT MESSAGE DETAILS
+   ============================================================ */
+
+.agent-message-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+  color: #26382f;
+  margin-left: -20px;
+  margin-top: -25px;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.agent-message-header {
+  margin-bottom: 25px;
+}
+
+.agent-message-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  color: #777;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.agent-message-back:hover {
+  color: #26382f;
+}
+
+.agent-message-heading span {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #a88b55;
+}
+
+.agent-message-heading h1 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  color: #26382f;
+}
+
+.agent-message-heading p {
+  margin: 8px 0 0;
+  color: #777;
+  font-size: 14px;
+}
+
+/* ============================================================
+   PROPERTY CONTEXT
+   ============================================================ */
+
+.agent-conversation-property {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 18px;
+  padding: 16px;
+  border: 1px solid #e8dfd3;
+  border-radius: 14px;
+  background: #fffdf9;
+}
+
+.agent-conversation-property-image {
+  width: 100px;
+  height: 78px;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #eee8df;
+  color: #a88b55;
+}
+
+.agent-conversation-property-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.agent-conversation-property-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.agent-conversation-property-info > span {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #a88b55;
+}
+
+.agent-conversation-property-info h2 {
+  margin: 0 0 7px;
+  font-family: "Playfair Display", serif;
+  font-size: 19px;
+  color: #26382f;
+}
+
+.agent-conversation-property-info p {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0;
+  color: #777;
+  font-size: 13px;
+}
+
+.agent-conversation-property-info svg {
+  color: #a88b55;
+}
+
+.agent-view-property {
+  flex-shrink: 0;
+  padding: 10px 16px;
+  border: 1px solid #26382f;
+  border-radius: 8px;
+  color: #26382f;
+  text-decoration: none;
+  font-size: 13px;
+  transition: 0.2s ease;
+}
+
+.agent-view-property:hover {
+  background: #26382f;
+  color: white;
+}
+
+/* ============================================================
+   CLIENT INFORMATION
+   ============================================================ */
+
+.agent-client-info {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 18px;
+  padding: 14px 17px;
+  border: 1px solid #e8dfd3;
+  border-radius: 12px;
+  background: #faf7f1;
+}
+
+.agent-client-avatar {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #26382f;
+  color: white;
+}
+
+.agent-client-info > div:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.agent-client-info span {
+  margin-bottom: 3px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  color: #a88b55;
+}
+
+.agent-client-info strong {
+  font-size: 14px;
+  color: #26382f;
+}
+
+.agent-client-info small {
+  margin-top: 2px;
+  color: #888;
+  font-size: 12px;
+}
+
+/* ============================================================
+   CHAT CARD
+   ============================================================ */
+
+.agent-chat-card {
+  overflow: hidden;
+  border: 1px solid #e8dfd3;
+  border-radius: 16px;
+  background: #fffdf9;
+}
+
+/* ============================================================
+   CHAT HEADER
+   ============================================================ */
+
+.agent-chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 22px;
+  border-bottom: 1px solid #eee6db;
+  background: #faf7f1;
+}
+
+.agent-chat-header h2 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  color: #26382f;
+}
+
+.agent-chat-header p {
+  margin: 5px 0 0;
+  color: #888;
+  font-size: 12px;
+}
+
+.agent-chat-header > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #999;
+  font-size: 12px;
+}
+
+/* ============================================================
+   CHAT ERROR
+   ============================================================ */
+
+.agent-chat-error {
+  margin: 15px 20px 0;
+  padding: 10px 13px;
+  border-radius: 8px;
+  background: #fff1ef;
+  color: #a33a30;
+  font-size: 13px;
+}
+
+/* ============================================================
+   MESSAGE LIST
+   ============================================================ */
+
+.agent-message-list {
+  height: 480px;
+  overflow-y: auto;
+  padding: 25px;
+  background: #fdfbf7;
+}
+
+.agent-message-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.agent-message-list::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #d6c9b8;
+}
+
+/* ============================================================
+   MESSAGE ROW
+   ============================================================ */
+
+.agent-message-row {
+  display: flex;
+  margin-bottom: 14px;
+}
+
+.agent-message-row-sent {
+  justify-content: flex-end;
+}
+
+.agent-message-row-received {
+  justify-content: flex-start;
+}
+
+/* ============================================================
+   MESSAGE BUBBLE
+   ============================================================ */
+
+.agent-message-bubble {
+  max-width: 70%;
+  padding: 11px 14px;
+  border-radius: 13px;
+}
+
+.agent-message-sent {
+  border-bottom-right-radius: 4px;
+  background: #26382f;
+  color: white;
+}
+
+.agent-message-received {
+  border-bottom-left-radius: 4px;
+  border: 1px solid #e5ddd1;
+  background: white;
+  color: #444;
+}
+
+.agent-message-bubble p {
+  margin: 0;
+  line-height: 1.55;
+  font-size: 14px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.agent-message-bubble span {
+  display: block;
+  margin-top: 6px;
+  text-align: right;
+  font-size: 10px;
+  opacity: 0.65;
+}
+
+/* ============================================================
+   NO MESSAGES
+   ============================================================ */
+
+.agent-no-messages {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #888;
+}
+
+.agent-no-messages svg {
+  margin-bottom: 12px;
+  font-size: 35px;
+  color: #a88b55;
+}
+
+.agent-no-messages h3 {
+  margin: 0 0 6px;
+  color: #26382f;
+  font-family: "Playfair Display", serif;
+}
+
+.agent-no-messages p {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* ============================================================
+   MESSAGE INPUT
+   ============================================================ */
+
+.agent-message-input-area {
+  display: flex;
+  gap: 10px;
+  padding: 16px;
+  border-top: 1px solid #eee6db;
+  background: white;
+}
+
+.agent-message-input-area input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid #ddd3c5;
+  border-radius: 9px;
+  outline: none;
+  background: #fffdf9;
+  color: #333;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.agent-message-input-area input:focus {
+  border-color: #a88b55;
+  box-shadow: 0 0 0 2px rgba(168, 139, 85, 0.08);
+}
+
+.agent-message-input-area input:disabled {
+  opacity: 0.65;
+}
+
+.agent-message-input-area button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 105px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 9px;
+  background: #26382f;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s ease;
+}
+
+.agent-message-input-area button:hover:not(:disabled) {
+  background: #344c40;
+}
+
+.agent-message-input-area button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ============================================================
+   LOADING / ERROR PAGE
+   ============================================================ */
+
+.agent-message-loading {
+  min-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+}
+
+.agent-message-error {
+  max-width: 500px;
+  margin: 70px auto;
+  padding: 40px;
+  text-align: center;
+  border: 1px solid #eadfd2;
+  border-radius: 14px;
+  background: #fffdf9;
+}
+
+.agent-message-error h2 {
+  margin: 0 0 10px;
+  font-family: "Playfair Display", serif;
+  color: #26382f;
+}
+
+.agent-message-error p {
+  margin-bottom: 20px;
+  color: #777;
+}
+
+.agent-message-error button {
+  margin-right: 10px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #26382f;
+  color: white;
+  cursor: pointer;
+}
+
+.agent-message-error a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: #26382f;
+  text-decoration: none;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .agent-message-page {
+    padding: 20px;
+  }
+
+  .agent-message-heading h1 {
+    font-size: 27px;
+  }
+
+  .agent-conversation-property {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .agent-conversation-property-image {
+    width: 80px;
+    height: 65px;
+  }
+
+  .agent-view-property {
+    width: 100%;
+    text-align: center;
+  }
+
+  .agent-message-list {
+    height: 420px;
+    padding: 18px;
+  }
+
+  .agent-message-bubble {
+    max-width: 85%;
+  }
+
+  .agent-message-input-area {
+    flex-direction: column;
+  }
+
+  .agent-message-input-area button {
+    height: 44px;
+  }
+}
 
