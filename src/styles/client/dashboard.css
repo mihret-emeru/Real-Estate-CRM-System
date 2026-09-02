@@ -1,1 +1,778 @@
+/* ============================================================
+   CLIENT DASHBOARD
+   ============================================================ */
+
+.client-home-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 28px 32px 60px;
+  box-sizing: border-box;
+  margin-left: -26px;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.client-hero {
+  position: relative;
+
+  min-height: 330px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 55px 60px;
+  margin-bottom: 38px;
+  margin-top: -20px;
+
+  border-radius: 22px;
+
+  background: linear-gradient(135deg, #30483c 0%, #3d594b 55%, #557563 100%);
+
+  overflow-x: clip;
+
+  box-shadow: 0 12px 35px rgba(48, 72, 60, 0.14);
+}
+
+/* Decorative circle */
+
+.client-hero::after {
+  content: "";
+
+  position: absolute;
+
+  width: 280px;
+  height: 280px;
+
+  right: -70px;
+  top: -80px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ============================================================
+   HERO CONTENT
+   ============================================================ */
+
+.client-hero-content {
+  position: relative;
+  z-index: 2;
+
+  max-width: 650px;
+}
+
+.client-hero-eyebrow {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+
+  color: #dfcfaa;
+}
+
+.client-hero-content h1 {
+  margin: 0;
+
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: 43px;
+  line-height: 1.15;
+
+  color: #ffffff;
+}
+
+.client-hero-content p {
+  max-width: 580px;
+
+  margin: 13px 0 0;
+
+  font-size: 15px;
+  line-height: 1.7;
+
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.client-property-search {
+  position: relative;
+  z-index: 20;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  width: 100%;
+  max-width: 620px;
+
+  margin-top: 28px;
+
+  background: #fffdf9;
+  border: 1px solid #e5ddd0;
+  border-radius: 12px;
+
+  box-shadow: 0 6px 20px rgba(48, 72, 60, 0.07);
+
+  overflow: visible;
+  box-sizing: border-box;
+}
+/* ============================================================
+   LOCATION
+   ============================================================ */
+
+.client-location {
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 0 17px;
+
+  border-right: 1px solid #e8e1d5;
+
+  font-size: 13px;
+  color: #ffffff;
+
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.client-location svg {
+  color: #a88945;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   TYPE / STATUS FILTER DROPDOWN
+   ============================================================ */
+
+.client-type-dropdown {
+  position: relative;
+  z-index: 100;
+
+  min-width: 0;
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 8px;
+
+  flex-shrink: 0;
+  box-sizing: border-box;
+
+  overflow: visible;
+}
+
+/* ============================================================
+   PROPERTY SECTION
+   ============================================================ */
+
+.client-properties-section {
+  width: 100%;
+}
+
+.client-properties-header {
+  margin-bottom: 20px;
+}
+
+.client-properties-header span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.8px;
+
+  color: #a88945;
+}
+
+.client-properties-header h2 {
+  margin: 0;
+
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: 27px;
+
+  color: #30483c;
+}
+
+.client-properties-header p {
+  margin: 6px 0 0;
+
+  font-size: 13px;
+
+  color: #817d75;
+}
+
+/* ============================================================
+   DASHBOARD PROPERTY GRID
+   ============================================================ */
+
+.client-properties-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 22px;
+
+  width: 100%;
+}
+
+/* ============================================================
+   HEART — LEFT SIDE
+   ============================================================ */
+
+.client-properties-grid .client-property-card .property-save-btn {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: auto;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 253, 249, 0.94);
+  color: #cc2649;
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+  box-shadow: 0 3px 10px rgba(48, 72, 60, 0.12);
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+/* ============================================================
+   MESSAGE AGENT BUTTON
+   ============================================================ */
+
+.client-properties-grid .message-agent-btn {
+  flex: 1;
+  min-width: 150px;
+  min-height: 42px;
+
+  padding: 10px 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  border: 1px solid #c9b79c;
+  border-radius: 9px;
+
+  background: #fffdf9;
+  color: #4a4036;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  white-space: nowrap;
+  box-sizing: border-box;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.client-properties-grid .message-agent-btn:hover {
+  background: #f7f1e7;
+  border-color: #b8945f;
+  transform: translateY(-1px);
+}
+.client-properties-grid .agent-not-assigned-btn {
+  flex: 1;
+  min-width: 150px;
+  min-height: 42px;
+
+  padding: 10px 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #ddd6ca;
+  border-radius: 9px;
+
+  background: #f5f2ec;
+  color: #8a867e;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  white-space: nowrap;
+  box-sizing: border-box;
+
+  cursor: not-allowed;
+}
+.client-properties-grid .client-property-card .property-actions {
+  display: flex;
+  align-items: stretch;
+  gap: 11px;
+
+  margin-top: 17px;
+}
+
+.client-properties-grid .client-property-card .property-actions a,
+.client-properties-grid .client-property-card .property-actions button {
+  flex: 1;
+  min-width: 0;
+}
+
+.client-properties-grid .client-property-card .property-save-btn:hover {
+  transform: scale(1.05);
+  color: #a65d58;
+}
+
+.client-properties-grid .client-property-card .property-save-btn.saved {
+  color: #a65d58;
+}
+
+/* ============================================================
+   RECOMMENDATION SCORE
+   ============================================================ */
+
+.client-home-page .client-properties-grid > div > small {
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 10px;
+
+  color: #99948a;
+}
+
+.client-home-page .client-properties-grid > div > small:first-of-type {
+  margin-top: 8px;
+}
+
+/* ============================================================
+   CLIENT PAYMENT OVERVIEW
+   ============================================================ */
+
+.client-payment-overview {
+  width: 100%;
+  margin-top: 28px;
+  padding: 28px 30px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #e8dfd3;
+  border-radius: 16px;
+
+  background: #fffdf9;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.client-payment-overview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 24px;
+}
+
+.client-payment-overview-header > div span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #a88945;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.client-payment-overview-header h2 {
+  margin: 0;
+
+  color: #26382f;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.client-payment-header-icon {
+  width: 42px;
+  height: 42px;
+
+  padding: 11px;
+
+  box-sizing: border-box;
+
+  border-radius: 10px;
+
+  background: #f2ede4;
+  color: #a88945;
+}
+
+/* ============================================================
+   PAYMENT SUMMARY
+   ============================================================ */
+
+.client-payment-summary {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr)
+    minmax(0, 1fr)
+    auto;
+
+  align-items: stretch;
+
+  gap: 14px;
+}
+
+/* ============================================================
+   PAYMENT ITEM
+   ============================================================ */
+
+.client-payment-item {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 16px 18px;
+
+  border: 1px solid #ebe4da;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-sizing: border-box;
+}
+
+.client-payment-item-icon {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #f4efe7;
+  color: #a88945;
+
+  font-size: 15px;
+}
+
+.client-payment-item > div:last-child {
+  min-width: 0;
+}
+
+.client-payment-item span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #888078;
+
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.client-payment-item strong {
+  display: block;
+
+  color: #26382f;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+/* ============================================================
+   OUTSTANDING
+   ============================================================ */
+
+.client-payment-item.outstanding {
+  border-color: #ded5c7;
+
+  background: #f8f4ed;
+}
+
+.client-payment-item.outstanding .client-payment-item-icon {
+  background: #ebe3d5;
+}
+
+/* ============================================================
+   VIEW PAYMENTS BUTTON
+   ============================================================ */
+
+.client-view-payments-btn {
+  min-width: 145px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 0 18px;
+
+  border-radius: 10px;
+
+  background: #26382f;
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.client-view-payments-btn:hover {
+  background: #344c40;
+
+  color: #ffffff;
+
+  transform: translateY(-1px);
+}
+
+.client-view-payments-btn svg {
+  font-size: 12px;
+}
+
+/* ============================================================
+   LOADING
+   ============================================================ */
+
+.client-payment-overview-loading {
+  min-height: 90px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 4px;
+
+  color: #817d75;
+
+  font-size: 13px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1000px) {
+  .client-payment-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .client-view-payments-btn {
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 650px) {
+  .client-payment-overview {
+    padding: 22px 18px;
+  }
+
+  .client-payment-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .client-payment-item {
+    min-height: 72px;
+  }
+
+  .client-view-payments-btn {
+    min-height: 48px;
+  }
+}
+
+/* ============================================================
+   LOADING / ERROR
+   ============================================================ */
+
+.client-home-page .client-properties-section > p {
+  font-size: 13px;
+  color: #817d75;
+}
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+
+@media (max-width: 1100px) {
+  .client-properties-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .client-property-search {
+    grid-template-columns: 1fr 160px 160px;
+  }
+}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .client-home-page {
+    padding: 20px 18px 45px;
+  }
+
+  .client-hero {
+    min-height: auto;
+
+    padding: 38px 25px;
+
+    border-radius: 18px;
+  }
+
+  .client-hero-content h1 {
+    font-size: 32px;
+  }
+
+  .client-hero-content p {
+    font-size: 13px;
+  }
+
+  .client-property-search {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+
+    margin-top: 25px;
+  }
+
+  .client-search-input {
+    border-right: none;
+    border-bottom: 1px solid #e8e1d5;
+  }
+
+  .client-location {
+    border-right: none;
+    border-bottom: 1px solid #e8e1d5;
+  }
+
+  .client-type-dropdown {
+    border-bottom: none;
+  }
+
+  .client-properties-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 500px) {
+  .client-home-page {
+    padding: 17px 13px 35px;
+  }
+
+  .client-hero {
+    padding: 32px 20px;
+  }
+
+  .client-hero-content h1 {
+    font-size: 28px;
+  }
+
+  .client-hero-eyebrow {
+    font-size: 10px;
+  }
+
+  .client-properties-header h2 {
+    font-size: 23px;
+  }
+
+  .client-home-page .client-property-card .property-image {
+    height: 210px;
+  }
+}
+/* ============================================================
+   CLIENT DASHBOARD PROPERTY GRID
+   ============================================================ */
+
+.client-properties-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+}
+
+/* Keep each property card stable inside the grid */
+
+.client-properties-grid > div {
+  min-width: 0;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .client-properties-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .client-property-card .property-actions {
+    flex-direction: column;
+  }
+
+  .client-property-card .property-actions > a {
+    width: 100%;
+  }
+
+  .client-property-card .property-actions .view-btn,
+  .client-property-card .message-agent-btn {
+    width: 100%;
+  }
+}
 
