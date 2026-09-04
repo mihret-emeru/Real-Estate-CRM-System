@@ -1,1 +1,550 @@
+.property-settings-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 36px 50px;
+  box-sizing: border-box;
+  color: #344238;
+}
+
+.property-settings-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.property-settings-heading {
+  width: 100%;
+}
+
+.property-settings-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  color: #74877a;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.property-settings-back:hover {
+  color: #b2945d;
+}
+
+.property-settings-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  gap: 30px;
+}
+
+.property-settings-title > div:last-child {
+  order: 1;
+  flex: 1;
+}
+
+.property-settings-title-icon {
+  order: 2;
+  width: 58px;
+  height: 58px;
+  min-width: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  border-radius: 16px;
+  background: #f4efe5;
+  color: #b2945d;
+  font-size: 24px;
+  box-shadow: 0 5px 18px rgba(90, 75, 48, 0.07);
+}
+
+.property-settings-title h1 {
+  margin: 0;
+  color: #304137;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 31px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.property-settings-title p {
+  max-width: 650px;
+  margin: 8px 0 0;
+  color: #7d887f;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.property-settings-alert {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 13px 17px;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.property-settings-alert.success {
+  border: 1px solid #cfdfd2;
+  background: #eff6f0;
+  color: #55715c;
+}
+
+.property-settings-alert.error {
+  border: 1px solid #e4cece;
+  background: #fbf0f0;
+  color: #9a5d5d;
+}
+
+.property-settings-form {
+  width: 100%;
+  position: relative;
+  overflow: visible;
+}
+
+.property-settings-card {
+  position: relative;
+  width: 100%;
+  margin-bottom: 22px;
+  background: #ffffff;
+  border: 1px solid #e5e9e5;
+  border-radius: 18px;
+  box-shadow: 0 7px 25px rgba(52, 66, 56, 0.055);
+  overflow: visible;
+}
+
+.property-settings-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 21px 25px;
+  border-bottom: 1px solid #edf0ed;
+  background: #ffffff;
+  border-radius: 18px 18px 0 0;
+}
+
+.property-settings-card-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: #edf3ee;
+  color: #718978;
+  font-size: 16px;
+}
+
+.property-settings-card-header h2 {
+  margin: 0;
+  color: #35453b;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.property-settings-card-header p {
+  margin: 4px 0 0;
+  color: #8a938c;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.property-settings-options {
+  position: relative;
+  width: 100%;
+  padding: 4px 25px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.property-setting-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  width: 100%;
+  min-height: 76px;
+  padding: 17px 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid #edf0ed;
+  cursor: pointer;
+}
+
+.property-setting-row:last-child {
+  border-bottom: none;
+}
+
+.property-setting-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.property-setting-content strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #3c4b42;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.property-setting-content span {
+  display: block;
+  color: #89928b;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+/* Toggle switch */
+
+.property-setting-toggle {
+  position: relative;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 47px;
+  min-width: 47px;
+  height: 26px;
+  margin: 0;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  background: #d8ded9;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.property-setting-toggle::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.14);
+  transition: transform 0.25s ease;
+}
+
+.property-setting-toggle:checked {
+  background: #748f7b;
+}
+
+.property-setting-toggle:checked::after {
+  transform: translateX(21px);
+}
+
+.property-setting-toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Minimum images */
+
+.property-setting-input-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  min-height: 76px;
+  padding: 17px 0;
+  box-sizing: border-box;
+  border-bottom: none;
+}
+
+.property-number-input {
+  width: 100px;
+  height: 42px;
+  box-sizing: border-box;
+  padding: 0 13px;
+  border: 1px solid #d9dfda;
+  border-radius: 10px;
+  background: #fafbf9;
+  color: #39483f;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.property-number-input:hover:not(:disabled) {
+  border-color: #b8c5ba;
+}
+
+.property-number-input:focus {
+  border-color: #839b89;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(116, 143, 123, 0.11);
+}
+
+.property-number-input:disabled {
+  background: #f1f3f1;
+  color: #a1a8a2;
+  cursor: not-allowed;
+}
+
+/* Default values */
+
+.property-settings-defaults-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  padding: 25px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.property-setting-field {
+  position: relative;
+  min-width: 0;
+  z-index: 10;
+}
+
+.property-setting-field > label {
+  display: block;
+  margin-bottom: 9px;
+  color: #46544b;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.property-setting-field .custom-dropdown {
+  position: relative;
+  width: 100%;
+  z-index: 20;
+}
+
+/*
+  Keep the CustomDropdown itself above neighboring fields.
+  This is important because the menu is inside the settings card.
+*/
+
+.property-setting-field:hover,
+.property-setting-field:focus-within {
+  z-index: 100;
+}
+
+.property-settings-defaults-grid .property-setting-field:nth-child(1) {
+  z-index: 30;
+}
+
+.property-settings-defaults-grid .property-setting-field:nth-child(2) {
+  z-index: 20;
+}
+
+.property-settings-defaults-grid .property-setting-field:nth-child(3) {
+  z-index: 10;
+}
+
+/*
+  These selectors cover common menu class names used by
+  CustomDropdown implementations.
+*/
+
+.property-settings-defaults-grid .custom-dropdown-menu,
+.property-settings-defaults-grid .dropdown-menu,
+.property-settings-defaults-grid [role="listbox"] {
+  position: absolute;
+  z-index: 9999;
+}
+
+/* Settings actions */
+
+.property-settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 28px;
+}
+
+.property-settings-cancel,
+.property-settings-save {
+  min-width: 132px;
+  height: 44px;
+  padding: 0 21px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.property-settings-cancel {
+  border: 1px solid #d8ded9;
+  background: #ffffff;
+  color: #68756c;
+}
+
+.property-settings-cancel:hover:not(:disabled) {
+  border-color: #c2ccc4;
+  background: #f7f9f7;
+}
+
+.property-settings-save {
+  border: 1px solid #718a78;
+  background: #718a78;
+  color: #ffffff;
+  box-shadow: 0 5px 14px rgba(113, 138, 120, 0.16);
+}
+
+.property-settings-save:hover:not(:disabled) {
+  border-color: #627a69;
+  background: #627a69;
+  box-shadow: 0 7px 17px rgba(113, 138, 120, 0.2);
+}
+
+.property-settings-cancel:active:not(:disabled),
+.property-settings-save:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.property-settings-cancel:disabled,
+.property-settings-save:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Loading */
+
+.property-settings-loading {
+  width: 100%;
+  min-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  color: #77847b;
+  font-size: 14px;
+}
+
+.property-settings-loading p {
+  margin: 0;
+}
+
+.property-settings-loading-spinner {
+  width: 27px;
+  height: 27px;
+  border: 3px solid #dfe6e0;
+  border-top-color: #718a78;
+  border-radius: 50%;
+  animation: property-settings-spin 0.8s linear infinite;
+}
+
+@keyframes property-settings-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tablet */
+
+@media (max-width: 950px) {
+  .property-settings-page {
+    padding: 28px 24px 45px;
+  }
+
+  .property-settings-defaults-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .property-settings-defaults-grid .property-setting-field,
+  .property-settings-defaults-grid .property-setting-field:nth-child(1),
+  .property-settings-defaults-grid .property-setting-field:nth-child(2),
+  .property-settings-defaults-grid .property-setting-field:nth-child(3) {
+    z-index: 10;
+  }
+
+  .property-setting-field:focus-within {
+    z-index: 100;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 650px) {
+  .property-settings-page {
+    padding: 22px 16px 40px;
+  }
+
+  .property-settings-title {
+    gap: 18px;
+  }
+
+  .property-settings-title h1 {
+    font-size: 26px;
+  }
+
+  .property-settings-title p {
+    font-size: 13px;
+  }
+
+  .property-settings-title-icon {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    border-radius: 14px;
+    font-size: 21px;
+  }
+
+  .property-settings-card-header {
+    padding: 18px;
+  }
+
+  .property-settings-options {
+    padding: 4px 18px;
+  }
+
+  .property-setting-row,
+  .property-setting-input-row {
+    gap: 18px;
+  }
+
+  .property-setting-content strong {
+    font-size: 13px;
+  }
+
+  .property-setting-content span {
+    font-size: 12px;
+  }
+
+  .property-settings-defaults-grid {
+    padding: 18px;
+    gap: 18px;
+  }
+
+  .property-settings-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .property-settings-cancel,
+  .property-settings-save {
+    width: 100%;
+  }
+}
 
