@@ -1,1 +1,408 @@
+.admin-user-form-page {
+  padding: 20px 24px 32px;
+}
+
+.admin-user-form-topbar {
+  margin-bottom: 18px;
+}
+
+.admin-user-form-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border: 1px solid #ddd9d0;
+  border-radius: 7px;
+  background: #fff;
+  color: #68766c;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.admin-user-form-back:hover {
+  border-color: #b9c2ba;
+  background: #edf1ed;
+  color: #5f6f63;
+}
+
+.admin-user-form-back svg {
+  font-size: 10px;
+}
+
+.admin-user-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+
+.admin-user-form-header > div:first-child {
+  min-width: 0;
+}
+
+.admin-user-form-eyebrow {
+  display: block;
+  margin-bottom: 7px;
+  color: #9a7b22;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.admin-user-form-header h1 {
+  margin: 0 0 7px;
+  color: #2f3a32;
+  font-family: "Playfair Display", serif;
+  font-size: 31px;
+  font-weight: 600;
+}
+
+.admin-user-form-header p {
+  margin: 0;
+  color: #777;
+  font-size: 13px;
+}
+
+.admin-user-form-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #ddd4b9;
+  border-radius: 9px;
+  background: #fffdf7;
+  color: #9a7b22;
+}
+
+.admin-user-form-header-icon svg {
+  font-size: 19px;
+}
+
+.admin-user-form {
+  width: 100%;
+  max-width: 920px;
+  padding: 25px;
+  border: 1px solid #e4e0d8;
+  border-radius: 11px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.admin-user-form-section {
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #eeeae3;
+}
+
+.admin-user-form-section:last-of-type {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.admin-user-form-section-header {
+  margin-bottom: 18px;
+}
+
+.admin-user-form-section-header span {
+  display: block;
+  margin-bottom: 5px;
+  color: #9a7b22;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.admin-user-form-section-header h2 {
+  margin: 0;
+  color: #2f3a32;
+  font-family: "Playfair Display", serif;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.admin-user-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.admin-user-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.admin-user-form-field label {
+  color: #666;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.admin-user-form-field input {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #ddd9d0;
+  border-radius: 7px;
+  outline: none;
+  background: #fff;
+  color: #444;
+  font-family: inherit;
+  font-size: 12px;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.admin-user-form-field input::placeholder {
+  color: #aaa;
+}
+
+.admin-user-form-field input:focus {
+  border-color: #9aa89e;
+  box-shadow: 0 0 0 3px rgba(113, 128, 116, 0.08);
+}
+
+.admin-user-form-field input:disabled {
+  background: #f7f6f2;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.admin-user-form-field > div {
+  width: 100%;
+}
+
+.admin-user-form-field [class*="dropdown"] {
+  width: 100%;
+}
+
+.admin-user-form-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 45px;
+  padding: 0 13px;
+  border: 1px solid #e4e0d8;
+  border-radius: 8px;
+  background: #faf9f6;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.admin-user-form-checkbox input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  accent-color: #5f6f63;
+  cursor: pointer;
+}
+
+.admin-user-form-checkbox span {
+  color: #666;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.admin-user-form-error {
+  padding: 11px 13px;
+  margin-top: 20px;
+  border: 1px solid #e0cccc;
+  border-radius: 7px;
+  background: #fffafa;
+  color: #8f5e5e;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.admin-user-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 22px;
+  margin-top: 22px;
+  border-top: 1px solid #eeeae3;
+}
+
+.admin-user-form-actions a,
+.admin-user-form-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 110px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 7px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.admin-user-form-actions a {
+  border: 1px solid #ddd9d0;
+  background: #fff;
+  color: #777;
+}
+
+.admin-user-form-actions a:hover {
+  border-color: #cfcac0;
+  background: #faf9f6;
+  color: #555;
+}
+
+.admin-user-form-actions button {
+  border: 1px solid #2f3a32;
+  background: #2f3a32;
+  color: #fff;
+}
+
+.admin-user-form-actions button:hover {
+  background: #4a594d;
+}
+
+.admin-user-form-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-user-form-actions button svg {
+  font-size: 10px;
+}
+
+.admin-user-form-loading {
+  padding: 80px 20px;
+  color: #777;
+  font-size: 14px;
+  text-align: center;
+}
+
+.admin-user-form-error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  padding: 40px;
+  border: 1px solid #e4e0d8;
+  border-radius: 11px;
+  background: #fff;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.admin-user-form-error-state h2 {
+  margin: 0 0 8px;
+  color: #2f3a32;
+  font-family: "Playfair Display", serif;
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.admin-user-form-error-state p {
+  max-width: 420px;
+  margin: 0 0 20px;
+  color: #777;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.admin-user-form-error-state a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 17px;
+  border-radius: 7px;
+  background: #2f3a32;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.admin-user-form-error-state a:hover {
+  background: #4a594d;
+}
+
+@media (max-width: 768px) {
+  .admin-user-form-page {
+    padding: 18px;
+  }
+
+  .admin-user-form-header {
+    align-items: flex-start;
+  }
+
+  .admin-user-form-header h1 {
+    font-size: 28px;
+  }
+
+  .admin-user-form {
+    padding: 20px;
+  }
+
+  .admin-user-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .admin-user-form-page {
+    padding: 16px 14px 24px;
+  }
+
+  .admin-user-form-header {
+    gap: 14px;
+  }
+
+  .admin-user-form-header-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .admin-user-form-header-icon svg {
+    font-size: 16px;
+  }
+
+  .admin-user-form {
+    padding: 17px;
+  }
+
+  .admin-user-form-section {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+
+  .admin-user-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .admin-user-form-actions a,
+  .admin-user-form-actions button {
+    width: 100%;
+  }
+}
 
