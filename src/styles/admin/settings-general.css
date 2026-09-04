@@ -1,1 +1,373 @@
+.admin-settings-general-page {
+  min-height: 100%;
+  padding: 22px 28px 36px;
+}
+
+.admin-settings-general-topbar {
+  margin-bottom: 22px;
+}
+
+.admin-settings-general-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #6d786f;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.admin-settings-general-back:hover {
+  color: #2f3a32;
+}
+
+.admin-settings-general-back svg {
+  font-size: 10px;
+}
+
+.admin-settings-general-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 26px;
+}
+
+.admin-settings-general-eyebrow {
+  display: block;
+  margin-bottom: 7px;
+  color: #9b8060;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.admin-settings-general-header h1 {
+  margin: 0;
+  color: #2f3a32;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.admin-settings-general-header p {
+  margin: 8px 0 0;
+  color: #7c857d;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.admin-settings-general-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border: 1px solid #d8cbb8;
+  border-radius: 10px;
+  background: #efe9dc;
+  color: #9b8060;
+  font-size: 17px;
+}
+
+.admin-settings-general-form {
+  max-width: 1000px;
+}
+
+.admin-settings-general-section {
+  margin-bottom: 18px;
+  padding: 24px;
+  border: 1px solid #e3ded3;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 3px 12px rgba(47, 58, 50, 0.035);
+}
+
+.admin-settings-general-section-header {
+  padding-bottom: 18px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eeeae2;
+}
+
+.admin-settings-general-section-header > span {
+  display: block;
+  margin-bottom: 5px;
+  color: #a08a6d;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.admin-settings-general-section-header h2 {
+  margin: 0;
+  color: #344037;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.admin-settings-general-section-header p {
+  margin: 6px 0 0;
+  color: #858d86;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.admin-settings-general-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 20px;
+}
+
+.admin-settings-general-field {
+  min-width: 0;
+}
+
+.admin-settings-general-field.full {
+  grid-column: 1 / -1;
+}
+
+.admin-settings-general-field label {
+  display: block;
+  margin-bottom: 7px;
+  color: #59655c;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.admin-settings-general-input {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  border: 1px solid #ddd9d0;
+  border-radius: 6px;
+  background: #ffffff;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.admin-settings-general-input:focus-within {
+  border-color: #8d9b90;
+  box-shadow: 0 0 0 3px rgba(141, 155, 144, 0.1);
+}
+
+.admin-settings-general-input svg {
+  margin-left: 12px;
+  flex-shrink: 0;
+  color: #929b93;
+  font-size: 12px;
+}
+
+.admin-settings-general-input input {
+  width: 100%;
+  min-width: 0;
+  height: 38px;
+  padding: 0 12px 0 9px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #3f4a42;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.admin-settings-general-input input::placeholder {
+  color: #b0b5b0;
+}
+
+.admin-settings-general-field .custom-dropdown {
+  width: 100%;
+}
+
+.admin-settings-general-success {
+  margin-bottom: 16px;
+  padding: 12px 15px;
+  border: 1px solid #d3dfd5;
+  border-radius: 7px;
+  background: #edf3ee;
+  color: #58705d;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.admin-settings-general-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.admin-settings-general-actions a,
+.admin-settings-general-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 18px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.admin-settings-general-actions a {
+  border: 1px solid #ddd9d0;
+  background: #ffffff;
+  color: #68736a;
+}
+
+.admin-settings-general-actions a:hover {
+  border-color: #c8c4ba;
+  background: #f2f0eb;
+}
+
+.admin-settings-general-actions button {
+  gap: 8px;
+  border: 1px solid #2f3a32;
+  background: #2f3a32;
+  color: #ffffff;
+}
+
+.admin-settings-general-actions button:hover:not(:disabled) {
+  background: #435147;
+  border-color: #435147;
+}
+
+.admin-settings-general-actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.admin-settings-general-actions button svg {
+  font-size: 10px;
+}
+
+@media (max-width: 700px) {
+  .admin-settings-general-page {
+    padding: 18px 20px 30px;
+  }
+
+  .admin-settings-general-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-settings-general-field.full {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-settings-general-page {
+    padding: 16px 15px 26px;
+  }
+
+  .admin-settings-general-header h1 {
+    font-size: 25px;
+  }
+
+  .admin-settings-general-header p {
+    font-size: 12px;
+  }
+
+  .admin-settings-general-header-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 15px;
+  }
+
+  .admin-settings-general-section {
+    padding: 18px;
+  }
+
+  .admin-settings-general-section-header h2 {
+    font-size: 18px;
+  }
+
+  .admin-settings-general-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .admin-settings-general-actions a,
+  .admin-settings-general-actions button {
+    width: 100%;
+  }
+}
+
+.admin-settings-general-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: #7c857d;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.admin-settings-general-error {
+  max-width: 520px;
+  margin: 70px auto;
+  padding: 28px;
+  border: 1px solid #e3ded3;
+  border-radius: 10px;
+  background: #ffffff;
+  text-align: center;
+  box-shadow: 0 3px 12px rgba(47, 58, 50, 0.035);
+}
+
+.admin-settings-general-error h2 {
+  margin: 0;
+  color: #344037;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.admin-settings-general-error p {
+  margin: 8px 0 18px;
+  color: #858d86;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.admin-settings-general-error button {
+  min-height: 36px;
+  padding: 0 16px;
+  border: 1px solid #2f3a32;
+  border-radius: 6px;
+  background: #2f3a32;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-settings-general-error button:hover {
+  background: #435147;
+}
+
+.admin-settings-general-error-message {
+  margin-bottom: 16px;
+  padding: 12px 15px;
+  border: 1px solid #e2cfc9;
+  border-radius: 7px;
+  background: #f7eeeb;
+  color: #8a5f56;
+  font-size: 11px;
+  font-weight: 600;
+}
 
