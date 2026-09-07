@@ -2,11 +2,24 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Property from "@/models/Property";
 
-export async function GET(request, { params }) {
-  const { id } = await params;
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "http://localhost:3001",
+  "Access-Control-Allow-Methods": "GET, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
 
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders,
+  });
+}
+
+export async function GET(request, { params }) {
   try {
     await connectDB();
+
+    const { id } = await params;
 
     const property = await Property.findById(id).populate(
       "assignedAgent",
@@ -21,15 +34,24 @@ export async function GET(request, { params }) {
         },
         {
           status: 404,
+          headers: corsHeaders,
         },
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      data: property,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        data: property,
+      },
+      {
+        status: 200,
+        headers: corsHeaders,
+      },
+    );
   } catch (error) {
+    console.error("Get property error:", error);
+
     return NextResponse.json(
       {
         success: false,
@@ -37,12 +59,12 @@ export async function GET(request, { params }) {
       },
       {
         status: 500,
+        headers: corsHeaders,
       },
     );
   }
 }
 
-// UPDATE PROPERTY
 export async function PUT(request, { params }) {
   try {
     await connectDB();
@@ -64,6 +86,7 @@ export async function PUT(request, { params }) {
         },
         {
           status: 404,
+          headers: corsHeaders,
         },
       );
     }
@@ -75,9 +98,12 @@ export async function PUT(request, { params }) {
       },
       {
         status: 200,
+        headers: corsHeaders,
       },
     );
   } catch (error) {
+    console.error("Update property error:", error);
+
     return NextResponse.json(
       {
         success: false,
@@ -85,12 +111,12 @@ export async function PUT(request, { params }) {
       },
       {
         status: 500,
+        headers: corsHeaders,
       },
     );
   }
 }
 
-// DELETE PROPERTY
 export async function DELETE(request, { params }) {
   try {
     await connectDB();
@@ -107,15 +133,24 @@ export async function DELETE(request, { params }) {
         },
         {
           status: 404,
+          headers: corsHeaders,
         },
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      message: "Property deleted successfully",
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Property deleted successfully",
+      },
+      {
+        status: 200,
+        headers: corsHeaders,
+      },
+    );
   } catch (error) {
+    console.error("Delete property error:", error);
+
     return NextResponse.json(
       {
         success: false,
@@ -123,6 +158,7 @@ export async function DELETE(request, { params }) {
       },
       {
         status: 500,
+        headers: corsHeaders,
       },
     );
   }
