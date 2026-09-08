@@ -12,34 +12,24 @@ import {
   FaEyeSlash,
 } from "react-icons/fa";
 
-export default function RegisterForm() {
+export default function RegisterForm({ propertyId, conversion, returnTo }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
-
     email: "",
-
     phone: "",
-
     password: "",
-
     confirmPassword: "",
-
     city: "",
-
     preferredPropertyType: "",
-
     minBudget: "",
-
     maxBudget: "",
-
     currency: "ETB",
   });
 
   const [error, setError] = useState("");
-
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -47,7 +37,6 @@ export default function RegisterForm() {
 
     setFormData({
       ...formData,
-
       [name]: value,
     });
   };
@@ -94,12 +83,35 @@ export default function RegisterForm() {
       }
 
       alert("Account created successfully!");
+
+      if (propertyId && conversion) {
+        const loginParams = new URLSearchParams();
+
+        loginParams.set("propertyId", propertyId);
+        loginParams.set("conversion", conversion);
+
+        if (returnTo) {
+          loginParams.set("returnTo", returnTo);
+        }
+
+        window.location.href = `/login?${loginParams.toString()}`;
+        return;
+      }
     } catch (error) {
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+
+  const loginHref =
+    propertyId && conversion
+      ? `/login?propertyId=${encodeURIComponent(
+          propertyId,
+        )}&conversion=${encodeURIComponent(
+          conversion,
+        )}&returnTo=${encodeURIComponent(returnTo || "")}`
+      : "/login";
 
   return (
     <div className="register-card">
@@ -114,18 +126,18 @@ export default function RegisterForm() {
       <h1>Create Account</h1>
 
       <p>Create your client account to access the Real Estate CRM.</p>
+
       {error && <div className="login-error">{error}</div>}
 
       <form onSubmit={handleRegister}>
         <div className="register-grid">
-          {/* LEFT */}
-
           <div>
             <div className="register-field">
               <label>Full Name</label>
 
               <div className="register-input">
                 <FaUser />
+
                 <input
                   type="text"
                   name="name"
@@ -206,8 +218,6 @@ export default function RegisterForm() {
             </div>
           </div>
 
-          {/* RIGHT */}
-
           <div>
             <div className="register-field">
               <label>Email</label>
@@ -251,15 +261,10 @@ export default function RegisterForm() {
                   <option value="">Select Property Type</option>
 
                   <option value="house">House</option>
-
                   <option value="apartment">Apartment</option>
-
                   <option value="villa">Villa</option>
-
                   <option value="land">Land</option>
-
                   <option value="commercial">Commercial</option>
-
                   <option value="other">Other</option>
                 </select>
               </div>
@@ -306,9 +311,10 @@ export default function RegisterForm() {
         <button type="submit" className="login-submit" disabled={loading}>
           {loading ? "Creating Account..." : "Create Account"}
         </button>
+
         <div className="register-footer">
           Already have an account?
-          <Link href="/login">Login</Link>
+          <Link href={loginHref}>Login</Link>
         </div>
       </form>
     </div>
