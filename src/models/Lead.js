@@ -73,6 +73,7 @@ const leadSchema = new mongoose.Schema(
             enum: [
               "created",
               "status_change",
+              "property_interest",
               "note",
               "call",
               "meeting",
