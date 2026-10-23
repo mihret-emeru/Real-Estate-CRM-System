@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import LeadForm from "@/components/leads/LeadForm";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import BackLink from "@/components/common/BackLink";
+import Link from "next/link";
 
 export default function EditLeadPage() {
   const { id } = useParams();
@@ -54,13 +57,14 @@ export default function EditLeadPage() {
     }
   }
 
-  if (loading) return <h2>Loading...</h2>;
+  if (loading) return <LoadingSpinner message="Loading lead..." />;
 
   if (!lead) return <h2>Lead not found.</h2>;
 
   return (
     <div className="edit-lead-page">
       <div className="page-title">
+        <BackLink href="/manager/leads" label="Back to Leads" />
         <h1>Edit Lead</h1>
         <p>Update lead information</p>
       </div>
