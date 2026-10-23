@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import BackLink from "@/components/common/BackLink";
 import "@/styles/add-property.css";
 
 const PropertyLocationPicker = dynamic(
@@ -161,9 +162,7 @@ export default function AddPropertyPage() {
   }
   return (
     <div className="add-property-page">
-      <Link href="/manager/properties" className="property-back-link">
-        ← Back to Properties
-      </Link>
+      <BackLink href="/manager/properties" label="Back to Properties" />
       <div className="page-title">
         <h1>Add New Property</h1>
         <p>Create and manage property listings</p>
