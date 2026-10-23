@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import dynamic from "next/dynamic";
+import BackLink from "@/components/common/BackLink";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 import "@/styles/property-details.css";
 
@@ -98,7 +100,7 @@ export default function ClientPropertyDetailsPage() {
   if (loading) {
     return (
       <div className="property-details-page">
-        <h2>Loading property...</h2>
+        <LoadingSpinner message="Loading property..." />
       </div>
     );
   }
@@ -108,7 +110,7 @@ export default function ClientPropertyDetailsPage() {
       <div className="property-details-page">
         <h2>Property not found.</h2>
 
-        <Link href="/client/dashboard" className="property-back-link">
+        <Link href="/client/properties" className="property-back-link">
           ← Back to Home
         </Link>
       </div>
@@ -124,9 +126,7 @@ export default function ClientPropertyDetailsPage() {
 
   return (
     <div className="property-details-page">
-      <Link href="/client/dashboard" className="property-back-link">
-        ← Back to Properties
-      </Link>
+      <BackLink href="/client/properties" label="Back to Properties" />
 
       <div className="property-details-header">
         <div>
