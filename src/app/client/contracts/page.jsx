@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import "@/styles/client/contracts.css";
 
 export default function ClientContractsPage() {
@@ -30,7 +31,7 @@ export default function ClientContractsPage() {
   if (loading) {
     return (
       <div className="client-contracts-page">
-        <div className="contracts-loading">Loading contracts...</div>
+        <LoadingSpinner message="Loading contracts..." />
       </div>
     );
   }
@@ -39,6 +40,7 @@ export default function ClientContractsPage() {
     <div className="client-contracts-page">
       <div className="contracts-header">
         <div>
+          <span>DOCUMENTS</span>
           <h1>My Contracts</h1>
 
           <p>
