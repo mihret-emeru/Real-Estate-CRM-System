@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import PaymentActions from "@/components/payments/PaymentActions";
 import paymentStatusLabel from "@/utils/paymentStatusLabel";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import "@/styles/payment-details.css";
 import Link from "next/link";
 
@@ -33,11 +34,11 @@ export default function PaymentDetailsPage({ params }) {
   }, [params]);
 
   if (loading) {
-    return <p>Loading payment...</p>;
+    return <LoadingSpinner message="Loading payment..." />;
   }
 
   if (!payment) {
-    return <p>Payment not found.</p>;
+    return <LoadingSpinner message="Payment not found." />;
   }
 
   async function updatePayment(status) {
