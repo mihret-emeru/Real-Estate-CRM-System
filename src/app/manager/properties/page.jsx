@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import "@/styles/property.css";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import {
   FaPlus,
   FaBed,
@@ -58,7 +59,7 @@ export default function PropertiesPage() {
   }, [currentPage, statusFilter]);
 
   if (loading) {
-    return "Loading properties...";
+    return <LoadingSpinner message="Loading properties..." />;
   }
 
   async function handleDelete(id) {
