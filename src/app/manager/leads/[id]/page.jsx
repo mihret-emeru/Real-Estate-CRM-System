@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import LeadTimeline from "@/components/leads/LeadTimeline";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import {
   FaChartLine,
   FaFire,
@@ -52,7 +53,7 @@ export default function LeadDetailsPage() {
   }, [id]);
 
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <LoadingSpinner message="Loading leads..." />;
   }
 
   if (!lead) {
