@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import LeadForm from "@/components/leads/LeadForm";
+import BackLink from "@/components/common/BackLink";
 
 export default function AddLeadPage() {
   const router = useRouter();
@@ -32,6 +33,7 @@ export default function AddLeadPage() {
 
   return (
     <div className="leads-page">
+      <BackLink href="/manager/leads" label="Back to Leads" />
       <div className="page-title">
         <h1>Create Manual Lead</h1>
         <p>Add leads from phone calls, office visits, or referrals</p>
