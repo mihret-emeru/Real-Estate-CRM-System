@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import ClientPropertyCard from "@/components/client/ClientPropertyCard";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import "@/styles/client/favorites.css";
 
 export default function ClientFavoritesPage() {
   const [favorites, setFavorites] = useState([]);
@@ -69,14 +71,8 @@ export default function ClientFavoritesPage() {
       console.error("Failed to update favorite:", error);
     }
   }
-
   if (loading) {
-    return (
-      <div className="client-favorites-page">
-        <h1>Favorites</h1>
-        <p>Loading your favorites...</p>
-      </div>
-    );
+    return <LoadingSpinner message="Loading favorites..." />;
   }
 
   if (error) {
