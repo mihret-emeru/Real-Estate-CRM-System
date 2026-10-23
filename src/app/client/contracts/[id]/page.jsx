@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import BackLink from "@/components/common/BackLink";
 
 import "@/styles/client/contract-details.css";
 
@@ -40,7 +42,7 @@ export default function ClientContractDetailsPage() {
   if (loading) {
     return (
       <div className="client-contract-details-page">
-        <p>Loading contract...</p>
+        <LoadingSpinner message="Loading contract..." />
       </div>
     );
   }
@@ -50,7 +52,7 @@ export default function ClientContractDetailsPage() {
       <div className="client-contract-details-page">
         <h2>Contract not found.</h2>
 
-        <Link href="/client/contracts">← Back to Contracts</Link>
+        <BackLink href="/client/contracts" label="Back to Contracts" />
       </div>
     );
   }
@@ -68,9 +70,7 @@ export default function ClientContractDetailsPage() {
 
       <div className="contract-details-header">
         <div>
-          <Link href="/client/contracts" className="contract-back-link">
-            ← Back to Contracts
-          </Link>
+          <BackLink href="/client/contracts" label="Back to Contracts" />
 
           <h1>{contract.contractNumber || "Contract"}</h1>
 
