@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import SignatureCanvas from "react-signature-canvas";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import BackLink from "@/components/common/BackLink";
 
 import "@/styles/client/contract-sign.css";
 
@@ -127,7 +129,7 @@ export default function ClientContractSignPage() {
   if (loading) {
     return (
       <div className="contract-sign-page">
-        <div className="contract-sign-loading">Loading contract...</div>
+        <LoadingSpinner message="Loading contract..." />
       </div>
     );
   }
@@ -161,13 +163,7 @@ export default function ClientContractSignPage() {
         {/* Header */}
 
         <div className="contract-sign-header">
-          <button
-            type="button"
-            className="contract-back-btn"
-            onClick={() => router.push("/client/contracts")}
-          >
-            ← Back to Contracts
-          </button>
+          <BackLink href="/client/contracts" label="Back to Contracts" />
 
           <div>
             <h1>Sign Contract</h1>
