@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import BackLink from "@/components/common/BackLink";
 import dynamic from "next/dynamic";
 import "@/styles/add-property.css";
 
@@ -141,7 +143,7 @@ export default function EditPropertyPage() {
   }
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <LoadingSpinner message="Loading..." />;
   }
   async function handleUpdate(e) {
     e.preventDefault();
@@ -206,9 +208,7 @@ export default function EditPropertyPage() {
 
   return (
     <div className="add-property-page">
-      <Link href={`/manager/properties/${id}`} className="property-back-link">
-        ← Back to Property
-      </Link>
+      <BackLink href={`/manager/properties/${id}`} label="Back to Property" />
       <div className="page-title">
         <h1>Edit Property</h1>
         <p>Update property information</p>
