@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import BackLink from "@/components/common/BackLink";
 
 import {
   FaArrowLeft,
@@ -508,7 +510,11 @@ export default function ClientPaymentDetailsPage() {
     return (
       <div className="payment-details-page">
         <div className="payment-details-loading">
-          {verifying ? "Verifying Chapa payment..." : "Loading payment..."}
+          {verifying ? (
+            "Verifying Chapa payment..."
+          ) : (
+            <LoadingSpinner message="Loading payment..." />
+          )}
         </div>
       </div>
     );
@@ -568,10 +574,7 @@ export default function ClientPaymentDetailsPage() {
       {/* Header */}
 
       <div className="payment-details-header">
-        <Link href="/client/payments" className="payment-back-link">
-          <FaArrowLeft />
-          Back to Payments
-        </Link>
+        <BackLink href="/client/payments" label="Back to Payments" />
 
         {/* RETURNED FROM CHAPA */}
 
