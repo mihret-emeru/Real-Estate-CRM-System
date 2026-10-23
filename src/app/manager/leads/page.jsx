@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import LeadTable from "@/components/leads/LeadTable";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import {
   FaPlus,
   FaUsers,
@@ -63,7 +64,7 @@ export default function LeadsPage() {
   }
 
   if (loading) {
-    return <h2>Loading leads...</h2>;
+    return <LoadingSpinner message="Loading leads..." />;
   }
   const filteredLeads = leads.filter((lead) => {
     const searchMatch =
