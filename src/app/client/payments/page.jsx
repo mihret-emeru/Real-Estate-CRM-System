@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import {
   FaMoneyBillWave,
   FaCheckCircle,
@@ -131,7 +132,7 @@ export default function ClientPaymentsPage() {
   if (loading) {
     return (
       <div className="client-payments-page">
-        <div className="client-payments-loading">Loading payments...</div>
+        <LoadingSpinner message="Loading payments..." />
       </div>
     );
   }
