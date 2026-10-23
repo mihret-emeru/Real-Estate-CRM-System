@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import BackLink from "@/components/common/BackLink";
 import "@/styles/property-details.css";
 import dynamic from "next/dynamic";
 import {
@@ -132,16 +134,14 @@ export default function PropertyDetailsPage() {
   if (loading || !property) {
     return (
       <div className="property-details-page">
-        <h2>Loading property...</h2>
+        <LoadingSpinner message="Loading property..." />
       </div>
     );
   }
 
   return (
     <div className="property-details-page">
-      <Link href="/manager/properties" className="property-back-link">
-        ← Back to Properties
-      </Link>
+      <BackLink href="/manager/properties" label="Back to Properties" />
       <div className="property-details-header">
         <div>
           <h1>{property.title}</h1>
