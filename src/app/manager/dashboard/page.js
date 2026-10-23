@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { FiSun, FiSunrise, FiMoon } from "react-icons/fi";
 
 import "@/styles/manager-dashboard.css";
 
@@ -9,6 +12,17 @@ import AnalyticsChart from "@/components/analytics/AnalyticsChart";
 import ManagerNeedsAttention from "@/components/manager-dashboard/ManagerNeedsAttention";
 
 export default function ManagerDashboardPage() {
+  const { data: session } = useSession();
+
+  const manager = session?.user;
+  const hour = new Date().getHours();
+
+  const greeting =
+    hour < 12
+      ? { text: "Good morning", Icon: FiSunrise }
+      : hour < 17
+        ? { text: "Good afternoon", Icon: FiSun }
+        : { text: "Good evening", Icon: FiMoon };
   const [dashboard, setDashboard] = useState(null);
 
   const [loading, setLoading] = useState(true);
@@ -43,9 +57,7 @@ export default function ManagerDashboardPage() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="manager-dashboard-loading">Loading dashboard...</div>
-    );
+    return <LoadingSpinner message="Loading dashboard..." />;
   }
 
   if (error) {
@@ -205,9 +217,16 @@ export default function ManagerDashboardPage() {
 
       <div className="manager-dashboard-header">
         <div>
-          <h1>Dashboard</h1>
+          <span className="manager-dashboard-eyebrow">Manager Workspace</span>
 
-          <p>Welcome back. Here's what's happening with your business today.</p>
+          <h1 className="manager-dashboard-greeting">
+            <greeting.Icon className="manager-greeting-icon" />
+            <span>
+              {greeting.text}, {manager?.name || "Manager"}
+            </span>
+          </h1>
+
+          <p>Here's an overview of your current activity.</p>
         </div>
       </div>
 
