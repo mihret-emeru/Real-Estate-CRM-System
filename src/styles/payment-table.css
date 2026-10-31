@@ -1,0 +1,228 @@
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  background: #ffffff;
+
+  border: 1px solid #e8e3da;
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  font-size: 14px;
+}
+
+/* Header */
+
+.payment-table thead {
+  background: #f7f5f1;
+}
+
+.payment-table th {
+  padding: 14px 16px;
+
+  text-align: left;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  color: #555555;
+
+  border-bottom: 1px solid #e5e0d8;
+
+  white-space: nowrap;
+}
+
+/* Table body */
+
+.payment-table td {
+  padding: 15px 16px;
+
+  color: #333333;
+
+  border-bottom: 1px solid #eeeae4;
+
+  vertical-align: middle;
+}
+
+.payment-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.payment-table tbody tr:hover {
+  background: #faf9f7;
+}
+
+/* Client */
+
+.payment-table td:first-child {
+  font-weight: 600;
+  color: #252525;
+}
+
+/* Contract number */
+
+.payment-table td:nth-child(2) {
+  color: #555555;
+}
+
+/* Installment */
+
+.payment-table td:nth-child(3) {
+  font-weight: 600;
+  color: #555555;
+}
+
+/* Due date */
+
+.payment-table td:nth-child(4) {
+  white-space: nowrap;
+  color: #555555;
+}
+
+/* Amount */
+
+.payment-table td:nth-child(5) {
+  font-weight: 600;
+  color: #02483e;
+  white-space: nowrap;
+}
+
+/* Action */
+
+.payment-table td:last-child a {
+  display: inline-block;
+
+  padding: 6px 12px;
+
+  color: #02483e;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  border: 1px solid #cfe0dc;
+  border-radius: 6px;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.payment-table td:last-child a:hover {
+  background: #e7f2ef;
+  border-color: #02483e;
+}
+
+/* Empty state */
+
+.payment-table tbody tr td[colspan="7"] {
+  padding: 40px 20px;
+
+  text-align: center;
+
+  color: #888888;
+  font-size: 14px;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .payment-table {
+    min-width: 850px;
+  }
+}
+
+/* ================================
+   Payment Pagination
+================================ */
+
+.payment-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 22px 16px 12px;
+}
+
+.payment-pagination button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid #dce3dc;
+  border-radius: 9px;
+  background-color: #ffffff;
+  color: #526653;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.payment-pagination button:hover:not(:disabled) {
+  background-color: #edf2eb;
+  border-color: #91a48f;
+  color: #344b36;
+}
+
+.payment-pagination button.active {
+  background-color: #526b55;
+  border-color: #526b55;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(52, 75, 54, 0.15);
+}
+
+.payment-pagination button:disabled {
+  background-color: #f5f5f0;
+  border-color: #e8e8e0;
+  color: #b7b9b0;
+  cursor: not-allowed;
+}
+
+.payment-pagination button:focus-visible {
+  outline: 2px solid #c5a76b;
+  outline-offset: 3px;
+}
+
+/* Pagination information */
+
+.payment-pagination-info {
+  padding: 0 16px 20px;
+  color: #7b8278;
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* Responsive pagination */
+
+@media (max-width: 480px) {
+  .payment-pagination {
+    gap: 6px;
+    padding: 18px 8px 10px;
+  }
+
+  .payment-pagination button {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 9px;
+    border-radius: 7px;
+    font-size: 12px;
+  }
+
+  .payment-pagination-info {
+    padding: 0 8px 16px;
+    font-size: 12px;
+  }
+}

@@ -3,18 +3,52 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import RoleSelect from "@/components/common/RoleSelect";
 import Link from "next/link";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 
-export default function LoginForm() {
+export default function LoginForm({ propertyId, conversion, returnTo }) {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  async function handleConversionLogin() {
+    const purpose =
+      conversion === "interest" ? "property_interest" : conversion;
+
+    const response = await fetch("/api/public/conversion-token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        propertyId,
+        purpose,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error(data.message || "Unable to continue.");
+    }
+
+    const publicWebsiteUrl =
+      process.env.NEXT_PUBLIC_PUBLIC_WEBSITE_URL || "http://localhost:3001";
+
+    const conversionUrl =
+      `${publicWebsiteUrl}/properties/${propertyId}` +
+      `?conversionToken=${encodeURIComponent(data.token)}` +
+      `&conversion=${encodeURIComponent(conversion)}`;
+
+    window.location.href = conversionUrl;
+  }
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -22,8 +56,8 @@ export default function LoginForm() {
     setError("");
     setLoading(true);
 
-    if (!email || !password) {
-      setError("Please fill in all fields.");
+    if (!role || !email || !password) {
+      setError("Please select your role and fill in all fields.");
       setLoading(false);
       return;
     }
@@ -33,26 +67,75 @@ export default function LoginForm() {
       password,
       redirect: false,
     });
+    if (result?.error) {
+      if (result.error === "ACCOUNT_DEACTIVATED") {
+        setError(
+          "Your account has been deactivated. Please contact the administrator.",
+        );
+      } else {
+        setError("Invalid email or password.");
+      }
 
-    if (result.error) {
-      setError("Invalid email or password.");
       setLoading(false);
       return;
     }
 
-    // Temporary redirect
-    router.push("/client/dashboard");
+    try {
+      const sessionResponse = await fetch("/api/auth/session");
+
+      const sessionData = await sessionResponse.json();
+
+      if (propertyId && conversion && sessionData?.user?.role === "client") {
+        await handleConversionLogin();
+        return;
+      }
+
+      switch (sessionData?.user?.role) {
+        case "admin":
+          router.push("/admin/dashboard");
+          break;
+
+        case "manager":
+          router.push("/manager/dashboard");
+          break;
+
+        case "agent":
+          router.push("/agent/dashboard");
+          break;
+
+        default:
+          router.push("/client/dashboard");
+      }
+    } catch (error) {
+      console.error("Conversion login error:", error);
+
+      setError(error.message || "Login succeeded, but we could not continue.");
+
+      setLoading(false);
+    }
   }
 
   return (
     <div className="login-form-container">
+      <div className="heading-line"></div>
+
       <h1>Welcome Back</h1>
 
-      <p>Sign in to continue to your account.</p>
+      <p>
+        {propertyId
+          ? "Sign in to continue with this property."
+          : "Sign in to continue to your account."}
+      </p>
 
       {error && <div className="login-error">{error}</div>}
 
       <form onSubmit={handleLogin}>
+        <div className="form-group">
+          <label>Select Your Role</label>
+
+          <RoleSelect value={role} onChange={setRole} />
+        </div>
+
         <div className="form-group">
           <label>Email</label>
 
@@ -70,6 +153,7 @@ export default function LoginForm() {
 
         <div className="form-group">
           <label>Password</label>
+
           <div className="input-wrapper">
             <FaLock className="input-icon" />
 
@@ -79,6 +163,7 @@ export default function LoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+
             <button
               type="button"
               className="password-toggle"
@@ -94,6 +179,7 @@ export default function LoginForm() {
             <input type="checkbox" />
             <span>Remember me</span>
           </label>
+
           <Link href="/forgot-password">Forgot password?</Link>
         </div>
 

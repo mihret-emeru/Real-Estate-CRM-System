@@ -36,6 +36,10 @@ export const authOptions = {
             throw new Error("User not found");
           }
 
+          if (user.isActive === false) {
+            throw new Error("ACCOUNT_DEACTIVATED");
+          }
+
           const isPasswordCorrect = await bcrypt.compare(
             credentials.password,
             user.password,

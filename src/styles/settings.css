@@ -1,0 +1,475 @@
+/* ================================
+   Settings Page
+================================ */
+
+.settings-page {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px;
+  color: #303b32;
+  font-family: inherit;
+}
+
+.settings-header {
+  margin-bottom: 28px;
+}
+
+.settings-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 22px;
+  color: #617864;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.settings-back-link:hover {
+  color: #354d39;
+}
+
+.settings-header h1 {
+  margin: 0 0 8px;
+  font-size: 30px;
+  font-weight: 700;
+  color: #303b32;
+}
+
+.settings-header p {
+  margin: 0;
+  color: #7a827a;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Settings Cards */
+
+.settings-card {
+  padding: 26px;
+  margin-bottom: 22px;
+  background: #ffffff;
+  border: 1px solid #e6e9e2;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(40, 55, 40, 0.04);
+}
+
+.settings-section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding-bottom: 22px;
+}
+
+.settings-section-heading > svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+  color: #718873;
+  font-size: 20px;
+}
+
+.settings-section-heading h2 {
+  margin: 0 0 6px;
+  color: #354238;
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.settings-section-heading p {
+  margin: 0;
+  color: #858b83;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Form Fields */
+
+.settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  max-width: 420px;
+}
+
+.settings-field label {
+  color: #4c584d;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.settings-field select {
+  width: 100%;
+  padding: 12px 14px;
+  color: #354238;
+  background: #fbfcf9;
+  border: 1px solid #dfe5da;
+  border-radius: 8px;
+  outline: none;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.settings-field select:focus {
+  border-color: #829984;
+  box-shadow: 0 0 0 3px rgba(130, 153, 132, 0.13);
+}
+
+/* Notification Toggles */
+
+.settings-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 0;
+  border-top: 1px solid #edf0e9;
+  cursor: pointer;
+}
+
+.settings-toggle span {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.settings-toggle strong {
+  color: #465348;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.settings-toggle small {
+  color: #8a9088;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.settings-toggle input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: #718873;
+  cursor: pointer;
+}
+
+/* Profile Link */
+
+.settings-profile-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 18px;
+  color: #536d56;
+  background: #f3f6f0;
+  border: 1px solid #dfe7da;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.settings-profile-link:hover {
+  background: #e9efe5;
+}
+
+/* Save Button */
+
+.settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.settings-actions button {
+  padding: 12px 24px;
+  color: #ffffff;
+  background: #718873;
+  border: 1px solid #718873;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.settings-actions button:hover {
+  background: #5e755f;
+  border-color: #5e755f;
+}
+
+.settings-actions button:active {
+  transform: translateY(1px);
+}
+
+/* Success Message */
+
+.settings-success {
+  padding: 13px 16px;
+  margin-bottom: 20px;
+  color: #3f6846;
+  background: #edf6eb;
+  border: 1px solid #d4e8d1;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+  .settings-page {
+    padding: 22px 16px;
+  }
+
+  .settings-header h1 {
+    font-size: 26px;
+  }
+
+  .settings-card {
+    padding: 20px 16px;
+    border-radius: 12px;
+  }
+
+  .settings-section-heading {
+    gap: 11px;
+  }
+
+  .settings-toggle {
+    gap: 12px;
+  }
+
+  .settings-actions {
+    justify-content: stretch;
+  }
+
+  .settings-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .settings-page {
+    padding: 18px 12px;
+  }
+
+  .settings-card {
+    padding: 18px 13px;
+  }
+}
+
+/* ================================
+   Dark Mode
+================================ */
+
+html[data-theme="dark"] .settings-page {
+  color: #e8ede7;
+}
+
+html[data-theme="dark"] .settings-header h1 {
+  color: #e8ede7;
+}
+
+html[data-theme="dark"] .settings-header p {
+  color: #b1bbb1;
+}
+
+html[data-theme="dark"] .settings-card {
+  background: #242d26;
+  border-color: #3c493e;
+  box-shadow: none;
+}
+
+html[data-theme="dark"] .settings-section-heading h2 {
+  color: #e2e9e0;
+}
+
+html[data-theme="dark"] .settings-section-heading p,
+html[data-theme="dark"] .settings-toggle small {
+  color: #b1bbb1;
+}
+
+html[data-theme="dark"] .settings-field label,
+html[data-theme="dark"] .settings-toggle strong {
+  color: #dce5da;
+}
+
+html[data-theme="dark"] .settings-field select {
+  color: #e8ede7;
+  background: #303b32;
+  border-color: #4b5b4d;
+}
+
+html[data-theme="dark"] .settings-field select option {
+  color: #e8ede7;
+  background: #303b32;
+}
+
+html[data-theme="dark"] .settings-toggle {
+  border-top-color: #3c493e;
+}
+
+html[data-theme="dark"] .settings-profile-link {
+  color: #dbe8d8;
+  background: #344637;
+  border-color: #4b624e;
+}
+
+html[data-theme="dark"] .settings-profile-link:hover {
+  background: #405642;
+}
+
+html[data-theme="dark"] .settings-success {
+  color: #c5e8c5;
+  background: #263e2b;
+  border-color: #3c6242;
+}
+
+html[data-theme="dark"] .settings-back-link {
+  color: #b8d0b8;
+}
+
+html[data-theme="dark"] .settings-back-link:hover {
+  color: #e2f0e0;
+}
+
+html[data-theme="dark"] .settings-page .settings-actions button {
+  color: #ffffff;
+  background: #617c63;
+  border-color: #617c63;
+}
+
+html[data-theme="dark"] .settings-page .settings-actions button:hover {
+  background: #506a52;
+  border-color: #506a52;
+}
+
+/* Dark Mode: Improve Text Contrast */
+
+html[data-theme="dark"] .settings-page {
+  color: #f1f5f0;
+}
+
+html[data-theme="dark"] .settings-header h1 {
+  color: #f5f7f3;
+}
+
+html[data-theme="dark"] .settings-header p {
+  color: #c5cec4;
+}
+
+html[data-theme="dark"] .settings-section-heading h2 {
+  color: #f0f5ee;
+}
+
+html[data-theme="dark"] .settings-section-heading p {
+  color: #c5cec4;
+}
+
+html[data-theme="dark"] .settings-section-heading > svg {
+  color: #b9d2b9;
+}
+
+html[data-theme="dark"] .settings-field label {
+  color: #e7eee5;
+}
+
+html[data-theme="dark"] .settings-field select {
+  color: #f5f7f3;
+  background: #303b32;
+}
+
+html[data-theme="dark"] .settings-toggle strong {
+  color: #f0f5ee;
+}
+
+html[data-theme="dark"] .settings-toggle small {
+  color: #c5cec4;
+}
+
+html[data-theme="dark"] .settings-back-link {
+  color: #c6dfc6;
+}
+
+html[data-theme="dark"] .settings-back-link:hover {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .settings-profile-link {
+  color: #edf5eb;
+  background: #354a38;
+  border-color: #58715a;
+}
+
+html[data-theme="dark"] .settings-success {
+  color: #d9f7d9;
+  background: #263e2b;
+  border-color: #4c7351;
+}
+
+/* Dark Mode: Full Settings Page Background */
+
+html[data-theme="dark"] body {
+  background-color: #18211b !important;
+  color: #f5f7f3;
+}
+
+html[data-theme="dark"] .settings-page {
+  min-height: 100vh;
+  background-color: #18211b;
+  color: #f5f7f3;
+}
+
+html[data-theme="dark"] .settings-header h1,
+html[data-theme="dark"] .settings-section-heading h2,
+html[data-theme="dark"] .settings-toggle strong {
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .settings-header p,
+html[data-theme="dark"] .settings-section-heading p,
+html[data-theme="dark"] .settings-toggle small {
+  color: #d5dfd3 !important;
+}
+
+html[data-theme="dark"] .settings-section-heading > svg {
+  color: #c1d9c0 !important;
+}
+
+html[data-theme="dark"] .settings-back-link {
+  color: #cce5ca !important;
+}
+
+html[data-theme="dark"] .settings-field label {
+  color: #f0f5ee !important;
+}
+
+html[data-theme="dark"] .settings-toggle {
+  border-top-color: #435247;
+}
+
+html[data-theme="dark"] .settings-field select {
+  color: #ffffff !important;
+  background-color: #303b32 !important;
+  border-color: #586b5a !important;
+}
+
+html[data-theme="dark"] .settings-profile-link {
+  color: #ffffff !important;
+  background-color: #354a38 !important;
+  border-color: #58715a !important;
+}
+
+html[data-theme="dark"] .settings-success {
+  color: #e0ffe0 !important;
+  background-color: #263e2b !important;
+  border-color: #4c7351 !important;
+}

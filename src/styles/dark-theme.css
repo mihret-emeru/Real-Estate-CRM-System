@@ -1,0 +1,88 @@
+html.dark body {
+  background: #141917;
+  color: #f1f5f3;
+}
+
+html.dark main,
+html.dark section,
+html.dark article,
+html.dark aside,
+html.dark nav {
+  color: #f1f5f3;
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background: #1d2522;
+  color: #f1f5f3;
+  border-color: #35413d;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #aeb9b5;
+}
+
+html.dark table {
+  background: #1d2522;
+  color: #f1f5f3;
+}
+
+html.dark th {
+  background: #26302d;
+  color: #f1f5f3;
+}
+
+html.dark td {
+  border-color: #35413d;
+}
+
+html.dark button {
+  color: inherit;
+}
+
+html.dark .property-page,
+html.dark .dashboard-page,
+html.dark .settings-page,
+html.dark .admin-page,
+html.dark .manager-page,
+html.dark .agent-page,
+html.dark .client-page {
+  background: #141917;
+  color: #f1f5f3;
+}
+
+html.dark .property-card,
+html.dark .dashboard-card,
+html.dark .settings-card,
+html.dark .admin-card,
+html.dark .manager-card,
+html.dark .agent-card,
+html.dark .client-card {
+  background: #1d2522;
+  color: #f1f5f3;
+  border-color: #35413d;
+}
+
+html.dark .property-card h1,
+html.dark .property-card h2,
+html.dark .property-card h3,
+html.dark .dashboard-card h1,
+html.dark .dashboard-card h2,
+html.dark .dashboard-card h3,
+html.dark .settings-card h1,
+html.dark .settings-card h2,
+html.dark .settings-card h3 {
+  color: #f1f5f3;
+}
+
+html.dark .property-card p,
+html.dark .dashboard-card p,
+html.dark .settings-card p {
+  color: #aeb9b5;
+}
+
+html.dark hr {
+  border-color: #35413d;
+}

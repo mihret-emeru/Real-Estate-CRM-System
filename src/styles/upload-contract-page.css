@@ -1,0 +1,54 @@
+.page-container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.page-container h1 {
+  margin: 0 0 6px;
+
+  color: #02483e;
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.page-container .back-link {
+  display: inline-block;
+
+  margin-bottom: 16px;
+
+  color: #02483e;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+.page-container .back-link:hover {
+  text-decoration: underline;
+}
+
+/* Let ContractForm provide the single frame */
+.page-container .contract-form {
+  width: 100%;
+  max-width: 900px;
+
+  margin: 0;
+  padding: 0;
+
+  background: transparent;
+  border: none;
+  border-radius: 0;
+
+  box-sizing: border-box;
+}
+
+@media (max-width: 700px) {
+  .page-container .contract-form {
+    max-width: 100%;
+  }
+}

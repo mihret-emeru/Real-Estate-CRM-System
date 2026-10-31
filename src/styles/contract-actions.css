@@ -1,0 +1,64 @@
+.contract-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.contract-actions a,
+.contract-actions button {
+  width: 34px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 7px;
+
+  font-size: 13px;
+  text-decoration: none;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+}
+
+.contract-view-btn {
+  color: #00b4cc;
+  background: #e7f2ef;
+}
+
+.contract-edit-btn {
+  color: #f8ca00;
+  background: #fff4d6;
+}
+
+.contract-download-btn {
+  color: #2563eb;
+  background: #eaf2ff;
+}
+
+.contract-delete-btn {
+  color: #cc333f;
+  background: #fdecec;
+}
+
+.contract-view-btn:hover {
+  background: #d9ebe6;
+}
+
+.contract-edit-btn:hover {
+  background: #ffedbd;
+}
+
+.contract-download-btn:hover {
+  background: #dce9ff;
+}
+
+.contract-delete-btn:hover {
+  background: #fbdada;
+}
