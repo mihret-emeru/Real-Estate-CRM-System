@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Real Estate CRM System
 
-## Getting Started
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![Real Estate](https://img.shields.io/badge/Real%20Estate-CRM-2F6B5F?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-In_Development-orange?style=for-the-badge)
+![License](https://img.shields.io/badge/License-Educational-blue?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-1.0-green?style=for-the-badge)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Description
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+The **Real Estate CRM System** is a modern web-based platform that streamlines real estate operations through a centralized management system. It enables administrators, managers, agents, and clients to efficiently manage properties, customer relationships, sales, contracts, and daily business activities.
+##  Technology Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Frontend
 
-## Learn More
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
-To learn more about Next.js, take a look at the following resources:
+### Backend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![Next.js API Routes](https://img.shields.io/badge/Next.js_API_Routes-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![NextAuth.js](https://img.shields.io/badge/NextAuth.js-000000?style=for-the-badge)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Database
 
-## Deploy on Vercel
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=for-the-badge)
+#### Key Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- AI-Powered Property Recommendations
+- Map-Based Property Search
+- Virtual Property Tours
+- Automated Lead Generation from Website & Social Media Ads
+- Lead Scoring & Prioritization
+- Real-Time Live Chat
+- Property Management
+- Client Management
+- Agent Management
+- Contract & Installment Payment Management
+- Reports & Analytics Dashboard
+- Secure Role-Based Authentication
+- Responsive Design for Desktop, Tablet & Mobile
+##### Credits
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Real Estate CRM  System was created by Mercy and currently a work in progress.
