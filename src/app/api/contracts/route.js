@@ -6,6 +6,7 @@ import Contract from "@/models/Contract";
 import Property from "@/models/Property";
 import Payment from "@/models/Payment";
 import generateContractNumber from "@/utils/generateContractNumber";
+import { createNotification } from "@/utils/createNotification";
 import Lead from "@/models/Lead";
 
 export async function POST(request) {
@@ -101,6 +102,31 @@ export async function POST(request) {
     // ==========================================
 
     const contract = await Contract.create(contractData);
+
+    // Notify the client when a contract is created.
+    if (contract.client) {
+      try {
+        await createNotification({
+          recipient: contract.client,
+          type: "contract_created",
+          title: "New Contract Created",
+          message: `A contract (${contract.contractNumber}) has been created for ${property.title}. Please review your contract.`,
+          link: `/client/contracts`,
+          metadata: {
+            contractId: contract._id,
+            contractNumber: contract.contractNumber,
+            propertyId: property._id,
+            propertyTitle: property.title,
+          },
+          sendEmailNotification: true,
+        });
+      } catch (notificationError) {
+        console.error(
+          "Contract creation notification error:",
+          notificationError,
+        );
+      }
+    }
 
     // ==========================================
     // Update Property Status

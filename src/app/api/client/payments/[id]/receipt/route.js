@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import connectDB from "@/lib/mongodb";
 import Payment from "@/models/Payment";
+import User from "@/models/User";
 
 import { createNotification } from "@/utils/createNotification";
 
@@ -182,6 +183,10 @@ export async function POST(request, { params }) {
 
     await payment.save();
 
+    // ==========================================
+    // Notify client about receipt submission
+    // ==========================================
+
     await createNotification({
       recipient: payment.client,
       type: "payment_receipt_submitted",
@@ -190,10 +195,35 @@ export async function POST(request, { params }) {
       link: `/client/payments/${payment._id}`,
       metadata: {
         paymentId: payment._id,
-        propertyId: payment.property?._id || payment.property,
+        propertyId: payment.property,
         installmentNumber: payment.installmentNumber,
       },
     });
+
+    // ==========================================
+    // Notify active managers and admins
+    // ==========================================
+
+    const managersAndAdmins = await User.find({
+      role: { $in: ["manager", "admin"] },
+      isActive: true,
+    }).select("_id");
+
+    for (const user of managersAndAdmins) {
+      await createNotification({
+        recipient: user._id,
+        type: "payment_receipt_submitted",
+        title: "New Payment Receipt",
+        message: `A client submitted a receipt for installment #${payment.installmentNumber}. Please review the payment.`,
+        link: "/manager/payments",
+        metadata: {
+          paymentId: payment._id,
+          propertyId: payment.property,
+          installmentNumber: payment.installmentNumber,
+        },
+        sendEmailNotification: true,
+      });
+    }
 
     // ==========================================
     // Response

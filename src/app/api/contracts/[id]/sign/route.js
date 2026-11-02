@@ -7,6 +7,7 @@ import connectDB from "@/lib/mongodb";
 import Contract from "@/models/Contract";
 import Lead from "@/models/Lead";
 import Property from "@/models/Property";
+import { createNotification } from "@/utils/createNotification";
 
 export async function POST(request, { params }) {
   try {
@@ -112,6 +113,27 @@ export async function POST(request, { params }) {
     contract.status = "signed";
 
     await contract.save();
+
+    // Notify the responsible manager that the client signed the contract.
+    try {
+      await createNotification({
+        recipient: contract.manager,
+        type: "contract_updated",
+        title: "Contract Signed by Client",
+        message: `The client has signed contract ${contract.contractNumber}. Please review the signed contract.`,
+        link: `/manager/contracts/${contract._id}`,
+        metadata: {
+          contractId: contract._id,
+          contractNumber: contract.contractNumber,
+          clientId: contract.client,
+          propertyId: contract.property,
+          status: "signed",
+        },
+        sendEmailNotification: true,
+      });
+    } catch (notificationError) {
+      console.error("Contract signed notification error:", notificationError);
+    }
 
     /*
      * Property becomes sold after

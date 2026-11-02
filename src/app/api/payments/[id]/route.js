@@ -239,6 +239,7 @@ export async function PUT(request, { params }) {
         status,
         verificationNotes: payment.verificationNotes || "",
       },
+      sendEmailNotification: true,
     });
 
     return NextResponse.json({

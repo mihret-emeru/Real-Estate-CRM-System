@@ -2,6 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import connectDB from "@/lib/mongodb";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
+import { createNotification } from "@/utils/createNotification";
 
 export const authOptions = {
   providers: [
@@ -22,34 +23,100 @@ export const authOptions = {
 
       async authorize(credentials) {
         try {
-          console.log("Credentials received:", credentials);
-
           await connectDB();
 
-          const user = await User.findOne({
-            email: credentials.email,
-          });
+          const email = credentials?.email?.trim().toLowerCase();
+          const password = credentials?.password;
 
-          console.log("User found:", user);
+          if (!email || !password) {
+            throw new Error("Invalid email or password.");
+          }
+
+          const user = await User.findOne({ email });
+
           if (!user) {
-            console.log("No user found with email:", credentials.email);
-            throw new Error("User not found");
+            throw new Error("Invalid email or password.");
           }
 
           if (user.isActive === false) {
             throw new Error("ACCOUNT_DEACTIVATED");
           }
 
+          // Check whether the account is temporarily locked.
+          if (user.lockedUntil && user.lockedUntil > new Date()) {
+            throw new Error("ACCOUNT_TEMPORARILY_LOCKED");
+          }
+
+          // Reset an expired lockout.
+          if (user.lockedUntil && user.lockedUntil <= new Date()) {
+            user.failedLoginAttempts = 0;
+            user.lockedUntil = null;
+            await user.save();
+          }
+
           const isPasswordCorrect = await bcrypt.compare(
-            credentials.password,
+            password,
             user.password,
           );
 
-          console.log("Password correct:", isPasswordCorrect);
-
           if (!isPasswordCorrect) {
-            throw new Error("Invalid password");
+            console.log("FAILED LOGIN:", user.email);
+            console.log("ATTEMPTS BEFORE UPDATE:", user.failedLoginAttempts);
+            user.failedLoginAttempts = (user.failedLoginAttempts || 0) + 1;
+            user.lastFailedLoginAt = new Date();
+
+            // Lock the account after five failed attempts.
+            if (user.failedLoginAttempts === 5) {
+              user.lockedUntil = new Date(Date.now() + 15 * 60 * 1000);
+
+              // Notify active administrators.
+              try {
+                const admins = await User.find({
+                  role: "admin",
+                  isActive: true,
+                }).select("_id");
+
+                for (const admin of admins) {
+                  await createNotification({
+                    recipient: admin._id,
+                    type: "security_alert",
+                    title: "Account Temporarily Locked",
+                    message: `Account ${user.email} was temporarily locked after 5 failed login attempts.`,
+                    link: "/admin/users",
+                    metadata: {
+                      userId: user._id,
+                      email: user.email,
+                      failedAttempts: user.failedLoginAttempts,
+                      lockedUntil: user.lockedUntil,
+                    },
+                    sendEmailNotification: true,
+                  });
+                }
+              } catch (notificationError) {
+                console.error(
+                  "Security notification error:",
+                  notificationError,
+                );
+              }
+            }
+
+            await user.save();
+
+            console.log("ATTEMPTS AFTER UPDATE:", user.failedLoginAttempts);
+            console.log("LOCKED UNTIL:", user.lockedUntil);
+
+            throw new Error(
+              user.lockedUntil
+                ? "ACCOUNT_TEMPORARILY_LOCKED"
+                : "Invalid email or password.",
+            );
           }
+
+          // Reset failed attempts after successful login.
+          user.failedLoginAttempts = 0;
+          user.lastFailedLoginAt = null;
+          user.lockedUntil = null;
+          await user.save();
 
           return {
             id: user._id.toString(),
@@ -58,7 +125,7 @@ export const authOptions = {
             role: user.role,
           };
         } catch (error) {
-          console.error("AUTH ERROR:", error);
+          console.error("AUTH ERROR:", error.message);
           throw error;
         }
       },

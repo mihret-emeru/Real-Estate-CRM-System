@@ -25,6 +25,7 @@ const notificationSchema = new mongoose.Schema(
         "new_message",
         "property_update",
         "system",
+        "security_alert",
       ],
       required: true,
     },

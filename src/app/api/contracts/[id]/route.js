@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Contract from "@/models/Contract";
 import Property from "@/models/Property";
+import { createNotification } from "@/utils/createNotification";
 
 export async function GET(request, { params }) {
   try {
@@ -75,9 +76,53 @@ export async function PUT(request, { params }) {
     // Update contract
     // ==========================================
 
+    const previousStatus = contract.status;
+
     Object.assign(contract, body);
 
     await contract.save();
+
+    // Notify the client about contract cancellation or updates.
+    if (contract.client) {
+      try {
+        if (contract.status === "cancelled" && previousStatus !== "cancelled") {
+          await createNotification({
+            recipient: contract.client,
+            type: "contract_updated",
+            title: "Contract Cancelled",
+            message: `Your contract (${contract.contractNumber}) has been cancelled. Please contact the manager if you need further information.`,
+            link: "/client/contracts",
+            metadata: {
+              contractId: contract._id,
+              contractNumber: contract.contractNumber,
+              propertyId: contract.property,
+              status: "cancelled",
+            },
+            sendEmailNotification: true,
+          });
+        } else if (
+          contract.status !== "cancelled" &&
+          previousStatus !== "cancelled"
+        ) {
+          await createNotification({
+            recipient: contract.client,
+            type: "contract_updated",
+            title: "Contract Updated",
+            message: `Your contract (${contract.contractNumber}) has been updated. Please review the latest details.`,
+            link: "/client/contracts",
+            metadata: {
+              contractId: contract._id,
+              contractNumber: contract.contractNumber,
+              propertyId: contract.property,
+              status: contract.status,
+            },
+            sendEmailNotification: true,
+          });
+        }
+      } catch (notificationError) {
+        console.error("Contract notification error:", notificationError);
+      }
+    }
 
     // ==========================================
     // Update property according to contract status

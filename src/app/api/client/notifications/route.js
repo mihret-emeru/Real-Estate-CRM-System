@@ -5,31 +5,27 @@ import { authOptions } from "@/lib/auth";
 import connectDB from "@/lib/mongodb";
 import Notification from "@/models/Notification";
 
+const ALLOWED_ROLES = ["admin", "manager", "agent", "client"];
+
 export async function GET() {
   try {
-    await connectDB();
-
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "Unauthorized.",
-        },
+        { success: false, message: "Unauthorized." },
         { status: 401 },
       );
     }
 
-    if (session.user.role !== "client") {
+    if (!ALLOWED_ROLES.includes(session.user.role)) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "Only clients can access notifications.",
-        },
+        { success: false, message: "Access denied." },
         { status: 403 },
       );
     }
+
+    await connectDB();
 
     const notifications = await Notification.find({
       recipient: session.user.id,
@@ -49,7 +45,7 @@ export async function GET() {
       unreadCount,
     });
   } catch (error) {
-    console.error("Client notifications GET error:", error);
+    console.error("Notifications GET error:", error);
 
     return NextResponse.json(
       {
@@ -63,37 +59,26 @@ export async function GET() {
 
 export async function PATCH(request) {
   try {
-    await connectDB();
-
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "Unauthorized.",
-        },
+        { success: false, message: "Unauthorized." },
         { status: 401 },
       );
     }
 
-    if (session.user.role !== "client") {
+    if (!ALLOWED_ROLES.includes(session.user.role)) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "Only clients can update notifications.",
-        },
+        { success: false, message: "Access denied." },
         { status: 403 },
       );
     }
 
     const body = await request.json();
-
     const { notificationId, markAll } = body;
 
-    // ==========================================
-    // MARK ALL AS READ
-    // ==========================================
+    await connectDB();
 
     if (markAll === true) {
       await Notification.updateMany(
@@ -102,9 +87,7 @@ export async function PATCH(request) {
           isRead: false,
         },
         {
-          $set: {
-            isRead: true,
-          },
+          $set: { isRead: true },
         },
       );
 
@@ -113,10 +96,6 @@ export async function PATCH(request) {
         message: "All notifications marked as read.",
       });
     }
-
-    // ==========================================
-    // MARK ONE AS READ
-    // ==========================================
 
     if (!notificationId) {
       return NextResponse.json(
@@ -134,13 +113,9 @@ export async function PATCH(request) {
         recipient: session.user.id,
       },
       {
-        $set: {
-          isRead: true,
-        },
+        $set: { isRead: true },
       },
-      {
-        new: true,
-      },
+      { new: true },
     );
 
     if (!notification) {
@@ -159,7 +134,7 @@ export async function PATCH(request) {
       data: notification,
     });
   } catch (error) {
-    console.error("Client notifications PATCH error:", error);
+    console.error("Notifications PATCH error:", error);
 
     return NextResponse.json(
       {

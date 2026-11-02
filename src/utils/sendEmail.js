@@ -1,25 +1,25 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-let resendClient;
+let transporter;
 
-function getResendClient() {
-  if (!process.env.RESEND_API_KEY) {
-    throw new Error("RESEND_API_KEY is not configured.");
+function getTransporter() {
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+    throw new Error("Gmail SMTP credentials are not configured.");
   }
 
-  if (!resendClient) {
-    resendClient = new Resend(process.env.RESEND_API_KEY);
+  if (!transporter) {
+    transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
+    });
   }
 
-  return resendClient;
+  return transporter;
 }
 
-/**
- * Send a transactional email.
- *
- * Returns a result instead of throwing so an email failure
- * does not automatically interrupt the calling workflow.
- */
 export async function sendEmail({ to, subject, html, text }) {
   if (!to || !subject || (!html && !text)) {
     return {
@@ -29,35 +29,26 @@ export async function sendEmail({ to, subject, html, text }) {
   }
 
   try {
-    const resend = getResendClient();
+    const mailer = getTransporter();
 
-    const result = await resend.emails.send({
-      from: process.env.EMAIL_FROM || "Your CRM <onboarding@resend.dev>",
-      to: Array.isArray(to) ? to : [to],
+    const result = await mailer.sendMail({
+      from: `"EverHome Real Estate CRM" <${process.env.GMAIL_USER}>`,
+      to: Array.isArray(to) ? to.join(", ") : to,
       subject,
       ...(html ? { html } : {}),
       ...(text ? { text } : {}),
     });
 
-    if (result.error) {
-      console.error("Resend email error:", result.error);
-
-      return {
-        success: false,
-        error: result.error.message || "Failed to send email.",
-      };
-    }
-
     return {
       success: true,
-      id: result.data?.id,
+      id: result.messageId,
     };
   } catch (error) {
-    console.error("Email sending failed:", error.message);
+    console.error("Gmail email sending failed:", error.message);
 
     return {
       success: false,
-      error: "Email sending failed.",
+      error: error.message || "Failed to send email.",
     };
   }
 }

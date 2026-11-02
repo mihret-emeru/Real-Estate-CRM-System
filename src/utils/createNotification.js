@@ -32,8 +32,14 @@ export async function createNotification({
 
   // Email is optional.
   if (sendEmailNotification) {
+    console.log("EMAIL NOTIFICATION TRIGGERED:", {
+      recipient,
+      title,
+      sendEmailNotification,
+    });
     try {
       const user = await User.findById(recipient).select("email").lean();
+      console.log("EMAIL RECIPIENT FOUND:", user?.email);
 
       if (!user?.email) {
         console.error("Notification recipient has no email address.");

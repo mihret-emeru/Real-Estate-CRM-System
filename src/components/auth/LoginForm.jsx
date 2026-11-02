@@ -72,6 +72,10 @@ export default function LoginForm({ propertyId, conversion, returnTo }) {
         setError(
           "Your account has been deactivated. Please contact the administrator.",
         );
+      } else if (result.error.includes("ACCOUNT_TEMPORARILY_LOCKED")) {
+        setError(
+          "Your account has been temporarily locked after five failed login attempts. Please try again after 15 minutes.",
+        );
       } else {
         setError("Invalid email or password.");
       }

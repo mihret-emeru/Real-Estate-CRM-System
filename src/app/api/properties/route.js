@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Property from "@/models/Property";
+import User from "@/models/User";
+import { createNotification } from "@/utils/createNotification";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "http://localhost:3001",
@@ -22,7 +24,6 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url);
 
     const page = Math.max(Number(searchParams.get("page")) || 1, 1);
-
     const limit = Math.min(Number(searchParams.get("limit")) || 10, 50);
 
     const status = searchParams.get("status");
@@ -111,6 +112,37 @@ export async function POST(request) {
 
     const property = await Property.create(body);
 
+    // Notify the assigned agent when a property is created.
+    if (property.assignedAgent) {
+      try {
+        const agent = await User.findOne({
+          _id: property.assignedAgent,
+          role: "agent",
+          isActive: true,
+        }).select("_id");
+
+        if (agent) {
+          await createNotification({
+            recipient: agent._id,
+            type: "agent_assigned",
+            title: "New Property Assigned",
+            message: `You have been assigned to "${property.title}". Open your assigned properties to view the details.`,
+            link: `/agent/properties/${property._id}`,
+            metadata: {
+              propertyId: property._id,
+              propertyTitle: property.title,
+            },
+            sendEmailNotification: true,
+          });
+        }
+      } catch (notificationError) {
+        console.error(
+          "Property assignment notification error:",
+          notificationError,
+        );
+      }
+    }
+
     const populatedProperty = await Property.findById(property._id).populate(
       "assignedAgent",
       "name email phone",
@@ -127,6 +159,8 @@ export async function POST(request) {
       },
     );
   } catch (error) {
+    console.error("Create property error:", error);
+
     return NextResponse.json(
       {
         success: false,
