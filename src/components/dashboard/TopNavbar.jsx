@@ -35,6 +35,14 @@ export default function TopNavbar() {
 
   const userName = session?.user?.name || "User";
   const userRole = session?.user?.role || "";
+
+  const notificationPageUrl =
+    {
+      admin: "/admin/notifications",
+      manager: "/manager/notifications",
+      agent: "/agent/notifications",
+      client: "/client/notifications",
+    }[userRole] || "/login";
   const userInitial = userName.charAt(0).toUpperCase();
 
   // ============================================================
@@ -435,7 +443,7 @@ export default function TopNavbar() {
               {notifications.length > 0 && (
                 <div className="notification-dropdown-footer">
                   <Link
-                    href="/client/notifications"
+                    href={notificationPageUrl}
                     onClick={() => setShowNotifications(false)}
                   >
                     View all notifications

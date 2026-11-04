@@ -27,17 +27,25 @@ export async function GET() {
 
     await connectDB();
 
-    const notifications = await Notification.find({
+    const notificationFilter = {
       recipient: session.user.id,
-    })
+    };
+
+    if (session.user.role === "admin") {
+      notificationFilter.type = "security_alert";
+    }
+
+    const notifications = await Notification.find(notificationFilter)
       .sort({ createdAt: -1 })
       .limit(30)
       .lean();
 
-    const unreadCount = await Notification.countDocuments({
-      recipient: session.user.id,
+    const unreadFilter = {
+      ...notificationFilter,
       isRead: false,
-    });
+    };
+
+    const unreadCount = await Notification.countDocuments(unreadFilter);
 
     return NextResponse.json({
       success: true,
@@ -80,10 +88,16 @@ export async function PATCH(request) {
 
     await connectDB();
 
+    // Admins can update only security notifications.
+    const notificationFilter = {
+      recipient: session.user.id,
+      ...(session.user.role === "admin" ? { type: "security_alert" } : {}),
+    };
+
     if (markAll === true) {
       await Notification.updateMany(
         {
-          recipient: session.user.id,
+          ...notificationFilter,
           isRead: false,
         },
         {
@@ -109,8 +123,8 @@ export async function PATCH(request) {
 
     const notification = await Notification.findOneAndUpdate(
       {
+        ...notificationFilter,
         _id: notificationId,
-        recipient: session.user.id,
       },
       {
         $set: { isRead: true },

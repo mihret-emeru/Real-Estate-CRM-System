@@ -75,6 +75,11 @@ export async function createNotification({
 
         if (!emailResult.success) {
           console.error("Notification email failed:", emailResult.error);
+        } else {
+          console.log("NOTIFICATION EMAIL SENT SUCCESSFULLY:", {
+            recipient: user.email,
+            messageId: emailResult.id,
+          });
         }
       }
     } catch (error) {

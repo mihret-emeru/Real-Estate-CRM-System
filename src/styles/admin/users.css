@@ -275,6 +275,12 @@
   color: #8a7373;
 }
 
+.admin-users-status.locked {
+  background: #ffd8d8;
+  color: #a30006;
+  border: 1px solid #ffd8d8;
+}
+
 .admin-users-date {
   color: #888;
   white-space: nowrap;

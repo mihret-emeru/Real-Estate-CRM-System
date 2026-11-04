@@ -89,6 +89,18 @@ export default function AdminUsersPage() {
     return role.charAt(0).toUpperCase() + role.slice(1);
   }
 
+  function getAccountStatus(user) {
+    if (!user.isActive) {
+      return "inactive";
+    }
+
+    if (user.lockedUntil && new Date(user.lockedUntil) > new Date()) {
+      return "locked";
+    }
+
+    return "active";
+  }
+
   const filteredUsers = users.filter((user) => {
     const searchValue = search.toLowerCase().trim();
 
@@ -100,10 +112,10 @@ export default function AdminUsersPage() {
 
     const matchesRole = roleFilter === "all" || user.role === roleFilter;
 
+    const accountStatus = getAccountStatus(user);
+
     const matchesStatus =
-      statusFilter === "all" ||
-      (statusFilter === "active" && user.isActive) ||
-      (statusFilter === "inactive" && !user.isActive);
+      statusFilter === "all" || statusFilter === accountStatus;
 
     return matchesSearch && matchesRole && matchesStatus;
   });
@@ -288,6 +300,10 @@ export default function AdminUsersPage() {
               label: "Active",
             },
             {
+              value: "locked",
+              label: "Locked",
+            },
+            {
               value: "inactive",
               label: "Inactive",
             },
@@ -379,13 +395,19 @@ export default function AdminUsersPage() {
                   </td>
 
                   <td>
-                    <span
-                      className={`admin-users-status ${
-                        user.isActive ? "active" : "inactive"
-                      }`}
-                    >
-                      {user.isActive ? "Active" : "Inactive"}
-                    </span>
+                    {(() => {
+                      const status = getAccountStatus(user);
+
+                      return (
+                        <span className={`admin-users-status ${status}`}>
+                          {status === "locked"
+                            ? "Locked"
+                            : status === "active"
+                              ? "Active"
+                              : "Inactive"}
+                        </span>
+                      );
+                    })()}
                   </td>
 
                   <td>
