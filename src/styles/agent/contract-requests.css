@@ -1,0 +1,305 @@
+.agent-contract-requests-page {
+  width: 100%;
+  padding: 32px;
+  margin-left: -20px;
+  margin-top: -25px;
+}
+
+.agent-contract-requests-top {
+  margin-bottom: 24px;
+}
+
+.agent-contract-requests-header {
+  margin-bottom: 30px;
+}
+
+.agent-contract-requests-header span,
+.agent-contract-requests-table-header > div > span {
+  display: block;
+  margin-bottom: 7px;
+  color: #b08d57;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+
+.agent-contract-requests-header h1 {
+  margin: 0;
+  color: #26352b;
+  font-family: "Playfair Display", serif;
+  font-size: 34px;
+  font-weight: 600;
+}
+
+.agent-contract-requests-header p {
+  margin: 8px 0 0;
+  color: #7b837d;
+  font-size: 14px;
+}
+
+.agent-contract-request-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.agent-contract-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid #e8e4dc;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(38, 53, 43, 0.04);
+}
+
+.agent-contract-stat-icon {
+  display: flex;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #f0f3ed;
+  color: #6f806f;
+  font-size: 19px;
+}
+
+.agent-contract-stat-icon.pending {
+  background: #faf4e7;
+  color: #b08d57;
+}
+
+.agent-contract-stat-icon.approved {
+  background: #edf5ed;
+  color: #58845d;
+}
+
+.agent-contract-stat-icon.rejected {
+  background: #fbefed;
+  color: #b65f54;
+}
+
+.agent-contract-stat-card > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.agent-contract-stat-card span {
+  color: #858d85;
+  font-size: 12px;
+}
+
+.agent-contract-stat-card strong {
+  color: #26352b;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.agent-contract-requests-table-card {
+  overflow: hidden;
+  border: 1px solid #e8e4dc;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 8px 25px rgba(38, 53, 43, 0.05);
+}
+
+.agent-contract-requests-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 24px;
+  border-bottom: 1px solid #eeeae2;
+}
+
+.agent-contract-requests-table-header h2 {
+  margin: 0;
+  color: #26352b;
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.agent-contract-requests-table-header > span {
+  color: #7b837d;
+  font-size: 12px;
+}
+
+.agent-contract-requests-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.agent-contract-requests-table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+.agent-contract-requests-table th {
+  padding: 15px 20px;
+  background: #f8f7f3;
+  color: #7b837d;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.agent-contract-requests-table td {
+  padding: 17px 20px;
+  border-bottom: 1px solid #f0eee8;
+  color: #566158;
+  font-size: 13px;
+}
+
+.agent-contract-requests-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.agent-contract-requests-table tbody tr:hover {
+  background: #fbfcf9;
+}
+
+.agent-contract-requests-table td strong,
+.agent-contract-requests-table td small {
+  display: block;
+}
+
+.agent-contract-requests-table td strong {
+  margin-bottom: 5px;
+  color: #354239;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.agent-contract-requests-table td small {
+  color: #929990;
+  font-size: 11px;
+}
+
+.agent-contract-request-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 11px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.agent-contract-request-status.pending {
+  background: #faf3e4;
+  color: #a27c3e;
+}
+
+.agent-contract-request-status.approved {
+  background: #edf5ed;
+  color: #58845d;
+}
+
+.agent-contract-request-status.rejected {
+  background: #fbefed;
+  color: #b65f54;
+}
+
+.agent-contract-request-status.contract_created {
+  background: #edf1f8;
+  color: #536e9b;
+}
+
+.agent-contract-requests-empty {
+  display: flex;
+  min-height: 260px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.agent-contract-requests-empty > svg {
+  margin-bottom: 15px;
+  color: #b08d57;
+  font-size: 32px;
+}
+
+.agent-contract-requests-empty h3 {
+  margin: 0 0 8px;
+  color: #354239;
+  font-size: 18px;
+}
+
+.agent-contract-requests-empty p {
+  max-width: 380px;
+  margin: 0;
+  color: #858d85;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.agent-contract-requests-error {
+  padding: 18px;
+  border: 1px solid #ebceca;
+  border-radius: 10px;
+  background: #fff4f2;
+  color: #a34e43;
+}
+
+.agent-contract-requests-error p {
+  margin: 0 0 12px;
+  font-size: 13px;
+}
+
+.agent-contract-requests-error button {
+  padding: 9px 15px;
+  border: 1px solid #b65f54;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #a34e43;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+  .agent-contract-request-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .agent-contract-requests-page {
+    padding: 18px;
+  }
+
+  .agent-contract-requests-header h1 {
+    font-size: 27px;
+  }
+
+  .agent-contract-request-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .agent-contract-stat-card {
+    padding: 17px;
+  }
+
+  .agent-contract-requests-table-header {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 18px;
+  }
+
+  .agent-contract-requests-table th,
+  .agent-contract-requests-table td {
+    padding: 13px 15px;
+  }
+}

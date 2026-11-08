@@ -270,16 +270,6 @@ export default function PropertyDetailsPage() {
           longitude={property.location?.longitude}
         />
       </div>
-      <div className="property-section">
-        <h2>
-          <FaPhone className="section-icon" />
-          Owner Information
-        </h2>
-
-        <p>
-          <strong>Phone:</strong> {property.ownerPhone || "-"}
-        </p>
-      </div>
 
       <div className="property-section">
         <h2>Agent Assignment</h2>

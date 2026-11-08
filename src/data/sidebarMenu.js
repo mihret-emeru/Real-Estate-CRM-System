@@ -54,6 +54,11 @@ export const sidebarMenu = {
       icon: FaUserTie,
     },
     {
+      title: "Contract Requests",
+      href: "/manager/contract-requests",
+      icon: FaFileContract,
+    },
+    {
       title: "Contracts",
       href: "/manager/contracts",
       icon: FaFileContract,
@@ -90,6 +95,11 @@ export const sidebarMenu = {
       title: "Leads",
       href: "/agent/leads",
       icon: FaUserTie,
+    },
+    {
+      title: "Contract Requests",
+      href: "/agent/contract-requests",
+      icon: FaFileContract,
     },
     {
       title: "Appointments",

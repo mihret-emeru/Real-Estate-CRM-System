@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSession, signIn } from "next-auth/react";
 import { FaUserCircle, FaSave, FaArrowLeft, FaCamera } from "react-icons/fa";
+import BackLink from "@/components/common/BackLink";
 import Link from "next/link";
 import "@/styles/profile.css";
 
@@ -258,9 +259,7 @@ export default function ProfilePage() {
     <div className="profile-page">
       <div className="profile-page-header">
         <div>
-          <Link href={dashboardPath} className="profile-back-link">
-            <FaArrowLeft /> Back to Dashboard
-          </Link>
+          <BackLink href={dashboardPath} label="Back to Dashboard" />
 
           <h1>My Profile</h1>
           <p>View and manage your personal account information.</p>
@@ -408,10 +407,9 @@ export default function ProfilePage() {
                       value={form.preferredPropertyType}
                       onChange={handleChange}
                     >
-                      <option value="house">House</option>
                       <option value="apartment">Apartment</option>
                       <option value="villa">Villa</option>
-                      <option value="land">Land</option>
+
                       <option value="commercial">Commercial</option>
                       <option value="other">Other</option>
                     </select>

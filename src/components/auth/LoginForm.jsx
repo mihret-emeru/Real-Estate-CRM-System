@@ -17,6 +17,7 @@ export default function LoginForm({ propertyId, conversion, returnTo }) {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   async function handleConversionLogin() {
     const purpose =
@@ -65,6 +66,7 @@ export default function LoginForm({ propertyId, conversion, returnTo }) {
     const result = await signIn("credentials", {
       email,
       password,
+      rememberMe,
       redirect: false,
     });
     if (result?.error) {
@@ -180,7 +182,11 @@ export default function LoginForm({ propertyId, conversion, returnTo }) {
 
         <div className="login-options">
           <label className="remember-me">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
             <span>Remember me</span>
           </label>
 

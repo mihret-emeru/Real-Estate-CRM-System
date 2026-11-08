@@ -39,7 +39,9 @@ export default function AddLeadPage() {
         <p>Add leads from phone calls, office visits, or referrals</p>
       </div>
 
-      <LeadForm onSubmit={handleAddLead} submitText="Create Lead" />
+      <div className="lead-form-card">
+        <LeadForm onSubmit={handleAddLead} submitText="Create Lead" />
+      </div>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 
 import { authOptions } from "@/lib/auth";
 import connectDB from "@/lib/mongodb";
+import { createNotification } from "@/utils/createNotification";
 
 import Conversation from "@/models/Conversation";
 import Message from "@/models/Message";
@@ -238,6 +239,23 @@ export async function POST(request, { params }) {
     conversation.agentUnreadCount += 1;
 
     await conversation.save();
+
+    // ==========================================================
+    // NOTIFY AGENT ABOUT NEW MESSAGE
+    // ==========================================================
+
+    await createNotification({
+      recipient: conversation.agent,
+      type: "new_message",
+      title: "New Message from Client",
+      message: `You have received a new message: "${content.slice(0, 100)}${content.length > 100 ? "..." : ""}"`,
+      link: `/agent/messages/${conversation._id}`,
+      metadata: {
+        conversationId: conversation._id,
+        senderId: session.user.id,
+        senderRole: "client",
+      },
+    });
 
     // ==========================================================
     // POPULATE MESSAGE

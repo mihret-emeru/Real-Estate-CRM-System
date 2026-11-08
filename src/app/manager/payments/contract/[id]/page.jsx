@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import PaymentStatusBadge from "@/components/payments/PaymentStatusBadge";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import BackLink from "@/components/common/BackLink";
 import "@/styles/payment-details.css";
 
 export default function ContractPaymentsPage({ params }) {
@@ -62,9 +63,7 @@ export default function ContractPaymentsPage({ params }) {
   if (error) {
     return (
       <div className="payment-details-page">
-        <Link href="/manager/payments" className="back-link">
-          ← Back to Payments
-        </Link>
+        <BackLink href="/manager/payments" label="Back to Payments" />
 
         <p>{error}</p>
       </div>

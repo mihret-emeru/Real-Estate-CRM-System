@@ -334,3 +334,370 @@
     gap: 14px;
   }
 }
+
+/* =========================================
+   CONTRACT REQUEST WORKFLOW
+========================================= */
+
+/* Header button and status spacing */
+.agent-lead-view-status {
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.agent-contract-request-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 19px;
+  border: 1px solid #6f806f;
+  border-radius: 8px;
+  background: #6f806f;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.agent-contract-request-button:hover {
+  background: #586b59;
+  border-color: #586b59;
+  box-shadow: 0 5px 14px rgba(38, 53, 43, 0.14);
+  transform: translateY(-1px);
+}
+
+/* Contract request card */
+.agent-contract-request-card {
+  grid-column: 1 / -1;
+  min-width: 0;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e8e4dc;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(38, 53, 43, 0.05);
+}
+
+.agent-contract-request-card .agent-lead-card-header {
+  padding-bottom: 18px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #eeeae2;
+}
+
+.agent-contract-request-card .agent-lead-card-header h2 {
+  font-size: 23px;
+}
+
+/* Form layout */
+.agent-contract-request-card form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.agent-contract-form-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.agent-contract-form-group label {
+  color: #354239;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.agent-contract-form-group input,
+.agent-contract-form-group select,
+.agent-contract-form-group textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid #dedfd7;
+  border-radius: 8px;
+  outline: none;
+  background: #fcfbf8;
+  color: #354239;
+  font-family: inherit;
+  font-size: 14px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.agent-contract-form-group input,
+.agent-contract-form-group select {
+  min-height: 45px;
+}
+
+.agent-contract-form-group textarea {
+  min-height: 105px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.agent-contract-form-group input::placeholder,
+.agent-contract-form-group textarea::placeholder {
+  color: #a1a69f;
+}
+
+.agent-contract-form-group input:focus,
+.agent-contract-form-group select:focus,
+.agent-contract-form-group textarea:focus {
+  border-color: #829582;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(111, 128, 111, 0.12);
+}
+
+.agent-contract-form-group input:disabled,
+.agent-contract-form-group select:disabled,
+.agent-contract-form-group textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* Property search */
+.agent-contract-form-group:has(#propertySearch) {
+  grid-column: 1 / -1;
+}
+
+.agent-property-search-results {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  max-height: 260px;
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid #e5e1d8;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(38, 53, 43, 0.12);
+}
+
+.agent-property-search-results button {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.agent-property-search-results button:hover {
+  background: #f3f5ef;
+}
+
+.agent-property-search-results button strong {
+  color: #354239;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.agent-property-search-results button span {
+  color: #858d85;
+  font-size: 12px;
+}
+
+.agent-property-search-results > p {
+  margin: 0;
+  padding: 15px;
+  color: #858d85;
+  font-size: 13px;
+  text-align: center;
+}
+
+.agent-contract-form-group > p {
+  margin: 3px 0 0;
+  color: #858d85;
+  font-size: 12px;
+}
+
+/* Selected property details */
+.agent-contract-property-price {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px 20px;
+  padding: 20px;
+  border: 1px solid #e3e8dc;
+  border-left: 4px solid #6f806f;
+  border-radius: 10px;
+  background: #f7f8f3;
+}
+
+.agent-contract-property-price span {
+  color: #858d85;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.agent-contract-property-price strong {
+  overflow-wrap: anywhere;
+  color: #354239;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.agent-contract-property-price small {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  color: #6f806f;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Full payment information */
+.agent-contract-full-payment {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 13px 16px;
+  border: 1px solid #e9e2cf;
+  border-radius: 8px;
+  background: #faf7ef;
+  color: #8b744b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Additional terms */
+.agent-contract-form-group:has(#contractTerms) {
+  grid-column: 1 / -1;
+}
+
+/* Form buttons */
+.agent-contract-form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid #eeeae2;
+}
+
+.agent-contract-cancel-button,
+.agent-contract-submit-button {
+  display: inline-flex;
+  min-width: 135px;
+  min-height: 43px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.agent-contract-cancel-button {
+  border: 1px solid #d9ddd5;
+  background: #ffffff;
+  color: #69756a;
+}
+
+.agent-contract-cancel-button:hover:not(:disabled) {
+  border-color: #9ca99b;
+  background: #f5f6f2;
+}
+
+.agent-contract-submit-button {
+  border: 1px solid #6f806f;
+  background: #6f806f;
+  color: #ffffff;
+}
+
+.agent-contract-submit-button:hover:not(:disabled) {
+  border-color: #586b59;
+  background: #586b59;
+  box-shadow: 0 4px 12px rgba(38, 53, 43, 0.13);
+}
+
+.agent-contract-cancel-button:disabled,
+.agent-contract-submit-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Success and error feedback */
+.agent-contract-feedback {
+  grid-column: 1 / -1;
+  padding: 14px 17px;
+  border-radius: 9px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.agent-contract-feedback.success {
+  border: 1px solid #c9dfca;
+  background: #f0f7ef;
+  color: #426b46;
+}
+
+.agent-contract-feedback.error {
+  border: 1px solid #ebceca;
+  background: #fff4f2;
+  color: #a34e43;
+}
+
+/* Responsive contract form */
+@media (max-width: 650px) {
+  .agent-lead-view-status {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .agent-contract-request-button {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+
+  .agent-contract-request-card {
+    padding: 18px;
+  }
+
+  .agent-contract-request-card form {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+
+  .agent-contract-form-group:has(#propertySearch),
+  .agent-contract-property-price,
+  .agent-contract-full-payment,
+  .agent-contract-form-group:has(#contractTerms),
+  .agent-contract-form-actions {
+    grid-column: 1;
+  }
+
+  .agent-contract-property-price {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .agent-contract-property-price small {
+    grid-column: 1;
+  }
+
+  .agent-contract-form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .agent-contract-cancel-button,
+  .agent-contract-submit-button {
+    width: 100%;
+  }
+}

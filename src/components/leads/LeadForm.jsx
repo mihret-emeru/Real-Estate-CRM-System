@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import CustomDropdown from "@/components/common/CustomDropdown";
+import "@/styles/leadform.css";
 
 export default function LeadForm({
   initialData = {},

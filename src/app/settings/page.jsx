@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FaArrowLeft, FaBell, FaPalette, FaUser } from "react-icons/fa";
+import BackLink from "@/components/common/BackLink";
 import "@/styles/settings.css";
 
 const DEFAULT_SETTINGS = {
@@ -71,9 +72,7 @@ export default function SettingsPage() {
   return (
     <main className="settings-page">
       <header className="settings-header">
-        <Link href="/profile" className="settings-back-link">
-          <FaArrowLeft /> Back to Profile
-        </Link>
+        <BackLink href="/profile" label="Back to Profile" />
 
         <h1>Settings</h1>
         <p>Customize your Real Estate CRM experience.</p>
@@ -102,7 +101,7 @@ export default function SettingsPage() {
             onChange={(event) => updateSetting("theme", event.target.value)}
           >
             <option value="light">Light mode</option>
-            <option value="dark">Dark mode</option>
+            <option value="dark">Partial Dark mode</option>
           </select>
         </div>
       </section>

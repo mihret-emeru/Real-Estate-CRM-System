@@ -524,17 +524,6 @@ export default function EditPropertyPage() {
             placeholder="Video or 360 tour link"
           />
 
-          <h2>Owner Information</h2>
-
-          <label>Owner Phone</label>
-          <input
-            type="text"
-            name="ownerPhone"
-            value={formData.ownerPhone}
-            onChange={handleChange}
-            placeholder="Owner phone number"
-          />
-
           <button type="submit">Update Property</button>
         </div>
       </form>

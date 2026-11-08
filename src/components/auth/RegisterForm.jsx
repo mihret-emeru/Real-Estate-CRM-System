@@ -4,14 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import CustomDropdown from "@/components/common/CustomDropdown";
-import {
-  FaUser,
-  FaEnvelope,
-  FaPhone,
-  FaLock,
-  FaEye,
-  FaEyeSlash,
-} from "react-icons/fa";
+import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function RegisterForm({ propertyId, conversion, returnTo }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,6 +27,15 @@ export default function RegisterForm({ propertyId, conversion, returnTo }) {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const passwordRules = {
+    minLength: formData.password.length >= 8,
+    uppercase: /[A-Z]/.test(formData.password),
+    lowercase: /[a-z]/.test(formData.password),
+    number: /\d/.test(formData.password),
+    special: /[^A-Za-z0-9]/.test(formData.password),
+  };
+
+  const isPasswordValid = Object.values(passwordRules).every(Boolean);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,8 +65,18 @@ export default function RegisterForm({ propertyId, conversion, returnTo }) {
 
     setError("");
 
+    if (!isPasswordValid) {
+      setError("Please ensure your password meets all the requirements.");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
+      return;
+    }
+
+    if (formData.phone && !isValidPhoneNumber(formData.phone)) {
+      setError("Please enter a valid international phone number.");
       return;
     }
 
@@ -167,15 +181,19 @@ export default function RegisterForm({ propertyId, conversion, returnTo }) {
             <div className="register-field">
               <label>Phone Number</label>
 
-              <div className="register-input">
-                <FaPhone />
-
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="Enter your phone number"
+              <div className="register-input phone-input-wrapper">
+                <PhoneInput
+                  international
+                  defaultCountry="ET"
+                  countryCallingCodeEditable={false}
+                  value={formData.phone || undefined}
+                  onChange={(value) =>
+                    setFormData((current) => ({
+                      ...current,
+                      phone: value || "",
+                    }))
+                  }
+                  placeholder="Enter phone number"
                 />
               </div>
             </div>
@@ -201,6 +219,38 @@ export default function RegisterForm({ propertyId, conversion, returnTo }) {
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
+            </div>
+
+            <div className="password-requirements">
+              <small>Password must contain:</small>
+
+              <ul>
+                <li
+                  style={{ color: passwordRules.minLength ? "green" : "#777" }}
+                >
+                  {passwordRules.minLength ? "✓" : "○"} At least 8 characters
+                </li>
+
+                <li
+                  style={{ color: passwordRules.uppercase ? "green" : "#777" }}
+                >
+                  {passwordRules.uppercase ? "✓" : "○"} One uppercase letter
+                </li>
+
+                <li
+                  style={{ color: passwordRules.lowercase ? "green" : "#777" }}
+                >
+                  {passwordRules.lowercase ? "✓" : "○"} One lowercase letter
+                </li>
+
+                <li style={{ color: passwordRules.number ? "green" : "#777" }}>
+                  {passwordRules.number ? "✓" : "○"} One number
+                </li>
+
+                <li style={{ color: passwordRules.special ? "green" : "#777" }}>
+                  {passwordRules.special ? "✓" : "○"} One special character
+                </li>
+              </ul>
             </div>
 
             <div className="register-field">
@@ -273,10 +323,9 @@ export default function RegisterForm({ propertyId, conversion, returnTo }) {
                   onChange={handlePropertyTypeChange}
                   placeholder="Select Property Type"
                   options={[
-                    { value: "house", label: "House" },
                     { value: "apartment", label: "Apartment" },
                     { value: "villa", label: "Villa" },
-                    { value: "land", label: "Land" },
+
                     { value: "commercial", label: "Commercial" },
                     { value: "other", label: "Other" },
                   ]}
@@ -317,9 +366,9 @@ export default function RegisterForm({ propertyId, conversion, returnTo }) {
         </div>
 
         <div className="register-terms">
-          <input type="checkbox" />
+          <input type="checkbox" id="agreeTerms" required />
 
-          <span>I agree to the Terms & Conditions</span>
+          <label htmlFor="agreeTerms">I agree to the Terms & Conditions</label>
         </div>
 
         <button type="submit" className="register-button" disabled={loading}>

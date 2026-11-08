@@ -38,7 +38,7 @@ export async function GET(request, { params }) {
     const lead = await Lead.findById(id)
       .populate(
         "interestedProperty",
-        "title price currency propertyType status location images assignedAgent",
+        "title price currency paymentType propertyType status location images assignedAgent",
       )
       .populate("client", "name email phone")
       .lean();

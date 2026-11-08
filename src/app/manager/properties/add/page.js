@@ -469,11 +469,6 @@ export default function AddPropertyPage() {
           <label>Virtual Tour URL</label>
           <input type="text" placeholder="Video or 360 tour link" />
 
-          <h2>Owner Information</h2>
-
-          <label>Owner Phone</label>
-          <input type="text" placeholder="Owner phone number" />
-
           <button type="submit" disabled={submitting}>
             {submitting ? "Saving Property..." : "Save Property"}
           </button>

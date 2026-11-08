@@ -3,6 +3,7 @@ import connectDB from "@/lib/mongodb";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import { createNotification } from "@/utils/createNotification";
+import { encode as encodeJWT, decode as decodeJWT } from "next-auth/jwt";
 
 export const authOptions = {
   providers: [
@@ -19,6 +20,10 @@ export const authOptions = {
           label: "Password",
           type: "password",
         },
+        rememberMe: {
+          label: "Remember Me",
+          type: "text",
+        },
       },
 
       async authorize(credentials) {
@@ -27,6 +32,9 @@ export const authOptions = {
 
           const email = credentials?.email?.trim().toLowerCase();
           const password = credentials?.password;
+          const rememberMe =
+            credentials?.rememberMe === "true" ||
+            credentials?.rememberMe === true;
 
           if (!email || !password) {
             throw new Error("Invalid email or password.");
@@ -123,6 +131,7 @@ export const authOptions = {
             name: user.name,
             email: user.email,
             role: user.role,
+            rememberMe,
           };
         } catch (error) {
           console.error("AUTH ERROR:", error.message);
@@ -134,6 +143,26 @@ export const authOptions = {
 
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
+  },
+
+  jwt: {
+    async encode({ token, secret }) {
+      const maxAge = token?.rememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 60;
+
+      return encodeJWT({
+        token,
+        secret,
+        maxAge,
+      });
+    },
+
+    async decode({ token, secret }) {
+      return decodeJWT({
+        token,
+        secret,
+      });
+    },
   },
 
   callbacks: {
@@ -141,6 +170,7 @@ export const authOptions = {
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.rememberMe = user.rememberMe;
       }
 
       return token;

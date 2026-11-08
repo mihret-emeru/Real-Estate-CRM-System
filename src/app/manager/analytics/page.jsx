@@ -236,7 +236,7 @@ export default function AnalyticsPage() {
               type="bar"
               title="Property Status"
               data={{
-                labels: ["Available", "Sold", "Reserved", "Rented", "Pending"],
+                labels: ["Available", "Sold", "Reserved"],
 
                 datasets: [
                   {
@@ -248,10 +248,6 @@ export default function AnalyticsPage() {
                       analytics.properties.statusCounts?.sold || 0,
 
                       analytics.properties.statusCounts?.reserved || 0,
-
-                      analytics.properties.statusCounts?.rented || 0,
-
-                      analytics.properties.statusCounts?.pending || 0,
                     ],
                   },
                 ],

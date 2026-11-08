@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import PaymentActions from "@/components/payments/PaymentActions";
 import paymentStatusLabel from "@/utils/paymentStatusLabel";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import BackLink from "@/components/common/BackLink";
 import "@/styles/payment-details.css";
 import Link from "next/link";
 
@@ -70,10 +71,7 @@ export default function PaymentDetailsPage({ params }) {
 
   return (
     <div className="payment-details-page">
-      <Link href="/manager/payments" className="back-link">
-        ← Back to Payments
-      </Link>
-
+      <BackLink href="/manager/payments" label="Back to Payments" />
       <h1>Payment Details</h1>
 
       <div className="payment-details-card">

@@ -3,6 +3,7 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import Lead from "@/models/Lead";
 import { LEAD_SCORE } from "@/utils/leadScore";
+import { isValidPhoneNumber } from "libphonenumber-js";
 
 export async function POST(request) {
   try {
@@ -35,6 +36,42 @@ export async function POST(request) {
           status: 400,
         },
       );
+    }
+
+    // Validate password strength
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+      return Response.json(
+        {
+          success: false,
+          message:
+            "Password must contain at least 8 characters, including uppercase, lowercase, a number, and a special character.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    // Validate international phone number
+    if (phone) {
+      if (
+        typeof phone !== "string" ||
+        !phone.startsWith("+") ||
+        !isValidPhoneNumber(phone)
+      ) {
+        return Response.json(
+          {
+            success: false,
+            message: "Please provide a valid international phone number.",
+          },
+          {
+            status: 400,
+          },
+        );
+      }
     }
 
     // Check if user already exists
